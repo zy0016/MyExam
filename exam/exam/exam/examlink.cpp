@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "linkstructor.h"
 #include <iostream>
+using namespace std;
 
 node **findNode(node *root, int key)
 {
@@ -304,4 +305,5 @@ void LinkAction()
     b = DeleteNodeByValue(b,k2);
     printf("\nb=");
     ShowNode(b);
+	///////////////
 }
