@@ -144,11 +144,25 @@ void reserve(char a[])
         a[j] = temp;
     }
 }
-void OtherAction1()
+int fibonacci(int n)
 {
-    char des[20] = "";
-    solve("9", des,8);
-    printf("des:%s", des);
+    int temp[2];
+    temp[0] = 1;
+    temp[1] = 1;
+    if (n == 1 || n == 2)
+    {
+        return 1;
+    }
+    else
+    {
+        for (int i = 2; i < n; i ++)
+        {
+            int tp = temp[0] + temp[1];
+            temp[1] = temp[0];
+            temp[0] = tp;
+        }
+        return temp[0];
+    }
 }
 int symetry(char * str)
 {
@@ -167,6 +181,31 @@ int symetry(char * str)
     }
     return 1;
 }
+void testreference()
+{
+    int i = 10,k = 21;
+    int &j1 = i;
+    j1 = k;
+    j1 = 3;
+
+    printf("i:%d,j1:%d,k:%d\n",i,j1,k);
+    //////////////////////////////////////////////////////////////////////////
+    int it = 0,it2 = 9;
+    int& j = it;
+    printf("j:%d\n",j);
+    j = it2;
+    printf("j:%d\n",j);
+    j = 1000;
+    printf("it2:%d\n",it2);
+    printf("it:%d\n",it);
+}
+void OtherAction1()
+{
+    char des[20] = "";
+    solve("9", des,8);
+    printf("des:%s", des);
+}
+
 void OtherAction2()
 {
     int k = symetry("1122131");
@@ -197,6 +236,36 @@ void OtherAction6()
     else 
         printf("big-endian\n");  
 }
+void OtherAction7()
+{
+    testreference();
+}
+void OtherAction8()
+{
+    static int a[] = {0,1,2,3};
+    int *ptr[] = {a,a+1,a+2,a+3};
+    int **pptr = ptr;
+    pptr++;
+    printf("%d %d %d, ", pptr-ptr, *pptr - a, **pptr);
+    pptr++;
+    printf("%d %d %d, ", pptr-ptr, *pptr - a, **pptr);
+    pptr++;
+    printf("%d %d %d, ", pptr-ptr, *pptr - a, **pptr);
+}
+void OtherAction9()
+{
+    struct foo f={0};
+    if (f.a->s) 
+    {
+        printf( f.a->s);
+    }
+    /////////////////////
+    struct test *pt=NULL;
+    printf("&s = %x\n", pt->s); 
+    printf("&i = %x\n", &pt->i); 
+    printf("&c = %x\n", &pt->c);
+    printf("&p = %x\n", &pt->p);
+}
 void OtherAction()
 {
     cout << "\n===========================Other===========================" << endl;
@@ -208,4 +277,6 @@ void OtherAction()
     OtherAction4();
     OtherAction5();
     OtherAction6();
+    OtherAction7();
+    OtherAction8();
 }

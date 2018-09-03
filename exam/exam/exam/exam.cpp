@@ -11,7 +11,7 @@ int _tmain(int argc, _TCHAR* argv[])
     LinkAction();
     SortAction();
     ClassAction();
-    OtherAction();
+    //OtherAction();
 	return 0;
 }
 

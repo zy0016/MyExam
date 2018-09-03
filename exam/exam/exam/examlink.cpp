@@ -307,6 +307,7 @@ void LinkAction()
     ShowNode(b);
 	///////////////
     int key = 21;
+    c = merge_2(a , b);
     node ** pfind = findNode(c,key);
     if (*pfind)
     {

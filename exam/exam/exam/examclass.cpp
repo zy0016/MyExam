@@ -169,10 +169,53 @@ void Action4()
     bar(d);
     cout << "end!" << endl;
 }
+void Action5()
+{
+    cout << endl << "------1-------" << endl;
+    D d;
+    Base *p1 = &d;
+    Base &p2 = d;
+    Base *pd = new D;
+    Base p3;
+
+    p1->id();
+    p2.id();
+    p3.id();
+    //pd->Dfunction();
+}
+void Action6()
+{
+    cout << endl << "----2---------" << endl;
+    D d;
+    Base *pb = new D();
+    delete pb;
+    cout << "end!" << endl;
+}
+void Action7()
+{
+    cout << endl << "----3---------" << endl;
+    Base *p = new D();
+    delete p;
+}
+void Action8()
+{
+    Pet * bp = new Cat;
+    //Dog * d1 = dynamic_cast<Dog*>(bp);
+    Cat * d2 = dynamic_cast<Cat*>(bp);
+
+    cout << endl;
+    //cout << "d1=" << (long)d1 <<endl;
+    cout << "d2=" << (long)d2 <<endl;
+}
 void ClassAction()
 {
     cout << "\n===========================Class===========================" << endl;
     Action1();
     Action2();
     Action3();
+    Action4();
+    Action5();
+    Action6();
+    Action7();
+    Action8();
 }
