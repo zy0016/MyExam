@@ -261,7 +261,7 @@ void LinkAction()
     node *c = NULL;
     node *a2 = NULL;
     node *b2 = NULL;
-
+    cout << "\n===========================Link===========================" << endl;
     for (i = 2;i <= 20; i += 2)
     {
         a = AddNode(i, a);
@@ -306,4 +306,14 @@ void LinkAction()
     printf("\nb=");
     ShowNode(b);
 	///////////////
+    int key = 21;
+    node ** pfind = findNode(c,key);
+    if (*pfind)
+    {
+        printf("find the number:%d.\n",(*pfind)->val);
+    }
+    else
+    {
+        printf("Can't find the number:%d.\n",key);
+    }
 }
