@@ -33,7 +33,6 @@ class Cat : public Pet
     
 };
 //////////////////////////////////////////////
-
 class Base
 {
 private:
@@ -103,6 +102,28 @@ void bar (Base &b)
     cout << "bar" << endl;
     b.id();
 }
+/////////////////////////////////////////////
+class BB
+{
+    int i;
+public:
+    //virtual ~BB(){ out <<"BB::~BB()"<<endl; }
+};
+
+class BB2
+{
+    int i;
+public:
+    virtual ~BB2(){ cout <<"BB::~BB()"<<endl; }
+};
+ 
+class DD : public BB2
+{
+    int i;
+    int j;
+public:
+    virtual ~DD() { cout <<"DD::DD~()"<<endl; }
+};
 /////////////////////////////////////////////
 class Base_const
 {
@@ -207,6 +228,22 @@ void Action8()
     //cout << "d1=" << (long)d1 <<endl;
     cout << "d2=" << (long)d2 <<endl;
 }
+void Action9()
+{
+    int i = sizeof(BB);
+    cout << i << endl;
+}
+void Action10()
+{
+    cout << "sizeBB2:" << sizeof(BB2) << " sizeDD:"<< sizeof(DD) <<endl;
+    BB2* pb = new DD[2];
+    delete[] pb;
+}
+void Action11()
+{
+    Base base;
+    D2 d2;
+}
 void ClassAction()
 {
     cout << "\n===========================Class===========================" << endl;
@@ -218,4 +255,6 @@ void ClassAction()
     Action6();
     Action7();
     Action8();
+    Action9();
+    Action10();
 }

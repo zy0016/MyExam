@@ -199,6 +199,38 @@ void testreference()
     printf("it2:%d\n",it2);
     printf("it:%d\n",it);
 }
+void outputpair(int arr[],int size,int sum)
+{
+    int i,j;
+    for (i = 0;i < size - 1;i++)
+    {
+        for (j = i + 1;j < size;j++)
+        {
+            if (arr[i] + arr[j] == sum)
+            {
+                printf("%d+%d=%d\n",arr[i],arr[j],sum);
+            }
+        }
+    }
+}
+int &put(int n);  
+int vals[10];  
+int error=-1;  
+int &put(int n)  
+{  
+    if (n>=0 && n<=9 ) 
+        return vals[n];  
+    else 
+    { 
+        cout<<"subscript error"; 
+        return error; 
+    }  
+}  
+void reverence()
+{
+    put(0)=10; //?put(0)???????,???vals[0]=10;  
+    put(9)=20; //?put(9)???????,???vals[9]=20;
+}
 void OtherAction1()
 {
     char des[20] = "";
@@ -257,7 +289,7 @@ void OtherAction9()
     struct foo f={0};
     if (f.a->s) 
     {
-        printf( f.a->s);
+        //printf( f.a->s);
     }
     /////////////////////
     struct test *pt=NULL;
@@ -265,7 +297,82 @@ void OtherAction9()
     printf("&i = %x\n", &pt->i); 
     printf("&c = %x\n", &pt->c);
     printf("&p = %x\n", &pt->p);
+    ////////////////////
+    Test a1(1);
+    a1.func();
+    Test a2;
+    a2.func();
 }
+void OtherAction10()
+{
+    int arr[] = {1,2,3,4,7,9,12,8,0};
+    int size = sizeof(arr)/sizeof(int);
+    int sum = 9;
+    outputpair(arr,size,sum);
+}
+void OtherAction11()
+{
+    reverence();
+}
+void OtherAction12()
+{
+    /*au.x[0] = 10;
+    au.x[1] = 1;
+    printf("au.i:%d\n",au.i);*/
+
+    //int a[] = {1, 3, 5, 3, 4};
+    //solution(a,sizeof(a)/sizeof(a[0]));
+    
+    int *pt;
+    int (*pa)[3];
+    int a1[2][3];
+    int a2[3][2];
+    int **p2;
+    pt = a2[0];
+    p2 = &pt;
+    {
+        int a[5];
+        printf("%x\n", a);
+        printf("%x\n", a+1);
+        printf("%x\n", &a);
+        printf("%x\n", &a+1);
+    }
+    int a4[5] = {1,2,3,4,5};
+    int *ptr = (int*)(&a4 + 1);
+    {
+        int a = 247, b = 4;
+        int const c = 21;
+        const int *d = &a;
+
+        int * const e = &b;
+        //int const *f const = &a;
+
+        a = 12;
+        d = NULL;
+    }
+    {
+        int N = 11;
+        int s = 0;
+        for (int i = 2; i <= N;i++)
+        {
+            s = (s + 3) % i;
+        }
+        printf("s:%d\n",s);
+    }
+    {
+        unsigned short A = 10;
+        printf("~A=%u\n", ~A);
+        char c = 128;
+        printf("c=%d\n",c);
+    }
+    {
+        float a3 = 1.0f; 
+        cout << endl;
+        cout << (int)a3 << endl; 
+        cout << (int&)a3 << endl;
+    }
+}
+
 void OtherAction()
 {
     cout << "\n===========================Other===========================" << endl;
@@ -279,4 +386,66 @@ void OtherAction()
     OtherAction6();
     OtherAction7();
     OtherAction8();
+    OtherAction9();
+    OtherAction10();
+    OtherAction11();
+    OtherAction12();
 }
+
+//int solution(int A[], int N) {
+//    // write your code in C99
+//    int i,j,temp,ib;
+//    int bSwap = 0;
+//    for (i = 1;i < N;i++)
+//    {
+//        if (A[i - 1] > A[i])
+//        {
+//            if (bSwap == 0)
+//            {
+//                for (j = i + 1;j < N;j++)
+//                {
+//                    if (A[i] > A[j])
+//                        continue;
+//                    else
+//                    {
+//                        ib = i;
+//                        i = j;
+//                        break;
+//                    }    
+//                }
+//                temp = A[i - 1];
+//                A[i - 1] = A[i];
+//                A[i] = temp;
+//                bSwap = 1;
+//                i = ib;
+//            }
+//            else
+//            {
+//                return 0;
+//            }
+//        }
+//    }
+//    return 1;
+//}
+//#if 0
+//int solution(int A[], int N) {
+//    // write your code in C99
+//    int i,j;
+//    int sum = 0,sumbak = -1;
+//    for (i = 0;i < N;i++)
+//    {
+//        if (A[i] >= 0)
+//        {
+//           for (j = i;j < N && A[j] >= 0;j++)
+//           {
+//                sum = sum + A[j];
+//           }
+//           if (sum > sumbak)
+//                sumbak = sum;
+//           sum = 0;
+//           i = j;
+//        }
+//    }
+//    return sumbak;
+//}
+//#endif

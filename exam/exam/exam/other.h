@@ -29,6 +29,19 @@ struct test
     char *p;
     char s[10];
 };
-void OtherAction();
+struct Test
+{
+    Test(int){}
+    Test(){}
+    void func(){}
+};
 
+//union
+//{
+//    int i;
+//    char x[2];
+//}au;
+
+void OtherAction();
+//int solution(int A[], int N);
 #endif 
