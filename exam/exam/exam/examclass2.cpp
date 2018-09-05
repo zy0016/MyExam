@@ -84,7 +84,7 @@ void Class2Action1()
         }
         num.insert(num.begin(),9999);
         sort(num.begin(),num.end());
-        for (int i = 0;i < num.size();i++)
+        for (unsigned int i = 0;i < num.size();i++)
             cout << num[i]<<endl;
     }
     if (1)
