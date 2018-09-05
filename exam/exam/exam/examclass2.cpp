@@ -73,9 +73,9 @@ void Class2Action1()
     list<string>::iterator itor;
     list<int> Scores;
 
-    if (1)
+    if (0)
     {
-        cout<<"----------1------------"<<endl;
+        cout<<"----------examclass2 1------------"<<endl;
         vector<int> num;
         int element;
         while (cin >> element)
@@ -106,22 +106,24 @@ void Class2Action1()
     Milkshakes.push_front("Vanilla");
     Milkshakes.push_front("The Milkshake Menu");
     Milkshakes.push_back("*** Thats the end ***");
-    //int j = Milkshakes.size();
+    int j = Milkshakes.size();
     for (itor=Milkshakes.begin();itor != Milkshakes.end();itor++)
     {
         cout<<*itor<<endl;
     }
     
-    //remove(Milkshakes.begin(),Milkshakes.end(),"Chocolate");
-    cout<<"----------------------------------"<<endl;
+    remove(Milkshakes.begin(),Milkshakes.end(),"Chocolate");
+	j = Milkshakes.size();
     cout<<"begin >>>>>>>>>>>>>>>for_each"<<endl;
     for_each (Milkshakes.begin(),Milkshakes.end(),PrintIt);
     cout<<"end >>>>>>>>>>>>>>>>>for_each"<<endl;
 
-    for (itor=Milkshakes.begin();itor != Milkshakes.end();++itor)
-    {
-        //delete *itor;
-    }
+    //for (itor=Milkshakes.begin();itor != Milkshakes.end();++itor)
+    //{
+        //delete itor;
+    //}
+	Milkshakes.clear();
+
     Scores.push_back(100); Scores.push_back(80);
     Scores.push_back(45); Scores.push_back(75);
     Scores.push_back(99); Scores.push_back(100);

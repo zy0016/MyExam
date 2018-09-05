@@ -15,7 +15,7 @@ template<> struct Factorial<0>{
 
 void TemplateAction1()
 {
-    cout<<Factorial<3>::val<<endl;
+    cout<<Factorial<5>::val<<endl;
 }
 void TemplateAction()
 {
