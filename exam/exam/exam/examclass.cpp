@@ -3,32 +3,32 @@
 using namespace std;
 
 #if 0
-class Pet
+class Pet1
 {
 public:
-    virtual ~Pet(){}
+    virtual ~Pet1(){}
 };
-class Dog : public Pet{};
-class Cat : public Pet{};
+class Dog1 : public Pet1{};
+class Cat : public Pet1{};
 #endif
-class Pet
+class Pet1
 {
 public:
-    virtual ~Pet() = 0;
+    virtual ~Pet1() = 0;
 };
-Pet::~Pet()
+Pet1::~Pet1()
 {
-    cout << "~Pet()\n";
+    cout << "~Pet1()\n";
 }
-class Dog : public Pet
+class Dog1 : public Pet1
 {
 public:
-    ~Dog()
+    ~Dog1()
     {
-        cout << "~Dog()\n";
+        cout << "~Dog1()\n";
     }
 };
-class Cat : public Pet
+class Cat : public Pet1
 {
     
 };
@@ -159,13 +159,13 @@ public:
 /////////////////////////////////////////////
 void Action1()
 {
-    Pet *p = new Dog;
+    Pet1 *p = new Dog1;
     delete p;
 }
 void Action2()
 {
-    Pet *b = new Cat;
-    Dog *d1 = dynamic_cast<Dog*>(b);
+    Pet1 *b = new Cat;
+    Dog1 *d1 = dynamic_cast<Dog1*>(b);
     Cat *d2 = dynamic_cast<Cat*>(b);
     cout << "d1= " <<(long)d1 <<endl;
     cout << "d2= " <<(long)d2 <<endl;
@@ -220,8 +220,8 @@ void Action7()
 }
 void Action8()
 {
-    Pet * bp = new Cat;
-    //Dog * d1 = dynamic_cast<Dog*>(bp);
+    Pet1 * bp = new Cat;
+    //Dog1 * d1 = dynamic_cast<Dog1*>(bp);
     Cat * d2 = dynamic_cast<Cat*>(bp);
 
     cout << endl;

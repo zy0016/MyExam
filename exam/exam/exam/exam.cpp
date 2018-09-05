@@ -15,7 +15,7 @@ int _tmain(int argc, _TCHAR* argv[])
     SortAction();
     ClassAction();
     OtherAction();
-    //Class2Action();
+    Class2Action();
     TemplateAction();
     Class3Action();
 	return 0;
