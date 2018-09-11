@@ -27,6 +27,30 @@
     <ClInclude Include="linkstructor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sortstructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="classstructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="template1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +60,30 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="examlink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examsort.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examclass2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examtemplate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examclass3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examclass4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examclass5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

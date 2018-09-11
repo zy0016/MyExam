@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v100</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -77,13 +77,29 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="class2.h" />
+    <ClInclude Include="class3.h" />
+    <ClInclude Include="class4.h" />
+    <ClInclude Include="class5.h" />
+    <ClInclude Include="classstructor.h" />
     <ClInclude Include="linkstructor.h" />
+    <ClInclude Include="other.h" />
+    <ClInclude Include="sortstructor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="template1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="exam.cpp" />
+    <ClCompile Include="examclass.cpp" />
+    <ClCompile Include="examclass2.cpp" />
+    <ClCompile Include="examclass3.cpp" />
+    <ClCompile Include="examclass4.cpp" />
+    <ClCompile Include="examclass5.cpp" />
     <ClCompile Include="examlink.cpp" />
+    <ClCompile Include="examother.cpp" />
+    <ClCompile Include="examsort.cpp" />
+    <ClCompile Include="examtemplate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

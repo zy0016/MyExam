@@ -8,6 +8,8 @@
 #include "other.h"
 #include "class2.h"
 #include "class3.h"
+#include "class4.h"
+#include "class5.h"
 #include "template1.h"
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -18,6 +20,7 @@ int _tmain(int argc, _TCHAR* argv[])
     Class2Action();
     TemplateAction();
     Class3Action();
+    Class5Action();
 	return 0;
 }
 
