@@ -11,8 +11,7 @@ void PrintIt(string & StringToPrint)
 class IsAToothbrush 
 {
 public:  
-    IsAToothbrush(string& InToothbrushCode) : 
-      ToothbrushCode(InToothbrushCode) {}
+    IsAToothbrush(string& InToothbrushCode) : ToothbrushCode(InToothbrushCode) {}
     bool operator() ( string& SalesRecord ) 
     {
         return SalesRecord.substr(0,4)==ToothbrushCode;
@@ -127,8 +126,8 @@ void Class2Action1()
     Scores.push_back(100); Scores.push_back(80);
     Scores.push_back(45); Scores.push_back(75);
     Scores.push_back(99); Scores.push_back(100);
-    int NumberOf100Scores(0);
-    NumberOf100Scores = count (Scores.begin(), Scores.end(), 100);
+    int NumberOf100Scores(-1);
+    NumberOf100Scores = count (Scores.begin(), Scores.end(), 909);
     cout << "There were " << NumberOf100Scores << " scores of 100" << endl;
     //vector<string> v;
     cout<<"----------------------------------"<<endl;
@@ -203,7 +202,9 @@ void Class2Action1()
     cout<<"----------------------------------"<<endl;
     list<int> list1;
     list<int>::iterator ListIterator;
-    for (int i = 0; i < 10; ++i) list1.push_back(i);
+    for (int i = 0; i < 10; ++i) 
+		list1.push_back(i);
+
     list1.insert(list1.begin(), -1);
     list1.insert(list1.end(), 10);
     int IntArray[2] = {11,12};

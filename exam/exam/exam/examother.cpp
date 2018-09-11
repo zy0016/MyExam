@@ -144,9 +144,10 @@ void reserve(char a[])
         a[j] = temp;
     }
 }
-int fibonacci(int n)
+double fibonacci(int n)
 {
-    int temp[2];
+	double temp[2];
+	double tp;
     temp[0] = 1;
     temp[1] = 1;
     if (n == 1 || n == 2)
@@ -157,7 +158,13 @@ int fibonacci(int n)
     {
         for (int i = 2; i < n; i ++)
         {
-            int tp = temp[0] + temp[1];
+			/*if (LONG_MAX - temp[0] < temp[1])
+			{
+				double longmax = LONG_MAX;
+				cout << "temp[0]=" << temp[0] << ",temp[1]=" << temp[1] << ",LONG_MAX="<< longmax << endl;
+				return -1;
+			}*/
+            tp = temp[0] + temp[1];
             temp[1] = temp[0];
             temp[0] = tp;
         }
@@ -372,10 +379,16 @@ void OtherAction12()
         cout << (int&)a3 << endl;
     }
 }
-
+void OtherAction13()
+{
+	int f = 30;
+	double i = fibonacci(50);
+	cout << "fibonacci(" <<f<< ")=" << i << endl;
+}
 void OtherAction()
 {
     cout << "\n===========================Other===========================" << endl;
+	
     testpoint();
     OtherAction1();
     SpecialOutput();
@@ -390,6 +403,7 @@ void OtherAction()
     OtherAction10();
     OtherAction11();
     OtherAction12();
+	OtherAction13();
 }
 
 //int solution(int A[], int N) {
