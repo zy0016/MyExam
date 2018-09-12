@@ -6,38 +6,38 @@ using namespace std;
 
 class Top
 {
-    int x;
+    int t;
 public:
     Top(int n)
     {
-        x = n;
+        t = n;
     }
 };
 class Left:public Top
 {
-    int y;
+    int l;
 public:
     Left(int m,int n):Top(m)
     {
-        y = n;
+        l = n;
     }
 };
 class Right:public Top
 {
-    int z;
+    int r;
 public:
     Right(int m,int n):Top(m)
     {
-        z = n;
+        r = n;
     }
 };
 class Bottom:public Left,public Right
 {
-    int w;
+    int b;
 public:
     Bottom(int i,int j,int k,int m):Left(i,k),Right(j,k)
     {
-        w = m;
+        b = m;
     }
 };
 
@@ -46,53 +46,53 @@ void Class5Action1()
     Bottom b(1,2,3,4);
     cout << sizeof b <<endl;
 }
-
+///////////////////////////////////////////////////////////
 class Top2
 {
 protected:
-    int x;
+    int t;
 public:
     Top2(int n)
     {
-        x = n;
+        t = n;
     }
     virtual ~Top2(){}
     friend ostream& operator<<(ostream& os,const Top2& t)
     {
-        return os << t.x;
+        return os << t.t;
     }
 };
 class Left2:virtual public Top2
 {
 protected:
-    int y;
+    int l;
 public:
     Left2(int m,int n):Top2(m)
     {
-        y = n;
+        l = n;
     }
 };
 class Right2:virtual public Top2
 {
 protected:
-    int z;
+    int r;
 public:
     Right2(int m,int n):Top2(m)
     {
-        z = n;
+        r = n;
     }
 };
 class Bottom2:public Left2,public Right2
 {
-    int w;
+    int b;
 public:
     Bottom2(int i,int j,int k,int m):Top2(i),Left2(0,k),Right2(0,k)
     {
-        w = m;
+        b = m;
     }
     friend ostream& operator<<(ostream& os,const Bottom2& b)
     {
-        return os <<b.x<<",s"<<b.y<<","<<b.z<<","<<b.w<<endl;
+        return os <<b.t<<","<<b.l<<","<<b.r<<","<<b.b<<endl;
     }
 };
 void Class5Action2()

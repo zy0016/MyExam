@@ -20,6 +20,7 @@ int _tmain(int argc, _TCHAR* argv[])
     Class2Action();
     TemplateAction();
     Class3Action();
+	Class4Action();
     Class5Action();
 	return 0;
 }
