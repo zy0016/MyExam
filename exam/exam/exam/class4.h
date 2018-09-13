@@ -9,44 +9,94 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <memory>
 
 class Child;
 class Parent;
 
+//class Parent {
+//private:
+//	Child* myChild;
+//public:
+//	void setChild(Child* ch) {
+//		this->myChild = ch;
+//	}
+//
+//	void doSomething() {
+//		if (this->myChild) {
+//
+//		}
+//	}
+//
+//	~Parent() {
+//		delete myChild;
+//	}
+//};
+//
+//class Child {
+//private:
+//	Parent* myParent;
+//public:
+//	void setPartent(Parent* p) {
+//		this->myParent = p;
+//	}
+//	void doSomething() {
+//		if (this->myParent) {
+//
+//		}
+//	}
+//	~Child() {
+//		delete myParent;
+//	}
+//};
+
 class Parent {
 private:
-	Child* myChild;
+	//std::shared_ptr<Child> ChildPtr;//memory leak
+	std::weak_ptr<Child> ChildPtr;
 public:
-	void setChild(Child* ch) {
-		this->myChild = ch;
+	void setChild(std::shared_ptr<Child> child) {
+		this->ChildPtr = child;
 	}
 
 	void doSomething() {
-		if (this->myChild) {
+		if (this->ChildPtr.use_count()) {
 
 		}
 	}
 
 	~Parent() {
-		delete myChild;
 	}
 };
 
 class Child {
 private:
-	Parent* myParent;
+	std::shared_ptr<Parent> ParentPtr;
 public:
-	void setPartent(Parent* p) {
-		this->myParent = p;
+	void setPartent(std::shared_ptr<Parent> parent) {
+		this->ParentPtr = parent;
 	}
 	void doSomething() {
-		if (this->myParent) {
+		if (this->ParentPtr.use_count()) {
 
 		}
 	}
 	~Child() {
-		delete myParent;
 	}
+};
+
+class Person
+{
+public:
+	Person(int v) {
+		value = v;
+		std::cout << "Cons" << value << std::endl;
+	}
+	~Person() {
+		std::cout << "Des" << value << std::endl;
+	}
+	int value;
+
 };
 
 void Class4Action();
