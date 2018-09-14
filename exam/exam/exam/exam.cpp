@@ -10,6 +10,7 @@
 #include "class3.h"
 #include "class4.h"
 #include "class5.h"
+#include "mystring.h"
 #include "template1.h"
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -22,6 +23,7 @@ int _tmain(int argc, _TCHAR* argv[])
     Class3Action();
 	Class4Action();
     Class5Action();
+	testmystring();
 	return 0;
 }
 
