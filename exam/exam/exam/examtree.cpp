@@ -13,21 +13,24 @@ int max(int a, int b)
 }
 
 void preOrder(TreeNode* root, vector<int>& res) {
-	if (root == nullptr) return;
+	if (root == nullptr) 
+		return;
 	res.push_back(root->val);
 	preOrder(root->left, res);
 	preOrder(root->right, res);
 }
 
 void inOrder(TreeNode* root, vector<int>& res) {
-	if (root == nullptr) return;
+	if (root == nullptr) 
+		return;
 	inOrder(root->left, res);
 	res.push_back(root->val);
 	inOrder(root->right, res);
 }
 
 void postOrder(TreeNode* root, vector<int>& res) {
-	if (root == nullptr) return;
+	if (root == nullptr) 
+		return;
 	postOrder(root->left, res);
 	postOrder(root->right, res);
 	res.push_back(root->val);
@@ -35,7 +38,8 @@ void postOrder(TreeNode* root, vector<int>& res) {
 
 vector<int> preOrder(TreeNode* root) {
 	vector<int> res;
-	if (root == nullptr) return res;
+	if (root == nullptr) 
+		return res;
 
 	stack<TreeNode*> st;
 	TreeNode* cur = root;
@@ -56,16 +60,20 @@ vector<int> preOrder(TreeNode* root) {
 
 vector<int> inOrder(TreeNode* root) {
 	vector<int> res;
-	if (root == nullptr) return res;
+	if (root == nullptr) 
+		return res;
 
 	stack<TreeNode*> st;
 	TreeNode* cur = root;
-	while (cur || !st.empty()) {
-		while (cur) {
+	while (cur || !st.empty()) 
+	{
+		while (cur) 
+		{
 			st.push(cur);
 			cur = cur->left;
 		}
-		if (!st.empty()) {
+		if (!st.empty()) 
+		{
 			cur = st.top();
 			st.pop();
 			res.push_back(cur->val);
@@ -75,22 +83,27 @@ vector<int> inOrder(TreeNode* root) {
 	return res;
 }
 
-vector<int> postOrder(TreeNode* root) {
+vector<int> postOrder(TreeNode* root) 
+{
 	vector<int> res;
-	if (root == nullptr) return res;
+	if (root == nullptr) 
+		return res;
 
 	stack<TreeNode*> st;
 	TreeNode* cur = root;
-	while (cur) {
+	while (cur) 
+	{
 		st.push(cur);
 		cur = cur->left;
 	}
 
 	TreeNode* lastVisited = nullptr;
-	while (!st.empty()) {
+	while (!st.empty()) 
+	{
 		cur = st.top();
 		st.pop();
-		if (cur->right == nullptr || cur->right == lastVisited) {
+		if (cur->right == nullptr || cur->right == lastVisited) 
+		{
 			res.push_back(cur->val);
 			lastVisited = cur;
 		}
@@ -130,7 +143,9 @@ void createBiTree(BiTree &T)
 	char c;
 	cin >> c;
 	if ('#' == c)
+	{
 		T = NULL;
+	}
 	else
 	{
 		T = new BiTreeNode;
@@ -187,10 +202,9 @@ void testmytree()
 {
 	cout << "\n===========================testmytree===========================" << endl;
 	BiTree T;
-	createBiTree(T);
+	createBiTree(T);//2 3 4 # # 5 # 6 # # 7 # #
 
 	cout << "level browser:" << endl;
 	LevelTraverse(T);
 	cout << endl;
-
 }

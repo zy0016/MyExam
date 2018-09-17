@@ -16,7 +16,7 @@ struct TreeNode {
 	TreeNode* right;
 	TreeNode(int x) :val(x), left(nullptr), right(nullptr) {};
 };
-
+//////////////////////////////////////////////////
 typedef struct mynode
 {
 	struct mynode *leftChild;

@@ -101,13 +101,11 @@ public:
 		this->m_pdata = new char[strlen(a.m_pdata) + 1];
 		strcpy(this->m_pdata, a.m_pdata);
 	}
-
 	CString(CString&& a) 
 	{
 		this->m_pdata = a.m_pdata;
 		a.m_pdata = nullptr;
 	}
-
 	~CString() 
 	{
 		if (this->m_pdata)
@@ -115,7 +113,6 @@ public:
 			delete[] this->m_pdata;
 		}
 	}
-
 	CString& operator=(const CString& a) 
 	{
 		if (this == &a)
@@ -127,7 +124,6 @@ public:
 		strcpy(this->m_pdata, a.m_pdata);
 		return *this;
 	}
-
 	CString operator+=(const CString& a) 
 	{
 		if (a.m_pdata == nullptr) 
@@ -148,7 +144,6 @@ public:
 			return *this;
 		}
 	}
-
 	friend CString operator+(const CString& a, const CString& b) 
 	{
 		char* res = new char[strlen(a.m_pdata) + strlen(b.m_pdata) + 1];
@@ -158,7 +153,6 @@ public:
 		delete[] res;
 		return cs;
 	}
-
 	friend ostream& operator<<(ostream& os, const CString& a) 
 	{
 		os << a.m_pdata;

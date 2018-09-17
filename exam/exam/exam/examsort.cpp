@@ -197,7 +197,6 @@ int FindkndMaxValue(int array[], const int size, int k)
     }
     maxknd = a[0];
     free(a);
-    
     return maxknd;
 }
 
