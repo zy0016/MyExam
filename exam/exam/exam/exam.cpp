@@ -12,6 +12,7 @@
 #include "class5.h"
 #include "mystring.h"
 #include "template1.h"
+#include "template2.h"
 #include "mytree.h"
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -25,7 +26,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	Class4Action();
     Class5Action();
 	testmystring();
-	testmytree();
+	//testmytree();
+	Template2Action();
 	return 0;
 }
 
