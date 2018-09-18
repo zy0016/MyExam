@@ -80,20 +80,20 @@ void Template2Action3()
 ///////////////////////////////////////////////////////
 template<typename T> class XX {};
 /////////////////////////////////////////
-//template<class charT,size_t N>
-//basic_string<charT> bitsetToString(const bitset<N>& bs)
-//{
-//	return bs. template to_string<charT, char_traits<charT>, allocator, charT> > ();
-//}
+template<class charT,size_t N>
+basic_string<charT> bitsetToString(const bitset<N>& bs)
+{
+	return bs. template to_string<charT, char_traits<charT>, allocator<charT> > ();
+}
 void Template2Action4()
 {
 	cout << "\n===========================Template2Action4===========================" << endl;
-	/*bitset<10> bs;
+	bitset<10> bs;
 	bs.set(1);
 	bs.set(5);
 	cout << bs << endl;
 	string s = bitsetToString<char>(bs);
-	cout << s << endl;*/
+	cout << s << endl;
 }
 ////////////////////////////////////////////////
 template<class T>

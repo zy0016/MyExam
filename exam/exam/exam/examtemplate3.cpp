@@ -66,9 +66,35 @@ void Template3Action2()
 	C<float, float*>().f();
 	C<float*, int*>().f();
 }
+/////////////////////////////////////
+class X{
+public:
+    void f(){}
+};
+class Y{
+public:
+    void g(){}
+};
+template<typename T> class Z{
+    T t;
+public:
+    void a(){t.f();}
+    void b(){t.g();}
+};
+void Template3Action3()
+{
+    cout << "\n===========================Template3Action3===========================" << endl;
+    Z<X> zx;
+    zx.a();
+    Z<Y> zy;
+    zy.b();
+}
+
+
 void Template3Action()
 {
 	cout << "\n===========================Template3===========================" << endl;
 	Template3Action1();
 	Template3Action2();
+    Template3Action3();
 }
