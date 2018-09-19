@@ -409,12 +409,12 @@ void OtherAction()
 //int solution(int A[], int N) {
 //    // write your code in C99
 //    int i,j,temp,ib;
-//    int bSwap = 0;
+//    int bmyswap = 0;
 //    for (i = 1;i < N;i++)
 //    {
 //        if (A[i - 1] > A[i])
 //        {
-//            if (bSwap == 0)
+//            if (bmyswap == 0)
 //            {
 //                for (j = i + 1;j < N;j++)
 //                {
@@ -430,7 +430,7 @@ void OtherAction()
 //                temp = A[i - 1];
 //                A[i - 1] = A[i];
 //                A[i] = temp;
-//                bSwap = 1;
+//                bmyswap = 1;
 //                i = ib;
 //            }
 //            else

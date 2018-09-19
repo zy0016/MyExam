@@ -14,6 +14,9 @@
 #include "template1.h"
 #include "template2.h"
 #include "template3.h"
+#include "template4.h"
+#include "template5.h"
+#include "template6.h"
 #include "mytree.h"
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -30,6 +33,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	//testmytree();
 	Template2Action();
 	Template3Action();
+	Template4Action();
+	Template5Action();
+	Template6Action();
 	return 0;
 }
 
