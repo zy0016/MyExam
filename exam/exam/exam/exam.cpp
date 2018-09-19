@@ -25,12 +25,12 @@ int _tmain(int argc, _TCHAR* argv[])
     ClassAction();
     OtherAction();
     Class2Action();
-    TemplateAction();
     Class3Action();
 	Class4Action();
     Class5Action();
 	testmystring();
 	//testmytree();
+	TemplateAction();
 	Template2Action();
 	Template3Action();
 	Template4Action();

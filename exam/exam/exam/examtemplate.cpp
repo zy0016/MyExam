@@ -15,7 +15,7 @@ template<> struct Factorial<0>{
 void TemplateAction1()
 {
 	cout << "\n===========================TemplateAction1===========================" << endl;
-    cout<<Factorial<10>::val<<endl;
+    cout<<"Factorial:"<<Factorial<12>::val<<endl;
 }
 ///////////////////////////////////////////
 template<class T = int,size_t N = 100>
@@ -85,10 +85,47 @@ void TemplateAction3()
 	for (int i = 0; i < 20; i++)
 		cout << u() << ' ';
 }
+////////////////////////////////////////
+template<class T>
+class Counted {
+	static int count;
+public:
+	Counted() { ++count; }
+	Counted(const Counted<T>&) { ++count; }
+	~Counted() { --count; }
+	static int getCount() { return count; }
+};
+template<class T> int Counted<T>::count = 0;
+class CountedClass :public Counted<CountedClass> {};
+class CountedClass2 :public Counted<CountedClass2> {};
+void TemplateAction4()
+{
+	cout << "\n===========================TemplateAction4===========================" << endl;
+	CountedClass a;
+	cout << CountedClass::getCount() << endl;
+	CountedClass b;
+	cout << CountedClass::getCount() << endl;
+	CountedClass2 c;
+	cout << CountedClass2::getCount() << endl;
+}
+///////////////////////////
+template<int n>struct Fib {
+	enum{val = Fib<n-1>::val+Fib<n-2>::val};
+};
+template<> struct Fib<1> { enum { val = 1 }; };
+template<> struct Fib<0> { enum { val = 0 }; };
+void TemplateAction5()
+{
+	cout << "\n===========================TemplateAction5===========================" << endl;
+	cout << Fib<5>::val << endl;
+	cout << Fib<20>::val << endl;
+}
 void TemplateAction()
 {
     cout << "\n===========================Template1===========================" << endl;
     TemplateAction1();
 	TemplateAction2();
 	TemplateAction3();
+	TemplateAction4();
+	TemplateAction5();
 }
