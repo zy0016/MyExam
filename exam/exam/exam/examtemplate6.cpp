@@ -38,5 +38,6 @@ void Template6Action1()
 void Template6Action()
 {
 	cout << "\n===========================Template6===========================" << endl;
+	cout << typeid(true).name() << endl;
 	Template6Action1();
 }
