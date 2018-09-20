@@ -387,7 +387,7 @@ void OtherAction13()
 }
 void OtherAction()
 {
-    cout << "\n===========================Other===========================" << endl;
+    cout << "\n===========================OtherAction===========================" << endl;
 	
     testpoint();
     OtherAction1();
