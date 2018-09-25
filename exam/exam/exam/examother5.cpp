@@ -261,6 +261,54 @@ void Other5Action8()
     assert(typeid(b2)==typeid(B2*));
     delete b2;
 }
+/////////////////////////////////////////
+class Stimpy{
+public:
+    virtual void happy(){}
+    virtual void joy(){}
+    virtual ~Stimpy(){}
+};
+void Other5Action9()
+{
+    cout << "\n===========================Other5Action9===========================" << endl;
+    void *v=new Stimpy;
+}
+/////////////////////////////////////
+template<int id>
+class Announce{
+public:
+    Announce(){cout<<typeid(*this).name()<<" constructor"<<endl;}
+    ~Announce(){cout<<typeid(*this).name()<<" destructor"<<endl;}
+};
+class X:public Announce<0>{
+    Announce<1> m1;
+    Announce<2> m2;
+public:
+    X(){cout<<"X::X()"<<endl;}
+    ~X(){cout<<"X::~X()"<<endl;}
+};
+void Other5Action10()
+{
+    cout << "\n===========================Other5Action10===========================" << endl;
+    X x;
+}
+////////////////////////////////
+class BB{
+public:
+    virtual void f(){}
+    virtual ~BB(){}
+};
+class B11:virtual public BB{};
+class B21:virtual public BB{};
+class MI1:public B11,public B21{};
+
+void Other5Action11()
+{
+    cout << "\n===========================Other5Action11==========================" << endl;
+    BB* bbp=new MI1;
+    cout<<typeid(*bbp).name()<<endl;
+    MI1* mip=dynamic_cast<MI1*>(bbp);
+}
 
 void Other5Action()
 {
@@ -273,4 +321,7 @@ void Other5Action()
     Other5Action6();
     Other5Action7();
     Other5Action8();
+    Other5Action9();
+    Other5Action10();
+    Other5Action11();
 }
