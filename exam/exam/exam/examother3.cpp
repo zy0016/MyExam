@@ -12,6 +12,8 @@
 #include <cstdlib>
 #include <set>
 #include <deque>
+#include <list>
+#include <iterator>
 using namespace std;
 
 void Other3Action1()
@@ -22,7 +24,7 @@ void Other3Action1()
 		for (int j = 0; j < 10; j++)
 			intset.insert(j);
 	cout << intset.size() << endl;
-	assert(intset.size() == 10);
+	//assert(intset.size() == 10);
 }
 /////////////////////////
 class Shape {
@@ -140,6 +142,82 @@ void Other3Action4()
 		printf("%d ", *pos);
 	putchar('\n');
 }
+//////////////////////////////////////////////
+void Other3Action5()
+{
+	cout << "\n===========================Other3Action5===========================" << endl;
+	set<int> intset;
+	for (int i = 0; i < 25; i++)
+		for (int j = 0; j < 10; j++)
+			intset.insert(j);
+	assert(intset.size() == 10);
+}
+///////////////////////////////////////////////
+void Other3Action6()
+{
+	cout << "\n===========================Other3Action6===========================" << endl;
+	ifstream source("ints.out");
+	string word;
+	set<string> words;
+	while (source >> word)
+		words.insert(word);
+	copy(words.begin(), words.end(), ostream_iterator<string>(cout, "\n"));
+	cout << "Number of unique words:" << words.size() << endl;
+}
+void Other3Action7()
+{
+	cout << "\n===========================Other3Action7===========================" << endl;
+	int a[] = {1,3,1,4,1,5,1,6,1};
+	const int ASZ = sizeof a / sizeof *a;
+	ostream_iterator<int> out(cout, " ");
+	list<int> li(a, a + ASZ);
+	li.unique();
+	copy(li.begin(), li.end(), out);
+	cout << endl;
+	li.sort();
+	copy(li.begin(), li.end(), out);
+	cout << endl;
+	li.unique();
+	copy(li.begin(), li.end(), out);
+	cout << endl;
+}
+////////////////////////////////////////////
+class Obj {
+	int a[20];
+	int val;
+public:
+	Obj() :val(rand() % 500) {}
+	friend bool operator<(const Obj& a, const Obj& b) {
+		return a.val < b.val;
+	}
+	friend bool operator==(const Obj& a, const Obj& b) {
+		return a.val == b.val;
+	}
+	friend ostream& operator<<(ostream& os, const Obj& a) {
+		return os << a.val;
+	}
+};
+struct ObjGen {
+	Obj operator()() { return Obj(); }
+};
+void Other3Action8()
+{
+	cout << "\n===========================Other3Action8===========================" << endl;
+	const int SZ = 5000;
+	srand(time(0));
+	list<Obj> lo;
+	clock_t ticks = clock();
+	generate_n(back_inserter(lo), SZ, ObjGen());
+	lo.sort();
+	lo.unique();
+	cout << "list:" << clock() - ticks << endl;
+	set<Obj> so;
+	ticks = clock();
+	generate_n(inserter(so,so.begin()),SZ,ObjGen());
+	cout << "set:" << clock() - ticks << endl;
+	//print(lo);
+	//print(so);
+}
 void Other3Action()
 {
 	cout << "\n===========================Other3Action===========================" << endl;
@@ -147,4 +225,8 @@ void Other3Action()
 	Other3Action2();
 	Other3Action3();
 	Other3Action4();
+	Other3Action5();
+	Other3Action6();
+	Other3Action7();
+	Other3Action8();
 }

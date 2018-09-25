@@ -8,6 +8,8 @@
 #include "other.h"
 #include "other2.h"
 #include "other3.h"
+#include "other4.h"
+#include "other5.h"
 #include "class2.h"
 #include "class3.h"
 #include "class4.h"
@@ -40,6 +42,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	Template6Action();
 	Other2Action();
 	Other3Action();
+	Other4Action();
+	Other5Action();
 	return 0;
 }
 

@@ -1,5 +1,5 @@
-#ifndef _OTHER3_STRUCTOR_
-#define _OTHER3_STRUCTOR_
+#ifndef _OTHER4_STRUCTOR_
+#define _OTHER4_STRUCTOR_
 #include <fstream>
 #include <string>
 #include "stdlib.h"
@@ -15,5 +15,5 @@
 //	print(c.begin(), c.end(), nm, seq, os);
 //}
 
-void Other3Action();
+void Other4Action();
 #endif
