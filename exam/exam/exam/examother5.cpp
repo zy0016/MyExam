@@ -9,6 +9,7 @@
 #include <fstream>
 #include <functional>
 #include <ctime>
+#include <typeinfo>
 #include <cstdlib>
 #include <set>
 #include <deque>
@@ -166,6 +167,101 @@ void Other5Action4()
 	bitset<10> bs(os.str());
 	cout << "Bitset:" << endl << bs << endl;
 }
+////////////////////////////
+void Other5Action5()
+{
+    cout << "\n===========================Other5Action5===========================" << endl;
+	vector<Security*> portfolio;
+    portfolio.push_back(new Metal);
+    portfolio.push_back(new Investment);
+    portfolio.push_back(new Bond);
+    portfolio.push_back(new Stock);
+    for(vector<Security*>::iterator it=portfolio.begin();it!=portfolio.end();++it)
+    {
+        Investment* cm=dynamic_cast<Investment*>(*it);
+        if(cm)
+            cm->special();
+        else
+            cout<<"not a Investment"<<endl;
+    }
+    cout<<"cast from intermediate pointer:"<<endl;
+    Security *sp=new Metal;
+    Investment* cp= dynamic_cast<Investment*>(sp);
+    if(cp)
+        cout<<" it's an Investment"<<endl;
+
+    Metal* mp=dynamic_cast<Metal*>(sp);
+
+    if(mp)
+        cout<<" it's a Metal too!"<<endl;
+
+    purge(portfolio);
+}
+/////////////////////////
+void Other5Action6()
+{
+    cout << "\n===========================Other5Action6===========================" << endl;
+    Metal m;
+    Security& s=m;
+    try
+    {
+        Investment& c=dynamic_cast<Investment&>(s);
+        cout<<"It's an Investment"<<endl;
+    }
+    catch(bad_cast&)
+    {
+        cout<<"s is not an Investment type"<<endl;
+    }
+    try
+    {
+        Bond&  b= dynamic_cast<Bond&>(s);
+        cout<<"It's a Bond"<<endl;
+    }
+    catch(bad_cast&)
+    {
+        cout<<"It's not a Bond type"<<endl;
+    }
+}
+///////////////////////////
+class One{
+    class Nested{};
+    Nested* n;
+public:
+    One():n(new Nested){}
+    ~One(){delete n;}
+    Nested* nested(){return n;}
+};
+void Other5Action7()
+{
+    cout << "\n===========================Other5Action7===========================" << endl;
+    One o;
+    cout<<typeid(*o.nested()).name()<<endl;
+}
+//////////////////////////////
+class B1{
+public:
+    virtual ~B1(){}
+};
+class B2{
+public:
+    virtual ~B2(){}
+};
+class MI:public B1,public B2{};
+class Mi2:public MI{};
+void Other5Action8()
+{
+    cout << "\n===========================Other5Action8===========================" << endl;
+    B2 *b2=new Mi2;
+    Mi2* mi2=dynamic_cast<Mi2*>(b2);
+
+    MI* mi=dynamic_cast<MI*>(b2);
+    B1* b1=dynamic_cast<MI*>(b2);
+
+    assert(typeid(b2)!=typeid(Mi2*));
+    assert(typeid(b2)==typeid(B2*));
+    delete b2;
+}
+
 void Other5Action()
 {
 	cout << "\n===========================Other5Action===========================" << endl;
@@ -173,4 +269,8 @@ void Other5Action()
 	Other5Action2();
 	Other5Action3();
 	Other5Action4();
+    Other5Action5();
+    Other5Action6();
+    Other5Action7();
+    Other5Action8();
 }

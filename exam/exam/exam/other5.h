@@ -30,6 +30,19 @@ void purge(InpIt begin, InpIt end)
 		++begin;
 	}
 }
+//////////////////////////////
+class Security{
+public:
+    virtual ~Security(){}
+};
+class Stock:public Security{};
+class Bond:public Security{};
+class Investment:public Security{
+public:
+    void special(){std::cout<<"special Investment function"<<std::endl;}
+};
+class Metal:public Investment{};
+
 
 void Other5Action();
 #endif
