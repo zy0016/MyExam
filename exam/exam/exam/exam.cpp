@@ -23,6 +23,8 @@
 #include "template5.h"
 #include "template6.h"
 #include "mytree.h"
+#include "mytree2.h"
+#include "mytree3.h"
 int _tmain(int argc, _TCHAR* argv[])
 {
     LinkAction();
@@ -34,7 +36,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	Class4Action();
     Class5Action();
 	testmystring();
-	//testmytree();
 	TemplateAction();
 	Template2Action();
 	Template3Action();
@@ -46,6 +47,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	Other4Action();
 	Other5Action();
     Other6Action();
+	testmytree();
+	testmytree2();
+	testmytree3();
 	return 0;
 }
 
