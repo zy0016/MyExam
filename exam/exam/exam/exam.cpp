@@ -48,7 +48,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	Other5Action();
     Other6Action();
 	testmytree();
-	testmytree2();
+	//testmytree2();
 	testmytree3();
 	return 0;
 }

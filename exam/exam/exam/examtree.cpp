@@ -184,6 +184,31 @@ void PrintNodeAtLevel(BiTree T, int level)
 	PrintNodeAtLevel(T->rightChild, level - 1);
 }
 
+void traverseMiddle(BiTree tree)
+{
+	if (!tree)
+		return;
+	traverseMiddle(tree->leftChild);
+	cout << tree->data << " ";
+	traverseMiddle(tree->rightChild);
+}
+void traversePre(BiTree tree)
+{
+	if (!tree)
+		return;
+	cout << tree->data << " ";
+	traversePre(tree->leftChild);
+	traversePre(tree->rightChild);
+}
+void traversePost(BiTree tree)
+{
+	if (!tree)
+		return;
+	traversePost(tree->leftChild);
+	traversePost(tree->rightChild);
+	cout << tree->data << " ";
+}
+
 void LevelTraverse(BiTree T)
 {
 	if (NULL == T)
@@ -206,6 +231,19 @@ void testmytree()
 
 	cout << "level browser:" << endl;
 	LevelTraverse(T);
+
+	cout << "middle browers:";
+	traverseMiddle(T);
+	cout << endl;
+	
+	cout << "pre browers:";
+	traversePre(T);
+	cout << endl;
+
+	cout << "post browers:";
+	traversePost(T);
+	cout << endl;
+
 	cout << endl;
 }
 
