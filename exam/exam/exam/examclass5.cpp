@@ -4,6 +4,11 @@
 #include <memory>
 using namespace std;
 
+class testclass {
+public:
+	testclass() = default;
+};
+
 class Top
 {
     int t;
