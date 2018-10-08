@@ -201,6 +201,7 @@ void Other6Action4()
 void Other6Action5()
 {
 	cout << "\n===========================Other6Action5==========================" << endl;
+#ifdef CPLUSPLUS_11
 	std::function<double(double)> f0 = [](double x) {return 1; };
 	auto                          f1 = [](double x) {return x; };
 	decltype(f0)                  fa[3] = { f0,f1,[](double x) {return x*x; } };
@@ -223,7 +224,7 @@ void Other6Action5()
 	cout << endl;
 	for (auto &f : fa)
 		std::cout <<"fa->f(2.0)="<< f(2.0) << endl;
-
+#endif
 	cout << "end!" << endl;
 }
 void Other6Action6()
@@ -246,8 +247,10 @@ void Other6Action7()
 	c = 30;
 	cout << a << " " << b << " " << c << endl; //30 20 30
 }
+#ifdef CPLUSPLUS_11
 constexpr int get_five() { return 5; }
 int some_value[get_five() + 7];
+#endif
 void Other6Action8()
 {
 	cout << "\n===========================Other6Action8==========================" << endl;
@@ -262,16 +265,22 @@ void Other6Action8()
 	decltype(0) g;        // g 是 int 类型, 因为0是一个右值
 	////////////////////////////////
 	int my_array[5] = { 1, 2, 3, 4, 5 };
+#ifdef CPLUSPLUS_11
 	for (int &x : my_array)
 	{
 		x *= 2;
 		cout << x << endl;
 	}
+#endif
 	cout << endl;
 }
 struct NoInt {
 	void f(double i) {};
+#ifdef CPLUSPLUS_11
 	void f(int) = delete;    // 不能调用这个函数
+#else
+    void f(int);
+#endif
 };
 void Other6Action9()
 {

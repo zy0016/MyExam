@@ -6,7 +6,11 @@ using namespace std;
 
 class testclass {
 public:
+#ifdef CPLUSPLUS_11
 	testclass() = default;
+#else
+    testclass();
+#endif
 };
 
 class Top
