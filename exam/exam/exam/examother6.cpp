@@ -50,10 +50,9 @@ protected:
     enum{BASEID=0};
 public:
     virtual ~Security(){}
-    //virtual bool isA(int id)
-	static bool isA(int id)
+	static bool isA(int id)//virtual bool isA(int id)
 	{
-		return id==BASEID;
+		return true;//id==BASEID;
 	}
 	static Security* dynacast(Security* s)
 	{
@@ -100,11 +99,7 @@ public:
     }
     static Investment* dynacast(Security* s)
     {
-        //return (s->isA(TYPEID)) ? static_cast<Investment*>(s) : 0;
-        if (s->isA(TYPEID))
-            return static_cast<Investment*>(s);
-        else
-            return 0;
+        return (s->isA(TYPEID)) ? static_cast<Investment*>(s) : 0;
     }
     void special(){
         cout<<"special Investment function"<<endl;

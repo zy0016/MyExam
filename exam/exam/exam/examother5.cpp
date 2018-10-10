@@ -168,32 +168,43 @@ void Other5Action4()
 	cout << "Bitset:" << endl << bs << endl;
 }
 ////////////////////////////
+class Security_5 {
+public:
+	virtual ~Security_5() {}
+};
+class Stock_5 :public Security_5 {};
+class Bond_5 :public Security_5 {};
+class Investment_5 :public Security_5 {
+public:
+	void special() { std::cout << "special Investment_5 function" << std::endl; }
+};
+class Metal_5 :public Investment_5 {};
 void Other5Action5()
 {
     cout << "\n===========================Other5Action5===========================" << endl;
-	vector<Security*> portfolio;
-    portfolio.push_back(new Metal);
-    portfolio.push_back(new Investment);
-    portfolio.push_back(new Bond);
-    portfolio.push_back(new Stock);
-    for(vector<Security*>::iterator it=portfolio.begin();it!=portfolio.end();++it)
+	vector<Security_5*> portfolio;
+    portfolio.push_back(new Metal_5);
+    portfolio.push_back(new Investment_5);
+    portfolio.push_back(new Bond_5);
+    portfolio.push_back(new Stock_5);
+    for(vector<Security_5*>::iterator it=portfolio.begin();it!=portfolio.end();++it)
     {
-        Investment* cm=dynamic_cast<Investment*>(*it);
+        Investment_5* cm=dynamic_cast<Investment_5*>(*it);
         if(cm)
             cm->special();
         else
-            cout<<"not a Investment"<<endl;
+            cout<<"not a Investment_5"<<endl;
     }
     cout<<"cast from intermediate pointer:"<<endl;
-    Security *sp=new Metal;
-    Investment* cp= dynamic_cast<Investment*>(sp);
+    Security_5 *sp=new Metal_5;
+    Investment_5* cp= dynamic_cast<Investment_5*>(sp);
     if(cp)
-        cout<<" it's an Investment"<<endl;
+        cout<<" it's an Investment_5"<<endl;
 
-    Metal* mp=dynamic_cast<Metal*>(sp);
+    Metal_5* mp=dynamic_cast<Metal_5*>(sp);
 
     if(mp)
-        cout<<" it's a Metal too!"<<endl;
+        cout<<" it's a Metal_5 too!"<<endl;
 
     purge(portfolio);
 }
@@ -201,25 +212,25 @@ void Other5Action5()
 void Other5Action6()
 {
     cout << "\n===========================Other5Action6===========================" << endl;
-    Metal m;
-    Security& s=m;
+    Metal_5 m;
+    Security_5& s=m;
     try
     {
-        Investment& c=dynamic_cast<Investment&>(s);
-        cout<<"It's an Investment"<<endl;
+        Investment_5& c=dynamic_cast<Investment_5&>(s);
+        cout<<"It's an Investment_5"<<endl;
     }
     catch(bad_cast&)
     {
-        cout<<"s is not an Investment type"<<endl;
+        cout<<"s is not an Investment_5 type"<<endl;
     }
     try
     {
-        Bond&  b= dynamic_cast<Bond&>(s);
-        cout<<"It's a Bond"<<endl;
+        Bond_5&  b= dynamic_cast<Bond_5&>(s);
+        cout<<"It's a Bond_5"<<endl;
     }
     catch(bad_cast&)
     {
-        cout<<"It's not a Bond type"<<endl;
+        cout<<"It's not a Bond_5 type"<<endl;
     }
 }
 ///////////////////////////
