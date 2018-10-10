@@ -381,9 +381,18 @@ void OtherAction12()
 }
 void OtherAction13()
 {
+	cout << "\n===========================OtherAction13===========================" << endl;
 	int f = 30;
 	double i = fibonacci(50);
 	cout << "fibonacci(" <<f<< ")=" << i << endl;
+	////////////////////////////////
+	vector<int> vec;
+	vec.push_back(20);
+	vec.push_back(10);
+	for (int &i : vec)
+	{
+		cout << i << endl;
+	}
 }
 void OtherAction()
 {

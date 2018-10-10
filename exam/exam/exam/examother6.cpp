@@ -50,7 +50,18 @@ protected:
     enum{BASEID=0};
 public:
     virtual ~Security(){}
-    virtual bool isA(int id){return id==BASEID;}
+    //virtual bool isA(int id)
+	static bool isA(int id)
+	{
+		return id==BASEID;
+	}
+	static Security* dynacast(Security* s)
+	{
+		if (s->isA(BASEID))
+			return static_cast<Security*>(s);
+		else
+			return 0;
+	}
 };
 class Stock:public Security{
     typedef Security Super;
@@ -121,6 +132,7 @@ void Other6Action1()
     portfolio.push_back(new Investment);
     portfolio.push_back(new Bond);
     portfolio.push_back(new Stock);
+
     for(vector<Security*>::iterator it=portfolio.begin();it!=portfolio.end();++it)
     {
         Investment* cm=Investment::dynacast(*it);
@@ -156,6 +168,10 @@ void Other6Action2()
 	};
 	int num = fun(10);// 调用
 	cout << num << endl;// 测试返回值
+	///////////////////////////////
+	auto fun2 = []() {cout << "hello world!" << endl; };
+	fun2();
+
 	//[](int x, int y) { return x + y; } // 隐式返回类型
 	//[](int& x) { ++x; }   // 没有return语句 -> lambda 函数的返回类型是'void'
 	//[]() { ++global_x; }  // 没有参数,仅访问某个全局变量
