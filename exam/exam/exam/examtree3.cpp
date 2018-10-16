@@ -516,15 +516,18 @@ using namespace std;
 //==========================================定义头部
 #include <iostream>
 using namespace std;
-struct BiTNode {
+struct TreeNode {
 	char data;
-	struct BiTNode *lchild, *rchild;//左右孩子
+	struct TreeNode *lchild, *rchild;//左右孩子
 };
-BiTNode*T;
-void CreateBiTree(BiTNode* &T);
-void Inorder(BiTNode* &T);
-void PreOrderTraverse(BiTNode* &T);
-void Posorder(BiTNode* &T);
+TreeNode*T;
+void CreateBiTree(TreeNode* &T);
+void Inorder(TreeNode* &T);
+void PreOrderTraverse(TreeNode* &T);
+void Posorder(TreeNode* &T);
+void DispMid(TreeNode* &t);
+void Disp(TreeNode* &t);
+void DispBehid(TreeNode* &t);
 //===========================================主函数
 int testmytree3_1() {
 	cout << "create a tree,the A->Z are data,with # is null:" << endl;
@@ -532,41 +535,130 @@ int testmytree3_1() {
 	cout << "pre order:" << endl;
 	PreOrderTraverse(T);
 	cout << endl;
+
+	Disp(T);
+	cout << endl;
+
 	cout << "middle order:" << endl;
 	Inorder(T);
 	cout << endl;
+
+	DispMid(T);
+	cout << endl;
+
 	cout << "post order:" << endl;
 	Posorder(T);
 	cout << endl;
+	DispBehid(T);
+	cout << endl;
 	return 1;
 }
+//先序遍历非递归算法
+void Disp(TreeNode* &t)
+{
+	if (t == NULL)
+	{
+		return;
+	}
+	stack<TreeNode *> m_stack;//定义栈
+	m_stack.push(t);
+	while (!m_stack.empty())
+	{
+		TreeNode *p = m_stack.top();//赋值一份当前双亲节点
+		cout << p->data;
+		m_stack.pop();
+		if (p->rchild)//先存储右子树，确保先输出左子树
+		{
+			m_stack.push(p->rchild);
+		}
+		if (p->lchild)//后存储左子树
+		{
+			m_stack.push(p->lchild);
+		}
+	}
+}
+void DispMid(TreeNode* &t)
+{
+	if (t == NULL)
+	{
+		return;
+	}
+	TreeNode *p = t;
+	stack<TreeNode *>m_stack;
+	while (p != NULL || !m_stack.empty())
+	{
+		while (p != NULL)//一路直走至左下角
+		{
+			m_stack.push(p);
+			p = p->lchild;
+		}
+		if (!m_stack.empty())
+		{
+			p = m_stack.top();//备份当前栈顶地址
+			m_stack.pop();
+			cout << p->data /*<< ends*/;
+			p = p->rchild;
+		}
+	}
+}
+//非递归后序遍历二叉树
+void DispBehid(TreeNode* &t)
+{
+	if (t == NULL)
+	{
+		return;
+	}
+	TreeNode *pre = NULL, *p = t;
+	stack<TreeNode *>m_stack;
+	while (p != NULL || !m_stack.empty())
+	{
+		while (p != NULL)//一路直走至左下角
+		{
+			m_stack.push(p);
+			p = p->lchild;
+		}
+		p = m_stack.top();
+		//右子树为空或者已访问，输出当前节点
+		if (p->rchild == NULL || p->rchild == pre)
+		{
+			cout << p->data/* << ends*/;
+			pre = p;//将当前结点地址赋值pre作为下一次判断标志，防止重复访问
+			m_stack.pop();
+			p = NULL;//p赋值空以便访问右子树
+		}
+		else
+		{
+			p = p->rchild;//访问子树的右子树
+		}
+	}
+}
 //=============================================先序递归创建二叉树树
-void CreateBiTree(BiTNode* &T) {
-	//按先序输入二叉树中结点的值（一个字符），空格字符代表空树，
+void CreateBiTree(TreeNode* &T) {
+	//按先序输入二叉树中结点的值(一个字符)，空格字符代表空树，
 	//构造二叉树表表示二叉树T。
 	char ch;
 	cin >> ch;
 	if (ch == '#')
-		T = NULL;//其中getchar（）为逐个读入标准库函数
+		T = NULL;//其中getchar()为逐个读入标准库函数
 	else {
-		T = new BiTNode;//产生新的子树
-		T->data = ch;//由getchar（）逐个读入来
+		T = new TreeNode;//产生新的子树
+		T->data = ch;//由getchar()逐个读入来
 		CreateBiTree(T->lchild);//递归创建左子树
 		CreateBiTree(T->rchild);//递归创建右子树
 	}
 }//CreateTree
  //===============================================先序递归遍历二叉树
-void PreOrderTraverse(BiTNode* &T) {
+void PreOrderTraverse(TreeNode* &T) {
 	//先序递归遍历二叉树
 	if (T) {//当结点不为空的时候执行
 		cout << T->data;
-		PreOrderTraverse(T->lchild);//
+		PreOrderTraverse(T->lchild);
 		PreOrderTraverse(T->rchild);
 	}
 	else cout << "";
 }//PreOrderTraverse
  //================================================中序遍历二叉树
-void Inorder(BiTNode* &T) {//中序递归遍历二叉树
+void Inorder(TreeNode* &T) {//中序递归遍历二叉树
 	if (T) {//bt=null退层
 		Inorder(T->lchild);//中序遍历左子树
 		cout << T->data;//访问参数
@@ -575,7 +667,7 @@ void Inorder(BiTNode* &T) {//中序递归遍历二叉树
 	else cout << "";
 }//Inorder
  //=================================================后序递归遍历二叉树
-void Posorder(BiTNode* &T) {
+void Posorder(TreeNode* &T) {
 	if (T) {
 		Posorder(T->lchild);//后序递归遍历左子树
 		Posorder(T->rchild);//后序递归遍历右子树
