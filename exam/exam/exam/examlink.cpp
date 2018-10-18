@@ -223,7 +223,7 @@ node* DeleteNodeByValue(node *head,int value)
     return head;
 }
 
-node* DeleteNode(node *head,unsigned int id)
+node* DeleteNodeById(node *head,unsigned int id)
 {
     unsigned int i = 1;
     node *pCur = head;
