@@ -192,25 +192,23 @@ node* DeleteNodeByValue(node *head,int value)
     {
         return NULL;
     }
-    if (pCur->val == value)
+    while (pCur->next != NULL && pCur->val != value)
     {
-        head = head->next;
-        free(pCur);
-        bfind = true;
+        pCurPre = pCur;
+        pCur = pCur->next;
     }
-    else
+    if (pCur != NULL && pCur->val == value)
     {
-        while (pCur->next != NULL && pCur->val != value)
+        if (pCurPre == NULL)
         {
-            pCurPre = pCur;
-            pCur = pCur->next;
+            head = head->next;
         }
-        if (pCur != NULL && pCur->val == value)
+        else
         {
             pCurPre->next = pCur->next;
-            free(pCur);
-            bfind = true;
         }
+        free(pCur);
+        bfind = true;
     }
     if (bfind)
     {
@@ -236,9 +234,9 @@ node* DeleteNodeById(node *head,unsigned int id)
     if (id == 0)
     {
         free(pCur);
+		printf("\nfree the %d node", id);
         return pCurNext;
     }
-    
     while (pCur->next != NULL && i++ < id)
     {
         pCur     = pCur->next;
@@ -246,10 +244,12 @@ node* DeleteNodeById(node *head,unsigned int id)
     }
     if (pCurNext == NULL && i <= id)
     {
+		printf("\ncan't free the %d node", id);
         return head;
     }
     pCur->next = pCurNext->next;
     free(pCurNext);
+	printf("\nfree the %d node", id);
     return head;
 }
 
@@ -301,10 +301,15 @@ void LinkAction()
     printf("\na=");
     ShowNode(a);
     ///////////////////////
-    int k2 = 10;
+    int k2 = 12;
     b = DeleteNodeByValue(b,k2);
-    printf("\nb=");
+    printf("\nCall the DeleteNodeByValue then b=");
     ShowNode(b);
+	///////////////////////////
+	int k3 = 10;
+	b = DeleteNodeById(b, k3);
+	printf("\nCall the DeleteNodeById then b=");
+	ShowNode(b);
 	///////////////
     int key = 21;
     c = merge_2(a , b);
@@ -317,4 +322,12 @@ void LinkAction()
     {
         printf("Can't find the number:%d.\n",key);
     }
+	printf("\nc=");
+	ShowNode(c);
+	printf("\nc reverse = ");
+	ShowNode(reverse(c));
+	///////////////////////
+	DeleteAllNodes(c);
+	DeleteAllNodes(a2);
+	DeleteAllNodes(b2);
 }

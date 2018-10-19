@@ -26,6 +26,7 @@
 #include "mytree.h"
 #include "mytree2.h"
 #include "mytree3.h"
+#include "thread1.h"
 int _tmain(int argc, _TCHAR* argv[])
 {
     LinkAction();
@@ -52,6 +53,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	testmytree();
 	//testmytree2();
 	testmytree3();
+	Thread1Action();
 	return 0;
 }
 
