@@ -87,19 +87,29 @@ private:
 public:
 	CString(const char* ptr = nullptr) 
 	{
-		if (ptr == nullptr) 
-			m_pdata = nullptr;
-
-		m_pdata = new char[strlen(ptr) + 1];
-		strcpy(m_pdata, ptr);
+		if (ptr == nullptr)
+		{
+			m_pdata = new char[1];
+			m_pdata[0] = '\0';
+		}
+		else
+		{
+			m_pdata = new char[strlen(ptr) + 1];
+			strcpy(m_pdata, ptr);
+		}
 	}
 	CString(const CString& a) 
 	{
-		if (a.m_pdata == nullptr) 
-			this->m_pdata = nullptr;
-
-		this->m_pdata = new char[strlen(a.m_pdata) + 1];
-		strcpy(this->m_pdata, a.m_pdata);
+		if (a.m_pdata == nullptr)
+		{
+			m_pdata = new char[1];
+			m_pdata[0] = '\0';
+		}
+		else
+		{
+			this->m_pdata = new char[strlen(a.m_pdata) + 1];
+			strcpy(this->m_pdata, a.m_pdata);
+		}
 	}
 	CString(CString&& a) 
 	{
@@ -178,6 +188,7 @@ void teststring()
 void teststring2()
 {
 	cout << "\n===========================teststring2===========================" << endl;
+	CString t;
 	CString a("abc");
 	CString b(a);
 	a = b;

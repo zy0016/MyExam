@@ -311,8 +311,10 @@ void LinkAction()
 	printf("\nCall the DeleteNodeById then b=");
 	ShowNode(b);
 	///////////////
-    int key = 21;
+    int key = 19;
     c = merge_2(a , b);
+	printf("\nc=");
+	ShowNode(c);
     node ** pfind = findNode(c,key);
     if (*pfind)
     {
