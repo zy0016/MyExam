@@ -389,10 +389,12 @@ void OtherAction13()
 	vector<int> vec;
 	vec.push_back(20);
 	vec.push_back(10);
+#ifdef CPLUSPLUS_11
 	for (int &i : vec)
 	{
 		cout << i << endl;
 	}
+#endif
 }
 void OtherAction()
 {

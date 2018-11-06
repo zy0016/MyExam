@@ -21,7 +21,9 @@
 #include <sstream>
 #include <bitset>
 #include <functional>
+#ifdef CPLUSPLUS_11
 #include <thread>
+#endif
 using namespace std;
 
 void output(int i)
@@ -31,21 +33,26 @@ void output(int i)
 void Thread1Action1()
 {
 	cout << "\n===========================Thread1Action1===========================" << endl;
+#ifdef CPLUSPLUS_11
 	for (uint8_t i = 0; i < 4; i++)
 	{
 		thread t(output, i);
 		t.detach();
 	}
+#endif
 }
 /////////////////////
 //线程函数
 void func(int a, int b, int c)
 {
+#ifdef CPLUSPLUS_11
 	std::this_thread::sleep_for(std::chrono::seconds(3));
+#endif
 	cout << a << " " << b << " " << c << endl;
 }
 void Thread1Action2()
 {
+#ifdef CPLUSPLUS_11
 	cout << "\n===========================Thread1Action2===========================" << endl;
 	//创建线程对象t1,绑定线程函数为func
 	std::thread t1(func, 1, 2, 3);
@@ -70,6 +77,7 @@ void Thread1Action2()
 	cout << "CPU: " << thread::hardware_concurrency() << endl;
 	//当添加下面注释掉的语句会抛出异常,因为线程对象先于线程函数结束了,应该保证线程对象的生命周期在线程函数执行完时仍然存在.
 	//std::thread t3(func, 3, 4, 5);
+#endif
 }
 void Thread1Action()
 {
