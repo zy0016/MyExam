@@ -17,7 +17,8 @@ void testpoint()
     printf("&i = %x\n", &pt->i); //??????????????&(pt->i)
     printf("&c = %x\n", &pt->c);
     printf("&p = %x\n", &pt->p);
-    printf("&s = %x\n", pt->s); //??? printf("%x\n", &(pt->s) );
+    printf("&s = %x\n", &pt->s); //??? printf("%x\n", &(pt->s) );
+	printf("&s = %x\n", pt->s); //??? printf("%x\n", &(pt->s) );
 }
 
 void solve(char *source, char * des,int n)
@@ -300,10 +301,12 @@ void OtherAction9()
     }
     /////////////////////
     struct test *pt=NULL;
+	printf("\n");
     printf("&s = %x\n", pt->s); 
     printf("&i = %x\n", &pt->i); 
     printf("&c = %x\n", &pt->c);
     printf("&p = %x\n", &pt->p);
+	printf("&i = %x\n", pt->p);
     ////////////////////
     Test a1(1);
     a1.func();
@@ -399,7 +402,9 @@ void OtherAction13()
 void OtherAction()
 {
     cout << "\n===========================OtherAction===========================" << endl;
-	
+	int *p = NULL;
+	int i = sizeof(void*);
+
     testpoint();
     OtherAction1();
     SpecialOutput();
