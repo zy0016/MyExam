@@ -43,8 +43,58 @@ void Other7Action1()
 }
 
 
+#define OUTPUT(f)	cout << #f << "\t: " << typeid(f).name() << endl;
+class BaseA {};
+class DeriveA: public BaseA {};
+ 
+class BaseB 
+{
+	virtual void f(){} 
+};
+class DeriveB: public BaseB {};
+void Other7Action8()
+{
+    cout << "-------直接处理类名-------" <<endl;
+ 
+	OUTPUT(BaseA);
+	OUTPUT(DeriveA);
+	OUTPUT(BaseB);
+	OUTPUT(DeriveB);
+ 
+	cout << endl << "-------基类不含虚函数-------" <<endl;
+ 
+	BaseA baseA;
+	DeriveA deriveA;
+	OUTPUT(baseA);
+	OUTPUT(deriveA);
+	
+	BaseA* pa;
+	pa = &baseA;
+	OUTPUT(*pa);
+	OUTPUT(pa);
+	pa = &deriveA;
+	OUTPUT(*pa);
+	OUTPUT(pa);
+ 
+	cout << endl << "-------基类含有虚函数-------" <<endl;
+ 
+	BaseB baseB;
+	DeriveB deriveB;
+	OUTPUT(baseB);
+	OUTPUT(deriveB);
+ 
+	BaseB* pb;
+	pb = &baseB;
+	OUTPUT(*pb);
+	OUTPUT(pb);
+	pb = &deriveB;
+	OUTPUT(*pb);
+	OUTPUT(pb);
+}
+
 void Other7Action()
 {
 	cout << "\n===========================Other7Action===========================" << endl;
 	Other7Action1();
+    Other7Action8();
 }
