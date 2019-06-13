@@ -181,6 +181,7 @@ void teststring()
 	//a += b;
 	MyString c = a;
 	MyString e = a + b;
+	MyString k = d + a;
 	cout << c << std::endl;
 	cout << a << std::endl;
 	cout << e << endl;
@@ -194,6 +195,7 @@ void teststring2()
 	a = b;
 	a += b;
 	CString c = a + b;
+	CString e = a + t;
 	std::cout << c << std::endl;
 	std::cout << a << std::endl;
 }

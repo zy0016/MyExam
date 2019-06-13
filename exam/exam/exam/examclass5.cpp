@@ -116,6 +116,29 @@ void Class5Action2()
     cout<<static_cast<void*>(p)<<endl;
     cout<<dynamic_cast<void*>(p)<<endl;
 }
+/////////////////
+class Teacher
+{
+private:
+	std::string name;
+	std::string position;
+
+public:
+	Teacher(const std::string& n, const std::string& p)
+		: name(n), position(p) {}
+
+	Teacher(std::string&& n, std::string&& p)
+		: name(std::move(n)), position(std::move(p)) {};
+
+	Teacher(const std::string&& n, const std::string& p)
+		: name(std::move(n)), position(p) {}
+
+	Teacher(const std::string& n, const std::string&& p)
+		: name(n), position(std::move(p)) {}
+
+	
+};
+
 void Class5Action()
 {
 	cout << "\n===========================Class5===========================" << endl;

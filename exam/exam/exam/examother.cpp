@@ -306,7 +306,7 @@ void OtherAction9()
     printf("&i = %x\n", &pt->i); 
     printf("&c = %x\n", &pt->c);
     printf("&p = %x\n", &pt->p);
-	printf("&i = %x\n", pt->p);
+	//printf("&i = %x\n", pt->p);
     ////////////////////
     Test a1(1);
     a1.func();

@@ -43,13 +43,18 @@ template <class T>
 class X {
 	typename T::id i;
 public:
-	void f() { i.g(); }
+	void f() { 
+		cout << "X::f()" << endl;
+		i.g(); 
+	}
 };
 class Y {
 public:
 	class id {
 	public:
-		void g() {}
+		void g() {
+			cout << "Y::id::g()" << endl;
+		}
 	};
 };
 void Template2Action2()
@@ -91,6 +96,7 @@ void Template2Action4()
 	bitset<10> bs;
 	bs.set(1);
 	bs.set(5);
+	string ss = bs.to_string();
 	cout << bs << endl;
 	string s = bitsetToString<char>(bs);
 	cout << s << endl;
@@ -219,4 +225,5 @@ void Template2Action()
 	Template2Action7();
 	Template2Action8();
 	Template2Action9();
+	Template2Action10();
 }

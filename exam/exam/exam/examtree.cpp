@@ -208,7 +208,16 @@ void traversePost(BiTree tree)
 	traversePost(tree->rightChild);
 	cout << tree->data << " ";
 }
-
+void destroytree(BiTree T)
+{
+	if (T)
+	{
+		destroytree(T->leftChild);
+		destroytree(T->rightChild);
+		delete T;
+		T = NULL;
+	}
+}
 void LevelTraverse(BiTree T)
 {
 	if (NULL == T)
@@ -244,6 +253,8 @@ void testmytree()
 	traversePost(T);
 	cout << endl;
 
+	cout << "destroy tree:" << endl;
+	destroytree(T);
 	cout << endl;
 }
 

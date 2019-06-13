@@ -41,10 +41,31 @@ void Other7Action1()
 						// 'i' 会被修改
 	std::cout << i << std::endl;  // 输出 1
 }
-
+void Other7Action2()
+{
+	int n = 10;
+	vector<int>v;//创建一个空的容器
+	for (int i = 0; i < n; ++i)
+	{
+		v.push_back(i);
+	}
+	cout << "size:" << v.size() << endl;
+	int m = 20;
+	v.resize(m);
+	cout << "resize:" << v.size() << endl;
+	v.reserve(30);
+	cout << "reserve:" << v.size() << endl;
+	for (int i = 0; i < m; ++i)
+	{
+		cout << v[i] << " ";
+	}
+	
+	cout << endl;
+}
 
 void Other7Action()
 {
 	cout << "\n===========================Other7Action===========================" << endl;
 	Other7Action1();
+	Other7Action2();
 }

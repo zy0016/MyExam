@@ -306,7 +306,7 @@ void LinkAction()
     printf("\nCall the DeleteNodeByValue then b=");
     ShowNode(b);
 	///////////////////////////
-	int k3 = 10;
+	int k3 = 0;
 	b = DeleteNodeById(b, k3);
 	printf("\nCall the DeleteNodeById then b=");
 	ShowNode(b);

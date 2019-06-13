@@ -25,6 +25,7 @@
 #include <thread>
 #endif
 using namespace std;
+//pthread_mutex_t flock = PTHREAD_MUTEX_INITIALIZER;
 
 void output(int i)
 {
@@ -38,6 +39,7 @@ void Thread1Action1()
 	{
 		thread t(output, i);
 		t.detach();
+		//t.join();
 	}
 #endif
 }
@@ -79,9 +81,31 @@ void Thread1Action2()
 	//std::thread t3(func, 3, 4, 5);
 #endif
 }
+
+//初始化互斥锁，互斥锁只能同时被一个对象访问，如果同时有两个对访问，其中一个会被阻塞
+void hello(char c)
+{
+	for (int i = 0; i<100; i++) {
+		//pthread_mutex_lock(&flock);//上锁
+		//cout << c << " " << i << endl;
+		cout << c << endl;
+		//pthread_mutex_unlock(&flock);//解锁
+	}
+}
+void Thread1Action3()
+{
+	cout << "\n===========================Thread1Action3===========================" << endl;
+	thread t0(hello, 'a');
+	thread t1(hello, 'b');
+	t0.join();
+	t1.join();
+	//t0.detach();
+	//t1.detach();  
+}
 void Thread1Action()
 {
 	cout << "\n===========================Thread1Action===========================" << endl;
 	Thread1Action1();
 	Thread1Action2();
+	Thread1Action3();
 }

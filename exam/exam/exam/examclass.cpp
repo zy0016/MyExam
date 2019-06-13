@@ -57,7 +57,7 @@ public:
     {
         cout << "Base destructor" << endl;
     }
-    virtual void id ()
+	virtual void id()
     {
         cout << "id() In base" << endl;
     }
@@ -198,6 +198,7 @@ void Action5()
     Base &p2 = d;
     Base *pd = new D;
     Base p3;
+	p3.geti(0);
 
     p1->id();
     p2.id();
