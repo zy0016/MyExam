@@ -26,19 +26,40 @@ void Class2Action1()
     list<string>::iterator itor;
     list<int> Scores;
 
-    if (0)
+    if (1)
     {
         cout<<"----------examclass2 1------------"<<endl;
         vector<int> num;
+		vector<char> elech;
         int element;
-        while (cin >> element)
+        /*while (cin >> element)
         {
             num.push_back(element);
-        }
+        }*/
+		num.push_back(12);
+		num.push_back(1);
+		num.push_back(3);
+		num.push_back(24);
+		num.push_back(74);
         num.insert(num.begin(),9999);
         sort(num.begin(),num.end());
         for (unsigned int i = 0;i < num.size();i++)
             cout << num[i]<<endl;
+		int c = num.capacity();
+		num.reserve(20);
+		int s = num.size();
+		num.resize(50);
+		int c2 = num.capacity();
+
+		/////////////////////
+		elech.push_back('3');
+		elech.push_back('b');
+		elech.push_back('q');
+		elech.push_back('j');
+		elech.push_back('o');
+		for (unsigned int i = 0; i < elech.size(); i++)
+			cout << elech[i] << endl;
+
     }
     if (1)
     {
