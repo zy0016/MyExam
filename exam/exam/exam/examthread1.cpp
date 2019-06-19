@@ -95,12 +95,14 @@ void hello(char c)
 void Thread1Action3()
 {
 	cout << "\n===========================Thread1Action3===========================" << endl;
+#ifdef CPLUSPLUS_11
 	thread t0(hello, 'a');
 	thread t1(hello, 'b');
 	t0.join();
 	t1.join();
 	//t0.detach();
 	//t1.detach();  
+#endif
 }
 void Thread1Action()
 {
