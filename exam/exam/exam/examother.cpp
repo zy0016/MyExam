@@ -1,6 +1,9 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "other.h"
 #include <iostream>
+#include <set>
+#include <list>
+#include <map>
 using namespace std;
 
 void testpoint()
@@ -381,6 +384,13 @@ void OtherAction12()
         cout << (int)a3 << endl; 
         cout << (int&)a3 << endl;
     }
+	int a[] = { 1,2,3,4,5,6,7,8,9,10 };
+	cout << "begin" << endl;
+	for (auto i : a) 
+	{
+		cout << i << endl;
+	}
+	cout <<"end"<< endl;
 }
 void OtherAction13()
 {
@@ -399,6 +409,132 @@ void OtherAction13()
 	}
 #endif
 }
+void OtherAction14()
+{
+	cout << "\n===========================OtherAction14===========================" << endl;
+	vector<string> v6 = { "hi","my","name","is","lee" };
+	for (vector<string>::iterator iter = v6.begin(); iter != v6.end(); iter++)
+	{
+		cout << *iter << endl;
+		//下面两种方法都行
+		cout << (*iter).empty() << endl;
+		cout << iter->empty() << endl;
+	}
+	for (vector<string>::reverse_iterator iter = v6.rbegin(); iter != v6.rend(); iter++)
+	{
+		cout << *iter << endl;
+	}
+}
+template <typename T>
+void showvector(vector<T> v)
+{
+	for (vector<T>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << *it<<" ";
+	}
+	cout << endl;
+}
+void OtherAction15()
+{
+	cout << "\n===========================OtherAction15===========================" << endl;
+	vector<string> v6 = { "hi","my","name","is","lee" };
+	v6.resize(3);  //重新调整vector容量大小
+	showvector(v6);
+
+	vector<int> v5 = { 1,2,3,4,5 }; //列表初始化,注意使用的是花括号
+	cout << v5.front() << endl; //访问第一个元素
+	cout << v5.back() << endl; //访问最后一个元素
+
+	showvector(v5);
+	v5.pop_back(); //删除最后一个元素
+	showvector(v5);
+	v5.push_back(6); //加入一个元素并把它放在最后
+	showvector(v5);
+	v5.insert(v5.begin() + 1, 9); //在第二个位置插入新元素
+	showvector(v5);
+	v5.erase(v5.begin() + 3);  //删除第四个元素
+	showvector(v5);
+	v5.insert(v5.begin() + 1, 7, 8); //连续插入7个8
+	showvector(v5);
+	v5.clear(); //清除所有内容
+	showvector(v5);
+
+	//system("pause");
+}
+
+template <typename T>
+void showset(set<T> v)
+{
+	for (set<T>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << *it;
+	}
+	cout << endl;
+}
+void OtherAction16()
+{
+	cout << "\n===========================OtherAction16===========================" << endl;
+	set<int> s1{ 9,8,1,2,3,4,5,5,5,6,7,7 }; //自动排序，从小到大,剔除相同项
+	showset(s1);
+	set<string> s2{ "hello","sysy","school","hello" }; //字典序排序
+	showset(s2);
+	s1.insert(9); //有这个值了，do nothing
+	showset(s1);
+	s2.insert("aaa"); //没有这个字符串，添加并且排序
+	showset(s2);
+}
+
+template <typename T>
+void showlist(list<T> v)
+{
+	for (list<T>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << *it<<" ";
+	}
+	cout << endl;
+}
+void OtherAction17()
+{
+	cout << "\n===========================OtherAction17===========================" << endl;
+	list<int> l1{ 1,2,3,4,5,5,6,7,7 ,0};
+	showlist(l1);
+	l1.sort();
+	list<double> l2;
+	list<char> l3(10);
+	list<int> l4(5, 10); //将元素都初始化为10
+	showlist(l4);
+}
+
+void showmap(map<string, int> v)
+{
+	for (map<string, int>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << it->first << "  " << it->second << endl;  //注意用法，不是用*it来访问了。first表示的是key，second存的是value
+	}
+	cout << endl;
+}
+void OtherAction18()
+{
+	cout << "\n===========================OtherAction18===========================" << endl;
+	map<string, int> m1; //<>里的第一个参数表示key的类型,第二个参数表示value的类型
+	m1["Kobe"] = 100;
+	m1["James"] = 99;
+	m1["Curry"] = 98;
+
+	string s("Jordan");
+	m1[s] = 90;
+
+	cout << m1["Kobe"] << endl;
+	cout << m1["Jordan"] << endl;
+	cout << m1["Durant"] << endl; //不存在这个key，就显示0
+
+	m1.erase("Curry");//通过关键字来删除
+	showmap(m1);
+	m1.insert(pair<string, int>("Harris", 89)); //也可以通过insert函数来实现增加元素
+	showmap(m1);
+	m1.clear(); //清空全部
+}
+
 void OtherAction()
 {
     cout << "\n===========================OtherAction===========================" << endl;
@@ -420,6 +556,11 @@ void OtherAction()
     OtherAction11();
     OtherAction12();
 	OtherAction13();
+	OtherAction14();
+	OtherAction15();
+	OtherAction16();
+	OtherAction17();
+	OtherAction18();
 }
 
 //int solution(int A[], int N) {

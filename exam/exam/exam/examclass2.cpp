@@ -24,6 +24,7 @@ void Class2Action1()
 {
     list<string> Milkshakes;
     list<string>::iterator itor;
+	list<string>::reverse_iterator reverseitor;
     list<int> Scores;
 
     if (1)
@@ -31,11 +32,20 @@ void Class2Action1()
         cout<<"----------examclass2 1------------"<<endl;
         vector<int> num;
 		vector<char> elech;
+		vector<string> vs;
         int element;
         /*while (cin >> element)
         {
             num.push_back(element);
         }*/
+		vs.push_back("abc");
+		vs.push_back("12");
+		vs.push_back("2c");
+		vs.push_back("afdbc");
+		vs[0] = "abcdf";
+		for (int i = 0; i < vs.size(); i++)
+			cout << vs[i] << endl;
+
 		num.push_back(12);
 		num.push_back(1);
 		num.push_back(3);
@@ -59,7 +69,6 @@ void Class2Action1()
 		elech.push_back('o');
 		for (unsigned int i = 0; i < elech.size(); i++)
 			cout << elech[i] << endl;
-
     }
     if (1)
     {
@@ -80,11 +89,18 @@ void Class2Action1()
     Milkshakes.push_front("Vanilla");
     Milkshakes.push_front("The Milkshake Menu");
     Milkshakes.push_back("*** Thats the end ***");
+	//Milkshakes.remove("Chocolate");
+	
     int j = Milkshakes.size();
     for (itor=Milkshakes.begin();itor != Milkshakes.end();itor++)
     {
         cout<<*itor<<endl;
     }
+
+	for (reverseitor = Milkshakes.rbegin(); reverseitor != Milkshakes.rend(); reverseitor++)
+	{
+		cout << *reverseitor << endl;
+	}
     
     remove(Milkshakes.begin(),Milkshakes.end(),"Chocolate");
 	j = Milkshakes.size();
@@ -190,8 +206,28 @@ void Class2Action1()
     }
     cout<<"----------------------------------"<<endl;
 }
+void Class2Action2()
+{
+	cout << "\n===========================Class2Action2===========================" << endl;
+	vector<int> v;
+	for (int i = 0; i < 10; ++i)
+	{
+		v.push_back(i);
+	}
+	for (vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+	{
+		cout << *it << " ";
+	}
+	cout << endl;
+	reverse(v.begin(), v.end());
+	for (vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+	{
+		cout << *it << " ";
+	}
+}
 void Class2Action()
 {
     cout << "\n===========================Class2===========================" << endl;
     Class2Action1();
+	Class2Action2();
 }
