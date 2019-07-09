@@ -24,7 +24,10 @@ void Other2Action1()
 	vector<int> v1(a, a + SIZE);
 	vector<int> v2(SIZE);
 	copy(v1.begin(), v1.end(), v2.begin());
-	assert(equal(v1.begin(),v1.end(),v2.begin()));
+    ///////////////////////
+    vector<int> v3;
+    copy(v1.begin(),v1.end(),back_inserter(v3));
+    assert(equal(v1.begin(),v1.end(),v3.begin()));
 }
 bool gt15(int x) { return 15 < x; }
 void Other2Action2()

@@ -384,6 +384,7 @@ void OtherAction12()
         cout << (int)a3 << endl; 
         cout << (int&)a3 << endl;
     }
+#ifdef CPLUSPLUS_11
 	int a[] = { 1,2,3,4,5,6,7,8,9,10 };
 	cout << "begin" << endl;
 	for (auto i : a) 
@@ -391,6 +392,7 @@ void OtherAction12()
 		cout << i << endl;
 	}
 	cout <<"end"<< endl;
+#endif
 }
 void OtherAction13()
 {
@@ -412,6 +414,7 @@ void OtherAction13()
 void OtherAction14()
 {
 	cout << "\n===========================OtherAction14===========================" << endl;
+#ifdef CPLUSPLUS_11
 	vector<string> v6 = { "hi","my","name","is","lee" };
 	for (vector<string>::iterator iter = v6.begin(); iter != v6.end(); iter++)
 	{
@@ -424,6 +427,7 @@ void OtherAction14()
 	{
 		cout << *iter << endl;
 	}
+#endif
 }
 template <typename T>
 void showvector(vector<T> v)
@@ -437,6 +441,7 @@ void showvector(vector<T> v)
 void OtherAction15()
 {
 	cout << "\n===========================OtherAction15===========================" << endl;
+#ifdef CPLUSPLUS_11
 	vector<string> v6 = { "hi","my","name","is","lee" };
 	v6.resize(3);  //重新调整vector容量大小
 	showvector(v6);
@@ -460,6 +465,7 @@ void OtherAction15()
 	showvector(v5);
 
 	//system("pause");
+#endif
 }
 
 template <typename T>
@@ -474,6 +480,7 @@ void showset(set<T> v)
 void OtherAction16()
 {
 	cout << "\n===========================OtherAction16===========================" << endl;
+#ifdef CPLUSPLUS_11
 	set<int> s1{ 9,8,1,2,3,4,5,5,5,6,7,7 }; //自动排序，从小到大,剔除相同项
 	showset(s1);
 	set<string> s2{ "hello","sysy","school","hello" }; //字典序排序
@@ -482,6 +489,7 @@ void OtherAction16()
 	showset(s1);
 	s2.insert("aaa"); //没有这个字符串，添加并且排序
 	showset(s2);
+#endif
 }
 
 template <typename T>
@@ -496,6 +504,7 @@ void showlist(list<T> v)
 void OtherAction17()
 {
 	cout << "\n===========================OtherAction17===========================" << endl;
+#ifdef CPLUSPLUS_11
 	list<int> l1{ 1,2,3,4,5,5,6,7,7 ,0};
 	showlist(l1);
 	l1.sort();
@@ -503,6 +512,7 @@ void OtherAction17()
 	list<char> l3(10);
 	list<int> l4(5, 10); //将元素都初始化为10
 	showlist(l4);
+#endif
 }
 
 void showmap(map<string, int> v)
