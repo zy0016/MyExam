@@ -1,5 +1,5 @@
 ﻿#include "stdafx.h"
-#include "other6.h"
+#include "other7.h"
 #include <iostream>
 #include <iterator>
 #include <algorithm>

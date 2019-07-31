@@ -3,6 +3,195 @@
 #include <iostream>
 using namespace std;
 
+struct ListNode {
+	int val;
+	struct ListNode *next;
+};
+int getNum(struct ListNode* l1)
+{
+	int count = 0;
+	int i = 1;
+	while (l1 != NULL)
+	{
+		count = count + l1->val * i;
+		i = i * 10;
+		l1 = l1->next;
+	}
+	return count;
+}
+struct ListNode *addNode(int value, struct ListNode* a)
+{
+	struct ListNode *p = NULL;
+	struct ListNode *pNext = a;
+	p = (struct ListNode*)malloc(sizeof(struct ListNode));
+	if (p == NULL)
+		return NULL;
+	p->val = value;
+	p->next = NULL;
+	if (a == NULL)
+		return p;
+	while (pNext->next != NULL)
+	{
+		pNext = pNext->next;
+	}
+	pNext->next = p;
+	return a;
+}
+struct ListNode * reverse2(struct ListNode *n)
+{
+	struct ListNode *head = NULL;
+	while (n)
+	{
+		struct ListNode *temp = n->next;
+		n->next = head;
+		head = n;
+		n = temp;
+	}
+	return head;
+}
+struct ListNode* addTwoNumbers2(struct ListNode* l1, struct ListNode* l2) {
+	if (l1->val == 0 && !l1->next) return l2;
+	if (l2->val == 0 && !l2->next) return l1;
+	struct ListNode* l3 = new struct ListNode;
+	struct ListNode* temp = l3;
+	int sum = 0;
+	temp->val = (sum = l1->val + l2->val) >= 10 ? sum % 10 : sum;
+	while (sum >= 10 || l1->next || l2->next) {
+		temp->next = new struct ListNode;
+		temp = temp->next;
+		sum = sum >= 10 ? 1 : 0;
+		sum += l1->next ? (l1 = l1->next)->val : 0;
+		sum += l2->next ? (l2 = l2->next)->val : 0;
+		temp->val = sum >= 10 ? sum % 10 : sum;
+	}
+	return l3;
+}
+struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
+	struct ListNode *l3 = NULL;
+	int morethan = 0;
+	while (l1 && l2)
+	{
+		int i1 = l1->val;
+		int i2 = l2->val;
+		int result = 0;
+		if (morethan == 0)
+		{
+			if (i1 + i2 >= 10)
+			{
+				morethan = 1;
+				result = i1 + i2 - 10;
+			}
+			else
+			{
+				morethan = 0;
+				result = i1 + i2;
+			}
+		}
+		else
+		{
+			if (i1 + i2 + 1 >= 10)
+			{
+				morethan = 1;
+				result = i1 + i2 + 1 - 10;
+			}
+			else
+			{
+				morethan = 0;
+				result = i1 + i2 + 1;
+			}
+		}
+		l1 = l1->next;
+		l2 = l2->next;
+		l3 = addNode(result, l3);
+	}
+	if (l1 != NULL)
+	{
+		struct ListNode *l1_first = NULL;
+		while (l1 != NULL)
+		{
+			int i1 = l1->val;
+			if (morethan == 1)
+			{
+				if (i1 == 9)
+				{
+					l1->val = 0;
+					l3 = addNode(0, l3);
+				}
+				else
+				{
+					morethan = 0;
+					l3 = addNode(++i1, l3);
+				}
+			}
+			else
+			{
+				l3 = addNode(l1->val, l3);
+			}
+			l1_first = l1;
+			l1 = l1->next;
+		}
+		if (morethan == 1)
+		{
+			if (l1_first->val == 9)
+			{
+				l3 = addNode(1, l3);
+			}
+			else
+			{
+				l3 = addNode(++l1_first->val, l3);
+			}
+		}
+		return (l3);
+	}
+	else if (l2 != NULL)
+	{
+		struct ListNode *l2_first = NULL;
+		while (l2 != NULL)
+		{
+			int i2 = l2->val;
+			if (morethan == 1)
+			{
+				if (i2 == 9)
+				{
+					l2->val = 0;
+					l3 = addNode(0, l3);
+				}
+				else
+				{
+					morethan = 0;
+					l3 = addNode(++i2, l3);
+				}
+			}
+			else
+			{
+				l3 = addNode(l2->val, l3);
+			}
+			l2_first = l2;
+			l2 = l2->next;
+		}
+		if (morethan == 1)
+		{
+			if (l2_first->val == 9)
+			{
+				l3 = addNode(1, l3);
+			}
+			else
+			{
+				l3 = addNode(++l2_first->val, l3);
+			}
+		}
+		return l3;
+	}
+	else
+	{
+		if (morethan == 1)
+		{
+			l3 = addNode(1, l3);
+		}
+		return (l3);
+	}
+}
+
 node **findNode(node *root, int key)
 {
     node **prev = &root->next;
@@ -332,4 +521,35 @@ void LinkAction()
 	DeleteAllNodes(c);
 	DeleteAllNodes(a2);
 	DeleteAllNodes(b2);
+	///////////////////////
+	struct ListNode *l1 = NULL;
+	struct ListNode *l2 = NULL;
+	struct ListNode *l3 = NULL;
+	
+	/*l1 = addNode(2, l1);
+	l1 = addNode(4, l1);
+	l1 = addNode(3, l1);
+
+	l2 = addNode(5, l2);
+	l2 = addNode(6, l2);
+	l2 = addNode(4, l2);*/
+
+	/*l1 = addNode(9, l1);
+	l2 = addNode(1, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);
+	l2 = addNode(9, l2);*/
+
+	/*l1 = addNode(9, l1);
+	l1 = addNode(8, l1);
+	l2 = addNode(1, l2);*/
+	l1 = addNode(9, l1);
+	l1 = addNode(9, l1);
+	l2 = addNode(9, l2);
+	l3 = addTwoNumbers(l1, l2);
 }
