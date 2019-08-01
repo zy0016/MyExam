@@ -52,12 +52,8 @@ int lengthOfLongestSubstring(char * s)
 			memset(w, 0x00, sizeof(w));
 			index = 0;
 			i = j;
-			w[index++] = s[i];
 		}
-		else
-		{
-			w[index++] = s[i];
-		}
+		w[index++] = s[i];
 	}
 	if (strlen(w) > strlen(res))
 		return strlen(w);
@@ -135,14 +131,7 @@ int myAtoi(char * str)
 				if (INT_MAX / 10 < count)
 				{
 					free(p);
-					if (n == 1)
-					{
-						return INT_MIN;
-					}
-					else
-					{
-						return INT_MAX;
-					}
+					return (n == 1) ? INT_MIN : INT_MAX;
 				}
 				count = count * 10 + p[i] - '0';
 				if (id == 10)
@@ -150,14 +139,7 @@ int myAtoi(char * str)
 					if (strcmp(pbegin, pmax) > 0)
 					{
 						free(p);
-						if (n == 1)
-						{
-							return INT_MIN;
-						}
-						else
-						{
-							return INT_MAX;
-						}
+						return (n == 1) ? INT_MIN : INT_MAX;
 					}
 				}
 			}
@@ -241,6 +223,142 @@ int maxArea(int* height, int heightSize) {
 	}
 	return maxarea;
 }
+
+//char * intToRoman(int num) {
+//	int x = num;
+//	char number[50] = { 0 };
+//	char romnum[50] = { 0 };
+//	int i, j, id = 0;
+//	bool bz = false;
+//	while (1)
+//	{
+//		i = (x % 10);
+//		j = (x / 10);
+//
+//		switch (i)
+//		{
+//		case 0:
+//			//number[id++] = 'I';
+//			bz = true;
+//			break;
+//		case 1:
+//			number[id++] = 'I';
+//			break;
+//		case 2:
+//			number[id++] = 'I';
+//			number[id++] = 'I';
+//			break;
+//		case 3:
+//			number[id++] = 'I';
+//			number[id++] = 'I';
+//			number[id++] = 'I';
+//			break;
+//		case 4:
+//			number[id++] = 'V';
+//			number[id++] = 'I';
+//			break;
+//		case 5:
+//			number[id++] = 'V';
+//			break;
+//		case 6:
+//			number[id++] = 'I';
+//			number[id++] = 'X';
+//			break;
+//		case 7:
+//			number[id++] = 'I';
+//			number[id++] = 'I';
+//			number[id++] = 'X';
+//			break;
+//		case 8:
+//			number[id++] = 'I';
+//			number[id++] = 'I';
+//			number[id++] = 'I';
+//			number[id++] = 'X';
+//			break;
+//		case 9:
+//			number[id++] = 'X';
+//			number[id++] = 'I';
+//			break;
+//		}
+//
+//		number[id++] = '0' + i;
+//		x = x / 10;
+//		if (j == 0)
+//		{
+//			break;
+//		}
+//	}
+//	int len = strlen(number);
+//	for (i = 0, j = len - 1; i < len && j >= 0 && i < j; i++, j--)
+//	{
+//		char c = number[i];
+//		number[i] = number[j];
+//		number[j] = c;
+//	}
+//}
+int romanToInt(char * s) 
+{
+	int count = 0,len = strlen(s);
+	for (int i = len - 1; i >= 0 ; i--)
+	{
+		switch (s[i])
+		{
+		case 'M'://1000
+			count = count + 1000;
+			if (i > 0 && s[i - 1] == 'C')
+			{
+				count = count - 100;
+				i--;
+			}
+			break;
+		case 'D'://500
+			count = count + 500;
+			if (i > 0 && s[i - 1] == 'C')
+			{
+				count = count - 100;
+				i--;
+			}
+			break;
+		case 'C'://100
+			count = count + 100;
+			if (i > 0 && s[i - 1] == 'X')
+			{
+				count = count - 10;
+				i--;
+			}
+			break;
+		case 'L'://50
+			count = count + 50;
+			if (i > 0 && s[i - 1] == 'X')
+			{
+				count = count - 10;
+				i--;
+			}
+			break;
+		case 'X'://10
+			count = count + 10;
+			if (i > 0 && s[i - 1] == 'I')
+			{
+				count--;
+				i--;
+			}
+			break;
+		case 'V'://5
+			count = count + 5;
+			if (i > 0 && s[i - 1] == 'I')
+			{
+				count--;
+				i--;
+			}
+			break;
+		case 'I'://1
+			count = count + 1;
+			break;
+		}
+	}
+	return count;
+}
+
 void Other8Action()
 {
 	cout << "\n===========================Other8Action===========================" << endl;
@@ -321,5 +439,21 @@ void Other8Action()
 
 	int a[] = { 1,8,6,2,5,4,8,3,7 };
 	i = maxArea(a, sizeof(a) / sizeof(int));
+	cout << i << endl;
+
+	//////////////
+	i = romanToInt("III");
+	cout << i << endl;
+
+	i = romanToInt("IV");
+	cout << i << endl;
+
+	i = romanToInt("IX");
+	cout << i << endl;
+
+	i = romanToInt("LVIII");
+	cout << i << endl;
+
+	i = romanToInt("MCMXCIV");
 	cout << i << endl;
 }
