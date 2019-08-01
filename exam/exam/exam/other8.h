@@ -9,7 +9,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-
+#include "other.h"
 //////////////////////////////
 
 void Other8Action();

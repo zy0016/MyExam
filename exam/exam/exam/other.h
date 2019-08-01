@@ -41,7 +41,7 @@ struct Test
 //    int i;
 //    char x[2];
 //}au;
-
+char * Trim(char * pStr);
 void OtherAction();
 //int solution(int A[], int N);
 #endif 
