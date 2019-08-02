@@ -359,6 +359,72 @@ int romanToInt(char * s)
 	return count;
 }
 
+char * longestCommonPrefix(char ** strs, int strsSize) 
+{
+	char **p = strs;
+	bool finddiff = false;
+	int index = 0,id;
+	char c;
+	if (strs == NULL)
+		return "";
+	if (strsSize == 1)
+	{
+		index = strlen(*strs);
+	}
+	else
+	{
+		while (1)
+		{
+			p = strs;
+			if (*p == NULL || strlen(*p) == 0)
+			{
+				break;
+			}
+			c = '\0';
+			id = 0;
+			finddiff = false;
+			while (id < strsSize && **p)
+			{
+				if (c == '\0')
+				{
+					char *q = *p;
+					c = *(q + index);
+					p++;
+					id++;
+					continue;
+				}
+				else
+				{
+					char *q = *p;
+					if (c == *(q + index))
+					{
+						id++;
+						p++;
+						continue;
+					}
+					else
+					{
+						finddiff = true;
+						break;
+					}
+				}
+			}
+			if (finddiff)
+			{
+				break;
+			}
+			index++;
+		}
+	}
+	
+	if (index == 0)
+		return "";
+	char *res = (char*)malloc(sizeof(char) * (index + 1));
+	memset(res, 0, sizeof(char) * (index + 1));
+	strncpy(res, *strs, index);
+	return res;
+}
+
 void Other8Action()
 {
 	cout << "\n===========================Other8Action===========================" << endl;
@@ -456,4 +522,32 @@ void Other8Action()
 
 	i = romanToInt("MCMXCIV");
 	cout << i << endl;
+	/////////////////
+	char *pp[] = { "flower","flow","flight" };
+	char *pp2 = longestCommonPrefix(pp, 3);
+	cout << pp2 << endl;
+
+	char *pparr[] = { "dog","racecar","car" };
+	char *ppr = longestCommonPrefix(pparr, 3);
+	cout << ppr << endl;
+
+	char *pparr2[] = { "a" };
+	char *ppr2 = longestCommonPrefix(pparr2, 1);
+	cout << ppr2 << endl;
+
+	char *pparr3[] = { NULL };
+	char *ppr3 = longestCommonPrefix(pparr3, 1);
+	cout << ppr3 << endl;
+
+	char *pparr4 = NULL;
+	char *ppr4 = longestCommonPrefix(&pparr4, 1);
+	cout << ppr4 << endl;
+
+	char *pparr5[] = { NULL,NULL };
+	char *ppr5 = longestCommonPrefix(NULL, 1);
+	cout << ppr5 << endl;
+
+	char *pparr6[] = { 0};
+	char *ppr6 = longestCommonPrefix(pparr6, 1);
+	cout << ppr6 << endl;
 }
