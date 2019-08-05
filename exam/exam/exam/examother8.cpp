@@ -361,45 +361,56 @@ int romanToInt(char * s)
 
 char * longestCommonPrefix(char ** strs, int strsSize) 
 {
-	char **p = strs;
+    char **bak = strs;
 	bool finddiff = false;
 	int index = 0,id;
 	char c;
-	if (strs == NULL)
+	if (strs == NULL || strsSize == 0 || *strs == NULL)
 		return "";
 	if (strsSize == 1)
 	{
 		index = strlen(*strs);
+        if (index == 0)
+            return "";
+
+        char *res = (char*)malloc(sizeof(char) * (index + 1));
+	    memset(res, 0, sizeof(char) * (index + 1));
+	    strncpy(res, *strs, index);
+	    return res;
 	}
 	else
 	{
 		while (1)
 		{
-			p = strs;
-			if (*p == NULL || strlen(*p) == 0)
+			char *str = *bak;
+			if (str == NULL || strlen(str) == 0)
 			{
 				break;
 			}
 			c = '\0';
 			id = 0;
 			finddiff = false;
-			while (id < strsSize && **p)
+            bool bstudy = false;
+			while (id < strsSize && index < strlen(str))
 			{
+                bstudy = true;
 				if (c == '\0')
 				{
-					char *q = *p;
-					c = *(q + index);
-					p++;
+					c = *(str + index);
 					id++;
+					str = strs[id];
 					continue;
 				}
 				else
 				{
-					char *q = *p;
-					if (c == *(q + index))
+					if (c == *(str + index))
 					{
 						id++;
-						p++;
+						if (id == strsSize)
+                        {
+                            break;
+                        }
+                        str = strs[id];
 						continue;
 					}
 					else
@@ -409,7 +420,7 @@ char * longestCommonPrefix(char ** strs, int strsSize)
 					}
 				}
 			}
-			if (finddiff)
+			if (finddiff || !bstudy || index == strlen(str))
 			{
 				break;
 			}
@@ -425,6 +436,67 @@ char * longestCommonPrefix(char ** strs, int strsSize)
 	return res;
 }
 
+static void InsertSort(int array[] , unsigned int nNum)
+{
+    int temp,j;
+    unsigned int i;
+    for (i = 1; i < nNum; ++i)
+    {
+        if (array[i] < array[i - 1])
+        {
+            temp = array[i];
+            array[i] = array[i - 1];
+            for (j = i - 1;j >= 0 && temp < array[j]; --j)
+            {
+                array[j + 1] = array[j];
+            }
+            array[j + 1] = temp;
+        }
+    }
+}
+vector<vector<int>> threeSum(vector<int>& nums) 
+{
+    vector<vector<int>> res;
+    vector<int> l2;
+    int numsSize = nums.size();
+    for (int i = 0; i < numsSize - 2; i++)
+	{
+		for (int j = i + 1; j < numsSize - 1; j++)
+		{
+			for (int k = j + 1; k < numsSize; k++)
+			{
+				if (nums[i] + nums[j] + nums[k] == 0)
+				{
+					int a[] = {nums[i],nums[j],nums[k]};
+                    InsertSort(a,3);
+                    /*l2.push_back(a[0]);
+                    l2.push_back(a[1]);
+                    l2.push_back(a[2]);*/
+					bool bfind = false;
+					for (int m = 0;m < res.size();m++)
+					{
+                        vector<int> l22 = res[m];
+						//if (l22[0] == l2[0] && l22[1] == l2[1] && l22[2] == l2[2])
+                        if (l22[0] == a[0] && l22[1] == a[1] && l22[2] == a[2])
+						{
+							bfind = true;
+							break;
+						}
+					}
+					if (!bfind)
+					{
+                        l2.push_back(a[0]);
+                        l2.push_back(a[1]);
+                        l2.push_back(a[2]);
+                        res.push_back(l2);
+					}
+                    l2.clear();
+				}
+			}
+		}
+	}
+    return res;
+}
 void Other8Action()
 {
 	cout << "\n===========================Other8Action===========================" << endl;
@@ -550,4 +622,22 @@ void Other8Action()
 	char *pparr6[] = { 0};
 	char *ppr6 = longestCommonPrefix(pparr6, 1);
 	cout << ppr6 << endl;
+    //////////////////////////
+    
+    vector<int> num;
+    num.push_back(-1);
+    num.push_back(0);
+    num.push_back(1);
+    num.push_back(2);
+    num.push_back(-1);
+    num.push_back(-4);
+    vector<vector<int>> res = threeSum(num);
+
+    int a2[] = {3,-9,3,9,-6,-1,-2,8,6,-7,-14,-15,-7,5,2,-7,-4,2,-12,-7,-1,-2,1,-15,-13,-4,0,-9,-11,7,4,7,13,14,-7,-8,-1,-2,7,-10,-2,1,-10,6,-9,-1,14,2,-13,9,10,-7,-8,-4,-14,-5,-1,1,1,4,-15,13,-12,13,12,-11,12,-12,2,-3,-7,-14,13,-9,7,-11,5,-1,-2,-1,-7,-7,0,-7,-4,1,3,3,9,11,14,10,1,-13,8,-9,13,-2,-6,1,10,-5,-6,0,1,8,4,13,14,9,-2,-15,-13};
+    vector<int> num2;
+    for (int i = 0;i < sizeof(a2)/sizeof(int);i++)
+    {
+        num2.push_back(a2[i]);
+    }
+    vector<vector<int>> res2 = threeSum(num2);
 }
