@@ -438,7 +438,10 @@ vector<vector<int>> threeSum(vector<int>& nums)
 					if (!bfind)
 					{
 						//vector<int> l2;
-						vector<int> vec = { nums.at(i), nums.at(j), nums.at(k) };
+						vector<int> vec;// = { nums.at(i), nums.at(j), nums.at(k) };
+                        vec.push_back(nums.at(i));
+                        vec.push_back(nums.at(j));
+                        vec.push_back(nums.at(k));
 						res.push_back(vec);
 					}
 					l2.clear();
@@ -447,6 +450,106 @@ vector<vector<int>> threeSum(vector<int>& nums)
 		}
 	}
 	return res;
+}
+int abs(int x)
+{
+    return ((x >= 0)?(x):(-x));
+}
+int threeSumClosest(int* nums, int numsSize, int target)
+{
+    InsertSort(nums,numsSize);
+    int step1 = -1;
+    int step2 = -1;
+    int step3 = -1;
+    int minstep = INT_MAX;
+    int m = 0;
+    for (int i = 0;i < numsSize - 2;i++)
+    {
+        for (int j = numsSize - 1;j > i;j--)
+        {
+            m = i + 1;
+            while(m < j)
+            {
+                int count = nums[i] + nums[j] + nums[m];
+                if (abs(count - target) < minstep)
+                {
+                    minstep = abs(count - target);
+                    step1 = nums[i];
+                    step2 = nums[j];
+                    step3 = nums[m];
+                }
+                m++;
+            }
+        }
+    }
+    return (step1 + step2 + step3);
+}
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ Input: "23"
+ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+ */
+char ** letterCombinations(char * digits, int* returnSize){
+    char dig[] = {'2','3','4','5','6','7','8','9'};
+    char *ch[] = {"abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    char **result = NULL;
+    if (digits == NULL)
+        return NULL;
+    int len = strlen(digits);
+    if (len == 0)
+        return NULL;
+    for (int i = 0;i < len;i++)
+    {
+        char singleall[10] = {0};
+        char c = digits[i];
+        int index = c - '2';
+        char *p = ch[index];
+        for (int j = 0;j < strlen(p);j++)
+        {
+        }
+    }
+    return result;
+}
+vector<vector<int>> fourSum(vector<int>& nums, int target) 
+{
+    vector<vector<int>> res;
+	vector<int> l2;
+	sort(nums.begin(), nums.end());
+	int numsSize = nums.size();
+    int m = 0,n = 0;
+    for (int i = 0;i < numsSize - 1;i++)
+    {
+        for (int j = numsSize - 1;j > 0;j--)
+        {
+            m = i + 1;
+            n = j - 1;
+            while(m < j)
+            {
+                while(n > i)
+                {
+                    if (m == n)
+                    {
+                        n--;
+                        continue;
+                    }
+                    int count = nums[i] + nums[j] + nums[m] + nums[n];
+                    if (count == target)
+                    {
+                        vector<int> vec;
+                        vec.push_back(nums.at(i));
+                        vec.push_back(nums.at(j));
+                        vec.push_back(nums.at(m));
+                        vec.push_back(nums.at(n));
+					    res.push_back(vec);
+                    
+                    }
+                    n--;
+                }
+                m++;
+            }
+        }
+    }
+    return res;
 }
 void Other8Action()
 {
@@ -591,4 +694,17 @@ void Other8Action()
         num2.push_back(a2[i]);
     }
     vector<vector<int>> res2 = threeSum(num2);
+    /////////////////////
+    int arr3[] = {-1, 2, 1, -4};
+    int a3 = threeSumClosest(arr3,sizeof(arr3)/sizeof(int),1);
+    cout<<a3<<endl;
+    /////////////////////
+    vector<int> a4;
+    a4.push_back(1);
+    a4.push_back(0);
+    a4.push_back(-1);
+    a4.push_back(0);
+    a4.push_back(-2);
+    a4.push_back(2);
+    vector<vector<int>> res4 = fourSum(a4,0);
 }
