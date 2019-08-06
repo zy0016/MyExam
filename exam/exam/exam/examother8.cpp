@@ -224,78 +224,26 @@ int maxArea(int* height, int heightSize) {
 	return maxarea;
 }
 
-//char * intToRoman(int num) {
-//	int x = num;
-//	char number[50] = { 0 };
-//	char romnum[50] = { 0 };
-//	int i, j, id = 0;
-//	bool bz = false;
-//	while (1)
-//	{
-//		i = (x % 10);
-//		j = (x / 10);
-//
-//		switch (i)
-//		{
-//		case 0:
-//			//number[id++] = 'I';
-//			bz = true;
-//			break;
-//		case 1:
-//			number[id++] = 'I';
-//			break;
-//		case 2:
-//			number[id++] = 'I';
-//			number[id++] = 'I';
-//			break;
-//		case 3:
-//			number[id++] = 'I';
-//			number[id++] = 'I';
-//			number[id++] = 'I';
-//			break;
-//		case 4:
-//			number[id++] = 'V';
-//			number[id++] = 'I';
-//			break;
-//		case 5:
-//			number[id++] = 'V';
-//			break;
-//		case 6:
-//			number[id++] = 'I';
-//			number[id++] = 'X';
-//			break;
-//		case 7:
-//			number[id++] = 'I';
-//			number[id++] = 'I';
-//			number[id++] = 'X';
-//			break;
-//		case 8:
-//			number[id++] = 'I';
-//			number[id++] = 'I';
-//			number[id++] = 'I';
-//			number[id++] = 'X';
-//			break;
-//		case 9:
-//			number[id++] = 'X';
-//			number[id++] = 'I';
-//			break;
-//		}
-//
-//		number[id++] = '0' + i;
-//		x = x / 10;
-//		if (j == 0)
-//		{
-//			break;
-//		}
-//	}
-//	int len = strlen(number);
-//	for (i = 0, j = len - 1; i < len && j >= 0 && i < j; i++, j--)
-//	{
-//		char c = number[i];
-//		number[i] = number[j];
-//		number[j] = c;
-//	}
-//}
+char * intToRoman(int num) {
+	if (num <= 0) 
+		return "";
+	char ret[100] = {0};
+	int number[] = { 1000, 900, 500, 400, 100,90, 50, 40, 10, 9, 5, 4, 1 };
+	char *flags[] = { "M","CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+	for (int i = 0; i < 13 && num > 0; i++)
+	{
+		if (num < number[i])
+			continue;
+		while (num >= number[i])
+		{
+			num -= number[i];
+			strcat(ret, flags[i]);
+		}
+	}
+	char *pres = (char*)malloc(strlen(ret) + 1);
+	strcpy(pres, ret);
+	return pres;
+}
 int romanToInt(char * s) 
 {
 	int count = 0,len = strlen(s);
@@ -456,28 +404,32 @@ static void InsertSort(int array[] , unsigned int nNum)
 }
 vector<vector<int>> threeSum(vector<int>& nums) 
 {
-    vector<vector<int>> res;
-    vector<int> l2;
-    int numsSize = nums.size();
-    for (int i = 0; i < numsSize - 2; i++)
+	vector<vector<int>> res;
+	vector<int> l2;
+	sort(nums.begin(), nums.end());
+	int numsSize = nums.size();
+	for (int i = 0; i < numsSize - 2; i++)
 	{
+		if (i > 0 && (nums.at(i) == nums.at(i - 1))) {
+			continue;
+		}
 		for (int j = i + 1; j < numsSize - 1; j++)
 		{
 			for (int k = j + 1; k < numsSize; k++)
 			{
 				if (nums[i] + nums[j] + nums[k] == 0)
 				{
-					int a[] = {nums[i],nums[j],nums[k]};
-                    InsertSort(a,3);
-                    /*l2.push_back(a[0]);
-                    l2.push_back(a[1]);
-                    l2.push_back(a[2]);*/
+					int a[] = { nums[i],nums[j],nums[k] };
+					//InsertSort(a,3);
+					/*l2.push_back(a[0]);
+					l2.push_back(a[1]);
+					l2.push_back(a[2]);*/
 					bool bfind = false;
-					for (int m = 0;m < res.size();m++)
+
+					for (int m = 0; m < res.size(); m++)
 					{
-                        vector<int> l22 = res[m];
-						//if (l22[0] == l2[0] && l22[1] == l2[1] && l22[2] == l2[2])
-                        if (l22[0] == a[0] && l22[1] == a[1] && l22[2] == a[2])
+						vector<int> l22 = res[m];
+						if (l22[0] == a[0] && l22[1] == a[1] && l22[2] == a[2])
 						{
 							bfind = true;
 							break;
@@ -485,17 +437,16 @@ vector<vector<int>> threeSum(vector<int>& nums)
 					}
 					if (!bfind)
 					{
-                        l2.push_back(a[0]);
-                        l2.push_back(a[1]);
-                        l2.push_back(a[2]);
-                        res.push_back(l2);
+						//vector<int> l2;
+						vector<int> vec = { nums.at(i), nums.at(j), nums.at(k) };
+						res.push_back(vec);
 					}
-                    l2.clear();
+					l2.clear();
 				}
 			}
 		}
 	}
-    return res;
+	return res;
 }
 void Other8Action()
 {
