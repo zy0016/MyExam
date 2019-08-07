@@ -372,6 +372,16 @@ void DeleteAllNodes(node *s)
         free(p);
     }
 }
+int GetLinkLength(node *s)
+{
+    int i = 0;
+    while(s != NULL)
+    {
+        i++;
+        s = s->next;
+    }
+    return i;
+}
 node* DeleteNodeByValue(node *head,int value)
 {
     node *pCur = head;

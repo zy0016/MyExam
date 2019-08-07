@@ -405,43 +405,46 @@ static void InsertSort(int array[] , unsigned int nNum)
 vector<vector<int>> threeSum(vector<int>& nums) 
 {
 	vector<vector<int>> res;
-	vector<int> l2;
 	sort(nums.begin(), nums.end());
 	int numsSize = nums.size();
-	for (int i = 0; i < numsSize - 2; i++)
+    int m;
+	for (int i = 0; i < numsSize - 1; i++)
 	{
-		if (i > 0 && (nums.at(i) == nums.at(i - 1))) {
-			continue;
-		}
-		for (int j = i + 1; j < numsSize - 1; j++)
+		for (int j = numsSize - 1; j > 0; j--)
 		{
-			for (int k = j + 1; k < numsSize; k++)
-			{
-				if (nums[i] + nums[j] + nums[k] == 0)
-				{
-					int a[] = { nums[i],nums[j],nums[k] };
-					bool bfind = false;
-
-					for (int m = 0; m < res.size(); m++)
+            /*if (i + j == numsSize)
+            {
+                break;
+            }*/
+            m = i + 1;
+            while(m < j)
+            {
+                if (nums[i] + nums[j] + nums[m] == 0)
+                {
+                    bool bfind = false;
+                    for (int m = 0; m < res.size(); m++)
 					{
-						vector<int> l22 = res[m];
-						if (l22[0] == a[0] && l22[1] == a[1] && l22[2] == a[2])
+						vector<int> v = res.at(m);
+                        int a[] = { nums[i],nums[j],nums[m] };
+                        InsertSort(a, 3);
+						if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2])
 						{
 							bfind = true;
 							break;
 						}
 					}
-					if (!bfind)
+                    if (!bfind)
 					{
 						vector<int> vec;
                         vec.push_back(nums.at(i));
                         vec.push_back(nums.at(j));
-                        vec.push_back(nums.at(k));
+                        vec.push_back(nums.at(m));
+                        sort(vec.begin(),vec.end());
 						res.push_back(vec);
 					}
-					l2.clear();
-				}
-			}
+                }
+                m++;
+            }
 		}
 	}
 	return res;
@@ -528,16 +531,19 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
                         n--;
                         continue;
                     }
+                    if ((n < m)&&(m + n == numsSize))
+                    {
+                        break;
+                    }
                     int count = nums[i] + nums[j] + nums[m] + nums[n];
                     if (count == target)
                     {
 						bool bfind = false;
-						for (int l = 0; l < res.size(); l++)
+                        for (int l = 0; l < res.size(); l++)
 						{
 							vector<int> v = res.at(l);
 							int a[4] = { nums[i] ,nums[j],nums[m],nums[n] };
-							InsertSort(a, 4);
-							//if (v[0] == nums[i] && v[1] == nums[j] && v[2] == nums[m] && v[3] == nums[n] )
+                            InsertSort(a, 4);
 							if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2] && v[3] == a[3])
 							{
 								bfind = true;
@@ -552,7 +558,7 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
 							vec.push_back(nums.at(m));
 							vec.push_back(nums.at(n));
 							sort(vec.begin(), vec.end());
-							res.push_back(vec);
+                            res.push_back(vec);
 						}
                     }
                     n--;
@@ -562,6 +568,15 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
         }
     }
     return res;
+}
+bool isValid(char * s)
+{
+    char stack[10] = {0};
+    for (int i = 0;i < strlen(s);i++)
+    {
+        //if (s[i])
+    }
+    return (strlen(stack) == 0);
 }
 void Other8Action()
 {
