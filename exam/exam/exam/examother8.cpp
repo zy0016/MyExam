@@ -420,10 +420,6 @@ vector<vector<int>> threeSum(vector<int>& nums)
 				if (nums[i] + nums[j] + nums[k] == 0)
 				{
 					int a[] = { nums[i],nums[j],nums[k] };
-					//InsertSort(a,3);
-					/*l2.push_back(a[0]);
-					l2.push_back(a[1]);
-					l2.push_back(a[2]);*/
 					bool bfind = false;
 
 					for (int m = 0; m < res.size(); m++)
@@ -437,8 +433,7 @@ vector<vector<int>> threeSum(vector<int>& nums)
 					}
 					if (!bfind)
 					{
-						//vector<int> l2;
-						vector<int> vec;// = { nums.at(i), nums.at(j), nums.at(k) };
+						vector<int> vec;
                         vec.push_back(nums.at(i));
                         vec.push_back(nums.at(j));
                         vec.push_back(nums.at(k));
@@ -517,14 +512,15 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
 	sort(nums.begin(), nums.end());
 	int numsSize = nums.size();
     int m = 0,n = 0;
-    for (int i = 0;i < numsSize - 1;i++)
+	
+    for (int i = 0;i < numsSize - 2;i++)
     {
-        for (int j = numsSize - 1;j > 0;j--)
+        for (int j = numsSize - 1;j > 1;j--)
         {
             m = i + 1;
-            n = j - 1;
             while(m < j)
             {
+				n = j - 1;
                 while(n > i)
                 {
                     if (m == n)
@@ -535,17 +531,33 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
                     int count = nums[i] + nums[j] + nums[m] + nums[n];
                     if (count == target)
                     {
-                        vector<int> vec;
-                        vec.push_back(nums.at(i));
-                        vec.push_back(nums.at(j));
-                        vec.push_back(nums.at(m));
-                        vec.push_back(nums.at(n));
-					    res.push_back(vec);
-                    
+						bool bfind = false;
+						for (int l = 0; l < res.size(); l++)
+						{
+							vector<int> v = res.at(l);
+							int a[4] = { nums[i] ,nums[j],nums[m],nums[n] };
+							InsertSort(a, 4);
+							//if (v[0] == nums[i] && v[1] == nums[j] && v[2] == nums[m] && v[3] == nums[n] )
+							if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2] && v[3] == a[3])
+							{
+								bfind = true;
+								break;
+							}
+						}
+						if (!bfind)
+						{
+							vector<int> vec;
+							vec.push_back(nums.at(i));
+							vec.push_back(nums.at(j));
+							vec.push_back(nums.at(m));
+							vec.push_back(nums.at(n));
+							sort(vec.begin(), vec.end());
+							res.push_back(vec);
+						}
                     }
                     n--;
                 }
-                m++;
+				m++;
             }
         }
     }
