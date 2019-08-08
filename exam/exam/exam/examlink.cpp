@@ -262,6 +262,75 @@ node * AddNode(int value , node *a)
     pNext->next = p;
     return a;
 }
+charnode * pushNode(char value , charnode *a)
+{
+    charnode *p = NULL;
+    charnode *pNext = a;
+
+    p = (charnode*)malloc(sizeof(charnode));
+    p->val = value;
+    p->next = NULL;
+    if (a != NULL)
+    {
+        p->next = a;
+    }
+    return p;
+}
+charnode* popupNode(charnode *a,char *c)
+{
+    if (a == NULL)
+    {
+        return NULL;
+    }
+    *c = a->val;
+    charnode *p = a;
+    a = a->next;
+    free(p);
+    return a;
+}
+int getTopNode(charnode *a,char *c)
+{
+    if (a == NULL)
+        return 0;
+    *c = a->val;
+    return 1;
+}
+void releaseNode(charnode *s)
+{
+    charnode *p = s;
+    while(s != NULL)
+    {
+        p = s;
+        s = s->next;
+        free(p);
+    }
+}
+int getNodeCount(charnode *s)
+{
+    int i = 0;
+    while(s != NULL)
+    {
+        s = s->next;
+        i++;
+    }
+    return i;
+}
+int getNodeCharAll(charnode *s,char *buf,unsigned int buflen)
+{
+    int i = 0;
+    char *p = buf;
+    while(s != NULL)
+    {
+        *p = s->val;
+        s = s->next;
+        if (i == buflen - 1)
+            break;
+        i++;
+        p++;
+    }
+    *p = '\0';
+    return i;
+}
 
 node *merge_1(node *a,node *b)
 {
@@ -289,6 +358,10 @@ node *merge_1(node *a,node *b)
 node *merge_2(node *a,node *b)
 {
     node *c, *pa, *pb, *pc;
+    if (a == NULL)
+        return b;
+    if (b == NULL)
+        return a;
     if (a->val <= b->val)
     {
         pc = c = a;
@@ -340,7 +413,26 @@ node *merge_3(node *a,node *b)
     }
     return head;
 }
-
+node* mergeKLists(node** lists, int listsSize)
+{
+    if (lists == NULL || listsSize == 0)
+        return NULL;
+    if (listsSize == 1)
+    {
+        return *lists;
+    }
+    node *p,*p1,*p2;
+    int id = 0;
+    p = lists[0];
+    while(listsSize - 1 > id)
+    {
+        p1 = p;
+        p2 = lists[id + 1];
+        p = merge_2(p1,p2);
+        id++;
+    }
+    return p;
+}
 node * reverse( node *n)
 {
     node *head = NULL;
@@ -356,6 +448,7 @@ node * reverse( node *n)
 
 void ShowNode(node *s)
 {
+    printf("\n");
     while(s != NULL)
     {
         printf("%d ",s->val);
@@ -531,6 +624,26 @@ void LinkAction()
 	DeleteAllNodes(c);
 	DeleteAllNodes(a2);
 	DeleteAllNodes(b2);
+    //////////////////////
+    node *p1 = NULL;
+    node *p2 = NULL;
+    node *p3 = NULL;
+    p1 = AddNode(1,p1);
+    p1 = AddNode(4,p1);
+    p1 = AddNode(5,p1);
+
+    p2 = AddNode(1,p2);
+    p2 = AddNode(3,p2);
+    p2 = AddNode(4,p2);
+
+    p3 = AddNode(2,p3);
+    p3 = AddNode(6,p3);
+
+    //node *p12 = merge_2(p1,p2);
+    //ShowNode(p12);
+    node *ps[] = {p1,p2,p3};
+    node *p4 = mergeKLists(ps,3);
+    ShowNode(p4);
 	///////////////////////
 	struct ListNode *l1 = NULL;
 	struct ListNode *l2 = NULL;

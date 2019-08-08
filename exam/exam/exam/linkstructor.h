@@ -18,6 +18,19 @@ struct node_
 };
 typedef struct node_ node;
 
+struct charnode_ 
+{
+    char val ;
+    struct charnode_ *next;
+};
+typedef struct charnode_ charnode;
+charnode * pushNode(char value , charnode *a);
+charnode * popupNode(charnode *a,char *c);
+int getTopNode(charnode *a,char *c);
+void releaseNode(charnode *a);
+int getNodeCount(charnode *s);
+int getNodeCharAll(charnode *s,char *buf,unsigned int buflen);
+
 node **findNode(node *root, int key);
 bool remove_if(node **head, int key);
 node * AddNode(int value , node *a);

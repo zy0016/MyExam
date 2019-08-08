@@ -569,14 +569,115 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
     }
     return res;
 }
+
 bool isValid(char * s)
 {
-    char stack[10] = {0};
+    charnode *p = NULL;
+    bool res = true;
+    if (s == NULL || strlen(s) == 0)
+        return true;
+
     for (int i = 0;i < strlen(s);i++)
     {
-        //if (s[i])
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{')
+        {
+            p = pushNode(s[i],p);
+        }
+        else if (s[i] == ')' || s[i] == ']' || s[i] == '}')
+        {
+            char ctop = '\0';
+            int itop = getTopNode(p,&ctop);
+            if (itop == 0)
+            {
+                res = false;
+                break;
+            }
+            if (ctop == '(' && s[i] == ')' || ctop == '[' && s[i] == ']' || ctop == '{' && s[i] == '}')
+            {
+                p = popupNode(p,&ctop);
+            }
+            else
+            {
+                res = false;
+                break;
+            }
+        }
     }
-    return (strlen(stack) == 0);
+    if (getNodeCount(p) > 0)
+        res = false;
+    releaseNode(p);
+    return res;
+}
+
+char *getParenthesis1(int n)
+{
+    charnode *p1 = NULL;
+    for (int i = 0;i < n;i++)
+    {
+        p1 = pushNode('(',p1);
+    }
+    for (int i = 0;i < n;i++)
+    {
+        p1 = pushNode(')',p1);
+    }
+    int len = getNodeCount(p1);
+    char *s1 = (char*)malloc(sizeof(char) * (len + 1));
+    memset(s1,0,sizeof(char) * (len + 1));
+    getNodeCharAll(p1,s1,len);
+    releaseNode(p1);
+    return s1;
+}
+char *getParenthesis2(int n)
+{
+    charnode *p1 = NULL;
+    for (int i = 0;i < n;i++)
+    {
+        p1 = pushNode('(',p1);
+        p1 = pushNode(')',p1);
+    }
+    int len = getNodeCount(p1);
+    char *s1 = (char*)malloc(sizeof(char) * (len + 1));
+    memset(s1,0,sizeof(char) * (len + 1));
+    getNodeCharAll(p1,s1,len);
+    releaseNode(p1);
+    return s1;
+}
+/*
+n = 3
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+*/
+vector<string> generateParenthesis(int n) 
+{
+    vector<string> res;
+    int len = 0;
+    if (n == 0)
+        return res;
+    if (n == 1)
+    {
+        res.push_back("()");
+        return res;
+    }
+    //1//
+    char *s1 = getParenthesis1(n);
+    res.push_back(s1);
+    free(s1);
+    s1 = NULL;
+    //////////2//////////
+    char *s2 = getParenthesis2(n);
+    res.push_back(s2);
+    free(s2);
+    s2 = NULL;
+    ///3/////////
+    for (int i = 0;i < n - 1;i++)
+    {
+
+    }
 }
 void Other8Action()
 {
@@ -720,7 +821,7 @@ void Other8Action()
     {
         num2.push_back(a2[i]);
     }
-    vector<vector<int>> res2 = threeSum(num2);
+    //vector<vector<int>> res2 = threeSum(num2);
     /////////////////////
     int arr3[] = {-1, 2, 1, -4};
     int a3 = threeSumClosest(arr3,sizeof(arr3)/sizeof(int),1);
@@ -734,4 +835,33 @@ void Other8Action()
     a4.push_back(-2);
     a4.push_back(2);
     vector<vector<int>> res4 = fourSum(a4,0);
+    ////////////////////////////
+    bool br = false;
+    char arrstrign1[] = "()";
+    br = isValid(arrstrign1);
+    cout<<br<<endl;
+
+    char arrstrign2[] = "()[]{}";
+    br = isValid(arrstrign2);
+    cout<<br<<endl;
+
+    char arrstrign3[] = "(]";
+    br = isValid(arrstrign3);
+    cout<<br<<endl;
+
+    char arrstrign4[] = "([)]";
+    br = isValid(arrstrign4);
+    cout<<br<<endl;
+
+    char arrstrign5[] = "{[]}";
+    br = isValid(arrstrign5);
+    cout<<br<<endl;
+
+    char arrstrign6[] = "]";
+    br = isValid(arrstrign6);
+    cout<<br<<endl;
+
+    char arrstrign7[] = "[";
+    br = isValid(arrstrign7);
+    cout<<br<<endl;
 }
