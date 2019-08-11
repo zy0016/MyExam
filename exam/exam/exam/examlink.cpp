@@ -433,6 +433,16 @@ node* mergeKLists(node** lists, int listsSize)
     }
     return p;
 }
+node* swapPairs(node* head)
+{
+    if (head == NULL || head->next == NULL) 
+		return head;
+	node *start = head->next;
+	node *next = start->next;
+	start->next = head;
+	head->next = swapPairs(next);
+	return start;
+}
 node * reverse( node *n)
 {
     node *head = NULL;
@@ -644,6 +654,23 @@ void LinkAction()
     node *ps[] = {p1,p2,p3};
     node *p4 = mergeKLists(ps,3);
     ShowNode(p4);
+    /////////////////////
+    node *pa = NULL;
+    for (i = 1;i <= 4; i++)
+    {
+        pa = AddNode(i, pa);
+    }
+    pa = swapPairs(pa);
+    ShowNode(pa);
+
+    node *pb = NULL;
+    for (i = 1;i <= 5; i++)
+    {
+        pb = AddNode(i, pb);
+    }
+    pb = swapPairs(pb);
+    ShowNode(pb);
+
 	///////////////////////
 	struct ListNode *l1 = NULL;
 	struct ListNode *l2 = NULL;

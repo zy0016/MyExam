@@ -679,6 +679,123 @@ vector<string> generateParenthesis(int n)
 
     }
 }
+int removeDuplicates(int* nums, int numsSize)
+{
+    if (nums == NULL || numsSize == 0)
+        return 0;
+    bool bfind = false;
+    int all = 0,numsSizebak = numsSize;
+    int i = 0,j = 1;
+    while(i < numsSize)
+    {
+        j = i + 1;
+        bfind = false;
+        while(j < numsSize)
+        {
+            if (nums[i] == nums[j])
+            {
+                all++;
+                for (int m = j;m < numsSize;m++)
+                {
+                    nums[m - 1] = nums[m];
+                }
+                bfind = true;
+                numsSize--;
+                break;
+            }
+            j++;
+        }
+        if (bfind)
+        {
+            continue;
+        }
+        i++;
+    }
+    return numsSizebak - all;
+}
+int removeElement(int* nums, int numsSize, int val)
+{
+    if (nums == NULL || numsSize == 0)
+        return 0;
+    bool bfind = false;
+    int all = 0,numsSizebak = numsSize;
+    int i = 0;
+    while(i < numsSize)
+    {
+        bfind = false;
+        if (nums[i] == val)
+        {
+            all++;
+            for (int m = i;m < numsSize - 1;m++)
+            {
+                nums[m] = nums[m + 1];
+            }
+            bfind = true;
+            numsSize--;
+        }
+        if (bfind)
+            continue;
+        i++;
+    }
+    return numsSizebak - all;
+}
+int divide(int dividend, int divisor)
+{
+    bool positive = true;
+    int div = 0;
+    if (dividend == 0)
+        return 0;
+    if (dividend == divisor)
+        return 1;
+    if (dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)
+    {
+        positive = false;
+    }
+    if (positive)
+    {
+        if (dividend > 0 && divisor > 0)
+        {
+            while(dividend >= 0 /*&& dividend > divisor*/)
+            {
+                div++;
+                dividend -= divisor;
+            }
+            div--;
+        }
+        else
+        {
+            while(dividend <= 0 /*&& dividend < divisor*/)
+            {
+                div++;
+                dividend -= divisor;
+            }
+            div--;
+        }
+        return div;
+    }
+    else
+    {
+        if (dividend > 0 && divisor < 0)
+        {
+            while(dividend >= 0)
+            {
+                div++;
+                dividend += divisor;
+            }
+            div--;
+        }
+        else
+        {
+            while(dividend <= 0)
+            {
+                div++;
+                dividend += divisor;
+            }
+            div--;
+        }
+        return -div;
+    }
+}
 void Other8Action()
 {
 	cout << "\n===========================Other8Action===========================" << endl;
@@ -864,4 +981,33 @@ void Other8Action()
     char arrstrign7[] = "[";
     br = isValid(arrstrign7);
     cout<<br<<endl;
+    ///////////////
+    int ar[] = {1,1,2};
+    int ir = removeDuplicates(ar,sizeof(ar)/sizeof(int));
+    cout<<ir<<endl;
+
+    int ar2[] = {0,0,1,1,1,2,2,3,3,4};
+    int ir2 = removeDuplicates(ar2,sizeof(ar2)/sizeof(int));
+    cout<<ir2<<endl;
+
+    int ar3[] = {0,0,1,1,1,2,2,3,3,4,4,5};
+    int ir3 = removeDuplicates(ar3,sizeof(ar3)/sizeof(int));
+    cout<<ir3<<endl;
+
+    int arm1[] = {3,2,2,3};
+    int armm1 = removeElement(arm1,sizeof(arm1)/sizeof(int),3);
+    cout<<armm1<<endl;
+
+    int arm2[] = {0,1,2,2,3,0,4,2};
+    int armm2 = removeElement(arm2,sizeof(arm2)/sizeof(int),2);
+    cout<<armm2<<endl;
+    //////////////
+    int id = divide(-10,-3);
+    cout<<id<<endl;
+
+    id = divide(7,-3);
+    cout<<id<<endl;
+
+    id = divide(2147483647,2);
+    cout<<id<<endl;
 }
