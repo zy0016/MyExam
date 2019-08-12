@@ -11,6 +11,7 @@
 #include <algorithm>
 #include "other.h"
 #include "linkstructor.h"
+#include "sortstructor.h"
 //////////////////////////////
 
 void Other8Action();

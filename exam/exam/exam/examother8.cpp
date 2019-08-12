@@ -384,21 +384,21 @@ char * longestCommonPrefix(char ** strs, int strsSize)
 	return res;
 }
 
-static void InsertSort(int array[] , unsigned int nNum)
+static void InsertSort(int nums[] , unsigned int nNum)
 {
     int temp,j;
     unsigned int i;
     for (i = 1; i < nNum; ++i)
     {
-        if (array[i] < array[i - 1])
+        if (nums[i] < nums[i - 1])
         {
-            temp = array[i];
-            array[i] = array[i - 1];
-            for (j = i - 1;j >= 0 && temp < array[j]; --j)
+            temp = nums[i];
+            nums[i] = nums[i - 1];
+            for (j = i - 1;j >= 0 && temp < nums[j]; --j)
             {
-                array[j + 1] = array[j];
+                nums[j + 1] = nums[j];
             }
-            array[j + 1] = temp;
+            nums[j + 1] = temp;
         }
     }
 }
@@ -764,12 +764,12 @@ int divide(int dividend, int divisor)
         }
         else
         {
-            while(dividend <= 0 /*&& dividend < divisor*/)
+            while(dividend <= 0 && dividend < divisor)
             {
                 div++;
                 dividend -= divisor;
             }
-            div--;
+            //div--;
         }
         return div;
     }
@@ -795,6 +795,88 @@ int divide(int dividend, int divisor)
         }
         return -div;
     }
+}
+bool decreaseOrder(int *nums,int n)
+{
+    for(int i = 0;i < n - 1;i++)
+    {
+        if (nums[i] < nums[i + 1])
+            return false;
+    }
+    return true;
+}
+void generateNextOrder(int *nums,int numsSize)
+{
+    int temp,j;
+    unsigned int i;
+    bool bfind = false;
+    /*for (i = 1; i < numsSize; ++i)
+    {
+        if (nums[i] > nums[i - 1])
+        {
+            temp = nums[i];
+            nums[i] = nums[i - 1];
+            for (j = i - 1;j >= 0 && temp > nums[j]; --j)
+            {
+                nums[j + 1] = nums[j];
+            }
+            nums[j + 1] = temp;
+            return;
+        }
+    }*/
+    for (int i = numsSize - 1;i > 0;i--)//last
+    {
+        for (int j = i - 1;j >= 0;j--)//previous
+        {
+            if (nums[i] > nums[j])
+            {
+                int k = nums[i];
+                nums[i] = nums[j];
+                nums[j] = k;
+                return;
+            }
+        }
+    }
+}
+void nextPermutation(int* nums, int numsSize)
+{
+    if (nums == NULL || numsSize == 0 || numsSize == 1)
+        return;
+    if (numsSize == 2)
+    {
+        int i = nums[0];
+        nums[0] = nums[1];
+        nums[1] = i;
+        return;
+    }
+    if (decreaseOrder(nums,numsSize))
+    {
+        InsertSort(nums,numsSize);
+        return;
+    }
+    generateNextOrder(nums,numsSize);
+}
+int* searchRange(int* nums, int numsSize, int target, int* returnSize)
+{
+    int start = -1,end = -1,i,j;
+    for (i = 0;i < numsSize - 1;i++)
+    {
+        if (nums[i] == target && nums[i + 1] == target)
+        {
+            start = i;
+            for(j = i + 1;j < numsSize;j++)
+            {
+                if (nums[j] != target)
+                    break;
+            }
+            end = j - 1;
+        }
+    }
+    int *p = (int*)malloc(sizeof(int) * 2);
+    p[0] = start;
+    p[1] = end;
+    *returnSize = 2;
+    return p;
 }
 void Other8Action()
 {
@@ -1010,4 +1092,23 @@ void Other8Action()
 
     id = divide(2147483647,2);
     cout<<id<<endl;
+
+    int n1[] = {1,2,3};
+    nextPermutation(n1,3);
+
+    int n2[] = {3,2,1};
+    nextPermutation(n2,3);
+
+    int n3[] = {1,1,5};
+    nextPermutation(n3,3);
+
+    int n4[] = {1,3,2};
+    nextPermutation(n4,3);
+    ///////////////
+    int r1[] = {5,7,7,8,8,10};
+    int r2 = 0;
+    int *rp1 = searchRange(r1,sizeof(r1)/sizeof(int),8,&r2);
+
+    int r22[] = {5,7,7,8,8,10};
+    int *rp2 = searchRange(r1,sizeof(r22)/sizeof(int),6,&r2);
 }
