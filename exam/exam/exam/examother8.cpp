@@ -978,10 +978,8 @@ int** combinationSum(int* candidates, int candidatesSize, int target, int* retur
         int k = target - candidates[i];
         if (k > 0)
         {
-            for (int m = 0;m < candidatesSize;m++)
+            for (int m = 0;m < candidatesSize && m!=i;m++)
             {
-                if (m == i)
-                    continue;
                 if (target % k == 0)
                 {
                     int num = target / candidates[m];
