@@ -810,20 +810,6 @@ void generateNextOrder(int *nums,int numsSize)
     int temp,j;
     unsigned int i;
     bool bfind = false;
-    /*for (i = 1; i < numsSize; ++i)
-    {
-        if (nums[i] > nums[i - 1])
-        {
-            temp = nums[i];
-            nums[i] = nums[i - 1];
-            for (j = i - 1;j >= 0 && temp > nums[j]; --j)
-            {
-                nums[j + 1] = nums[j];
-            }
-            nums[j + 1] = temp;
-            return;
-        }
-    }*/
     for (int i = numsSize - 1;i > 0;i--)//last
     {
         for (int j = i - 1;j >= 0;j--)//previous
@@ -855,28 +841,83 @@ void nextPermutation(int* nums, int numsSize)
         return;
     }
     generateNextOrder(nums,numsSize);
+	InsertSort(nums + 1, numsSize - 1);
+}
+int * getRange(int start, int end)
+{
+	int *p = (int*)malloc(sizeof(int) * 2);
+	p[0] = start;
+	p[1] = end;
+	return p;
 }
 int* searchRange(int* nums, int numsSize, int target, int* returnSize)
 {
-    int start = -1,end = -1,i,j;
-    for (i = 0;i < numsSize - 1;i++)
-    {
-        if (nums[i] == target && nums[i + 1] == target)
-        {
-            start = i;
-            for(j = i + 1;j < numsSize;j++)
-            {
-                if (nums[j] != target)
-                    break;
-            }
-            end = j - 1;
-        }
-    }
-    int *p = (int*)malloc(sizeof(int) * 2);
-    p[0] = start;
-    p[1] = end;
-    *returnSize = 2;
-    return p;
+	int start = -1, end = -1, i, j;
+	if (nums == NULL || numsSize == 0)
+	{
+		*returnSize = 2;
+		return getRange(start,end);
+	}
+	if (numsSize == 1)
+	{
+		if (nums[0] == target)
+		{
+			start = 0;
+			end = 0;
+		}
+		*returnSize = 2;
+		return getRange(start, end);
+	}
+	if (numsSize == 2)
+	{
+		if (nums[0] == target && nums[1] != target)
+		{
+			start = 0;
+			end = 0;
+		}
+		else if (nums[0] != target && nums[1] == target)
+		{
+			start = 1;
+			end = 1;
+		}
+		else if (nums[0] == target && nums[1] == target)
+		{
+			start = 0;
+			end = 1;
+		}
+		*returnSize = 2;
+		return getRange(start, end);
+	}
+	for (i = 0; i < numsSize - 1; i++)
+	{
+		if (nums[i] == target && nums[i + 1] == target)
+		{
+			if (start == -1)
+			{
+				start = i;
+			}
+			for (j = i + 1; j < numsSize; j++)
+			{
+				if (nums[j] != target)
+					break;
+			}
+			end = j - 1;
+		}
+	}
+	if (start == -1 && end == -1)
+	{
+		for (i = 0; i < numsSize; i++)
+		{
+			if (nums[i] == target)
+			{
+				start = i;
+				end = i;
+				break;
+			}
+		}
+	}
+	*returnSize = 2;
+	return getRange(start, end);
 }
 void Other8Action()
 {
@@ -1110,5 +1151,8 @@ void Other8Action()
     int *rp1 = searchRange(r1,sizeof(r1)/sizeof(int),8,&r2);
 
     int r22[] = {5,7,7,8,8,10};
-    int *rp2 = searchRange(r1,sizeof(r22)/sizeof(int),6,&r2);
+    int *rp2 = searchRange(r22,sizeof(r22)/sizeof(int),6,&r2);
+
+	int r33[] = { 3,3,3 };
+	int *rp3 = searchRange(r33, sizeof(r33) / sizeof(int), 3, &r2);
 }
