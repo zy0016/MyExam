@@ -936,6 +936,66 @@ int searchInsert(int* nums, int numsSize, int target)
 	}
 	return 0;
 }
+//char * countAndSay(int n)
+//{
+//    int i,j;
+//    while(true)
+//    {
+//        i = n / 10;
+//        j = n % 10;
+//        if (i == 0)
+//        {
+//            break;
+//        }
+//        n = i;
+//    }
+//}
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+int** combinationSum(int* candidates, int candidatesSize, int target, int* returnSize, int** returnColumnSizes)
+{
+    int **result = NULL;
+    //int *pindex = NULL;
+    int *p1 = NULL;
+    pnode *pall = NULL;
+    if (candidates == NULL || candidatesSize == 0)
+        return NULL;
+    for (int i = 0;i < candidatesSize;i++)
+    {
+        if (target % candidates[i] == 0)
+        {
+            int num = target / candidates[i];
+            p1 = (int*)malloc(sizeof(int) * num);
+            for (int j = 0;j < num;j++)
+                p1[j] = candidates[i];
+            pall = AddNode(p1,num,pall);
+            free(p1);
+            p1 = NULL;
+        }
+        int k = target - candidates[i];
+        if (k > 0)
+        {
+            for (int m = 0;m < candidatesSize;m++)
+            {
+                if (m == i)
+                    continue;
+                if (target % k == 0)
+                {
+                    int num = target / candidates[m];
+                    p1 = (int*)malloc(sizeof(int) * num);
+                    for (int j = 0;j < num;j++)
+                        p1[j] = candidates[m];
+                    pall = AddNode(p1,num,pall);
+                    free(p1);
+                    p1 = NULL;
+                }
+            }
+        }
+    }
+}
 void Other8Action()
 {
 	cout << "\n===========================Other8Action===========================" << endl;

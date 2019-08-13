@@ -331,6 +331,27 @@ int getNodeCharAll(charnode *s,char *buf,unsigned int buflen)
     *p = '\0';
     return i;
 }
+pnode * AddNode(int* value,int len , pnode *a)
+{
+    pnode *p = NULL;
+    pnode *pNext = a;
+
+    p = (pnode*)malloc(sizeof(pnode));
+    p->val = (int*)malloc(sizeof(int) * len);
+    memset(p->val,0,sizeof(int) * len);
+    memcpy(p->val,value,len);
+    p->next = NULL;
+    if (a == NULL)
+    {
+        return p;
+    }
+    while (pNext->next != NULL)
+    {
+        pNext = pNext->next;
+    }
+    pNext->next = p;
+    return a;
+}
 
 node *merge_1(node *a,node *b)
 {

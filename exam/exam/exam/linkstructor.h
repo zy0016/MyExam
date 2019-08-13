@@ -24,6 +24,14 @@ struct charnode_
     struct charnode_ *next;
 };
 typedef struct charnode_ charnode;
+struct pnode_ 
+{
+    int* val ;
+    struct pnode_ *next;
+};
+typedef struct pnode_ pnode;
+pnode * AddNode(int* value ,int len, pnode *a);
+
 charnode * pushNode(char value , charnode *a);
 charnode * popupNode(charnode *a,char *c);
 int getTopNode(charnode *a,char *c);
