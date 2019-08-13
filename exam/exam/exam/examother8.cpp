@@ -919,6 +919,23 @@ int* searchRange(int* nums, int numsSize, int target, int* returnSize)
 	*returnSize = 2;
 	return getRange(start, end);
 }
+int searchInsert(int* nums, int numsSize, int target) 
+{
+	if (nums == NULL || numsSize == 0 || target < nums[0] || numsSize == 1 && nums[0] == target)
+		return 0;
+	if (target == nums[numsSize - 1])
+		return numsSize - 1;
+	if (target > nums[numsSize - 1])
+		return numsSize;
+	for (int i = 0; i < numsSize - 1; i++)
+	{
+		if (nums[i] == target)
+			return i;
+		if (nums[i] < target && target < nums[i + 1])
+			return i + 1;
+	}
+	return 0;
+}
 void Other8Action()
 {
 	cout << "\n===========================Other8Action===========================" << endl;
