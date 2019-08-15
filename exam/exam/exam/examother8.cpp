@@ -745,8 +745,12 @@ int divide(int dividend, int divisor)
     int div = 0;
     if (dividend == 0)
         return 0;
-    if (dividend == divisor)
+    if (dividend == divisor || divisor == 1)
         return 1;
+	if (divisor == -1)
+	{
+		return (dividend == INT_MIN) ? INT_MAX : -dividend;
+	}
     if (dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)
     {
         positive = false;
@@ -936,20 +940,37 @@ int searchInsert(int* nums, int numsSize, int target)
 	}
 	return 0;
 }
-//char * countAndSay(int n)
-//{
-//    int i,j;
-//    while(true)
-//    {
-//        i = n / 10;
-//        j = n % 10;
-//        if (i == 0)
-//        {
-//            break;
-//        }
-//        n = i;
-//    }
-//}
+string countAndSay(int n) {
+	string inputString = "1";
+	int nCount = 1;
+	string output = inputString;
+	char currString = '0';
+	while (nCount < n) 
+	{
+		output = "";
+		int count = 0;
+		currString = inputString[0];
+		for (const auto &chr : inputString) 
+		{
+			if (chr == currString) 
+			{
+				count++;
+			}
+			else 
+			{
+				output += (std::to_string(count) + currString);
+				currString = chr;
+				count = 1;
+			}
+		}
+		output += (std::to_string(count) + currString);
+		inputString = output;
+		nCount++;
+	}
+
+	std::cout << output << std::endl;
+	return output;
+}
 /**
  * Return an array of arrays of size *returnSize.
  * The sizes of the arrays are returned as *returnColumnSizes array.
@@ -993,6 +1014,58 @@ int** combinationSum(int* candidates, int candidatesSize, int target, int* retur
             }
         }
     }
+}
+int firstMissingPositive(int* nums, int numsSize) 
+{
+	if (nums == NULL || numsSize == 0)
+		return 1;
+	if (numsSize == 1)
+	{
+		if (nums[0] <= 0 || nums[0] == INT_MAX || nums[0] > 1)
+			return 1;
+		else
+			return ++nums[0];
+	}
+	int id = 1;
+	InsertSort(nums, numsSize);
+	if (nums[0] > 1 || nums[numsSize - 1] < 0)
+		return 1;
+	
+	for (int i = 0; i < numsSize; i++)
+	{
+		if (nums[i] < 0 || nums[i] == id)
+			continue;
+		if (nums[i] == 0)
+		{
+			id = 1;
+			continue;
+		}
+		if (i == 0)
+		{
+			id = nums[i];
+			continue;
+		}
+		if (nums[i] > id)
+		{
+			if (nums[i] > nums[i - 1])
+			{
+				if (nums[i] - nums[i - 1] >= 2)
+				{
+					if (nums[i - 1] <= 0)
+					{
+						id = 1;
+					}
+					else
+					{
+						id = nums[i - 1] + 1;
+					}
+					return id;
+				}
+			}
+			id = nums[i];
+		}
+	}
+	return id + 1;
 }
 void Other8Action()
 {
@@ -1230,4 +1303,38 @@ void Other8Action()
 
 	int r33[] = { 3,3,3 };
 	int *rp3 = searchRange(r33, sizeof(r33) / sizeof(int), 3, &r2);
+	//////////////
+	string ra = countAndSay(5);
+	/////////////////
+	int count[] = { 1,2,0 };
+	int ic = firstMissingPositive(count, sizeof(count) / sizeof(int));
+	cout << ic << endl;
+
+	int count1[] = { 7,8,9,11,12 };
+	int ic1 = firstMissingPositive(count1, sizeof(count1) / sizeof(int));
+	cout << ic1 << endl;
+
+	int count2[] = { 3,4,-1,1 };
+	int ic2 = firstMissingPositive(count2, sizeof(count2) / sizeof(int));
+	cout << ic2 << endl;
+
+	int count3[] = { -1,-2 };
+	int ic3 = firstMissingPositive(count3, sizeof(count3) / sizeof(int));
+	cout << ic3 << endl;
+
+	int count4[] = { 1,1 };
+	int ic4 = firstMissingPositive(count4, sizeof(count4) / sizeof(int));
+	cout << ic4 << endl;
+
+	int count5[] = { 2,1 };
+	int ic5 = firstMissingPositive(count5, sizeof(count5) / sizeof(int));
+	cout << ic5 << endl;
+
+	int count6[] = { 1000,-1 };
+	int ic6 = firstMissingPositive(count6, sizeof(count6) / sizeof(int));
+	cout << ic6 << endl;
+
+	int count7[] = { 1000,1 };
+	int ic7 = firstMissingPositive(count7, sizeof(count7) / sizeof(int));
+	cout << ic7 << endl;
 }
