@@ -940,6 +940,7 @@ int searchInsert(int* nums, int numsSize, int target)
 	}
 	return 0;
 }
+#ifdef CPLUSPLUS_11
 string countAndSay(int n) {
 	string inputString = "1";
 	int nCount = 1;
@@ -971,6 +972,7 @@ string countAndSay(int n) {
 	std::cout << output << std::endl;
 	return output;
 }
+#endif
 /**
  * Return an array of arrays of size *returnSize.
  * The sizes of the arrays are returned as *returnColumnSizes array.
@@ -1066,6 +1068,100 @@ int firstMissingPositive(int* nums, int numsSize)
 		}
 	}
 	return id + 1;
+}
+char *multi10(char *num ,int mul)
+{
+    int ilen1 = strlen(num) + mul;
+    char *pres = (char*)malloc(sizeof(char)*(ilen1+2));
+    memset(pres,0,sizeof(char)*(ilen1+2));
+    strcpy(pres,num);
+    for (int i = 0;i < mul;i++)
+    {
+        strcat(pres,"0");
+    }
+    return pres;
+}
+char *multisingle(char *num1,char ch)
+{
+    int ilen1 = strlen(num1);
+    int m = ch - '0';
+    char *pres = (char*)malloc(sizeof(char)*(ilen1+2));
+    memset(pres,0,sizeof(char)*(ilen1+2));
+    memset(pres,32,sizeof(char)*(ilen1+1));
+    char *p = pres;
+    int id = 0;
+    bool improve = false;
+    int decade = -1;
+    for (int i = ilen1 - 1,id = ilen1;i >= 0 && id >= 0;i--,id--)
+    {
+        int num = num1[i] - '0';
+        int singlesingleres = num * m;
+        char str[3] = {0};
+        sprintf(str,"%d",singlesingleres);
+        if (singlesingleres >= 10)
+        {
+            if (improve)
+            {
+                pres[id] = (decade + str[1] - '0') + '0';
+            }
+            else
+            {
+                decade = str[0] - '0';
+                pres[id] = str[1];
+            }
+            improve = true;
+        }
+        else
+        {
+            if (improve)
+            {
+                pres[id] = (decade + singlesingleres) + '0';
+            }
+            else
+            {
+                pres[id] = singlesingleres + '0';
+            }
+            decade = 0;
+            improve = false;
+        }
+    }
+    if (decade != 0)
+    {
+        pres[0] = decade + '0';
+    }
+    Trim(pres);
+    return pres;
+}
+char *returnzero()
+{
+    char *p = (char*)malloc(sizeof(char)*2);
+    memset(p,0,sizeof(char)*2);
+    strcpy(p,"0");
+    return p;
+}
+char * multiply(char * num1, char * num2)
+{
+    if (num1 == NULL || num2 == NULL)
+        return NULL;
+    int ilen1 = strlen(num1);
+    int ilen2 = strlen(num2);
+    if (ilen1 == 0 || ilen2 == 0)
+        return NULL;
+    if ((ilen1 == 1 && num1[0] == '0') || (ilen2 == 1 && num2[0] == '0'))
+        return returnzero();
+    if (ilen1 == 1 && num1[0] == '1')
+        return num2;
+    if (ilen2 == 1 && num2[0] == '1')
+        return num1;
+    if (ilen1 == 1)
+    {
+        return multisingle(num2,num1[0]);
+    }
+    if (ilen2 == 1)
+    {
+        return multisingle(num1,num2[0]);
+    }
+    return NULL;
 }
 void Other8Action()
 {
@@ -1304,7 +1400,9 @@ void Other8Action()
 	int r33[] = { 3,3,3 };
 	int *rp3 = searchRange(r33, sizeof(r33) / sizeof(int), 3, &r2);
 	//////////////
+#ifdef CPLUSPLUS_11
 	string ra = countAndSay(5);
+#endif
 	/////////////////
 	int count[] = { 1,2,0 };
 	int ic = firstMissingPositive(count, sizeof(count) / sizeof(int));
@@ -1337,4 +1435,29 @@ void Other8Action()
 	int count7[] = { 1000,1 };
 	int ic7 = firstMissingPositive(count7, sizeof(count7) / sizeof(int));
 	cout << ic7 << endl;
+    /////////////////
+    char *ms1 = multisingle("99",'9');
+    cout<<ms1<<endl;
+    free(ms1);
+
+    ms1 = multisingle("23",'3');
+    cout<<ms1<<endl;
+    free(ms1);
+
+    ms1 = multisingle("23",'4');
+    cout<<ms1<<endl;
+    free(ms1);
+
+    ms1 = multisingle("9",'9');
+    cout<<ms1<<endl;
+    free(ms1);
+
+    ms1 = multisingle("3",'3');
+    cout<<ms1<<endl;
+    free(ms1);
+
+    ms1 = multi10("3",3);
+    cout<<ms1<<endl;
+    free(ms1);
+
 }
