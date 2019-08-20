@@ -1071,6 +1071,8 @@ int firstMissingPositive(int* nums, int numsSize)
 }
 char *multi10(char *num ,int mul)
 {
+	if (mul == 0)
+		return num;
     int ilen1 = strlen(num) + mul;
     char *pres = (char*)malloc(sizeof(char)*(ilen1+2));
     memset(pres,0,sizeof(char)*(ilen1+2));
@@ -1081,6 +1083,82 @@ char *multi10(char *num ,int mul)
     }
     return pres;
 }
+char *multiplus(char *num1, char *num2)
+{
+	int ilen1 = strlen(num1);
+	int ilen2 = strlen(num2);
+	int id1 = ilen1 - 1;
+	int id2 = ilen2 - 1;
+	int ilenres = 0, decade = 0;
+	int id = 0;
+	if (ilen1 > ilen2)
+		ilenres = ilen1 * 2 + 1;
+	else
+		ilenres = ilen2 * 2 + 1;
+
+	char *pres = (char*)malloc(sizeof(char)*(ilenres + 2));
+	memset(pres, 0, sizeof(char)*(ilenres + 2));
+	memset(pres, 32, sizeof(char)*(ilenres + 1));
+	id = ilenres;
+	while (id1 >= 0 && id2 >= 0)
+	{
+		int unit1 = num1[id1] - '0';
+		int unit2 = num2[id2] - '0';
+		int singlesingleres = unit1 + unit2;
+
+		if (decade + singlesingleres >= 10)
+		{
+			pres[id] = (decade + singlesingleres - 10) + '0';
+			decade = 1;
+		}
+		else
+		{
+			pres[id] = (decade + singlesingleres) + '0';
+			decade = 0;
+		}
+		id--;
+		id1--;
+		id2--;
+	}
+	while (id1 >= 0)
+	{
+		int singlesingleres = num1[id1] - '0';
+		if (decade + singlesingleres >= 10)
+		{
+			pres[id] = (decade + singlesingleres - 10) + '0';
+			decade = 1;
+		}
+		else
+		{
+			pres[id] = (decade + singlesingleres) + '0';
+			decade = 0;
+		}
+		id--;
+		id1--;
+	}
+	while (id2 >= 0)
+	{
+		int singlesingleres = num2[id2] - '0';
+		if (decade + singlesingleres >= 10)
+		{
+			pres[id] = (decade + singlesingleres - 10) + '0';
+			decade = 1;
+		}
+		else
+		{
+			pres[id] = (decade + singlesingleres) + '0';
+			decade = 0;
+		}
+		id--;
+		id2--;
+	}
+	if (decade > 0)
+	{
+		pres[id] = '1';
+	}
+	Trim(pres);
+	return pres;
+}
 char *multisingle(char *num1,char ch)
 {
     int ilen1 = strlen(num1);
@@ -1088,7 +1166,6 @@ char *multisingle(char *num1,char ch)
     char *pres = (char*)malloc(sizeof(char)*(ilen1+2));
     memset(pres,0,sizeof(char)*(ilen1+2));
     memset(pres,32,sizeof(char)*(ilen1+1));
-    char *p = pres;
     int id = 0;
     bool improve = false;
     int decade = -1;
@@ -1102,7 +1179,16 @@ char *multisingle(char *num1,char ch)
         {
             if (improve)
             {
-                pres[id] = (decade + str[1] - '0') + '0';
+				if (decade + (str[1] - '0') == 10)
+				{
+					pres[id] = '0';
+					decade = (str[0] - '0') + 1;
+				}
+				else
+				{
+					pres[id] = (decade + str[1] - '0') + '0';
+					decade = (str[0] - '0');
+				}
             }
             else
             {
@@ -1115,14 +1201,27 @@ char *multisingle(char *num1,char ch)
         {
             if (improve)
             {
-                pres[id] = (decade + singlesingleres) + '0';
+				if (decade + singlesingleres == 10)
+				{
+					pres[id] = '0';
+					decade = 1;
+					improve = true;
+				}
+				else
+				{
+					pres[id] = (decade + singlesingleres) + '0';
+					decade = 0;
+					improve = false;
+				}
             }
             else
             {
                 pres[id] = singlesingleres + '0';
+				decade = 0;
+				improve = false;
             }
-            decade = 0;
-            improve = false;
+            //decade = 0;
+            //improve = false;
         }
     }
     if (decade != 0)
@@ -1139,6 +1238,7 @@ char *returnzero()
     strcpy(p,"0");
     return p;
 }
+
 char * multiply(char * num1, char * num2)
 {
     if (num1 == NULL || num2 == NULL)
@@ -1161,7 +1261,22 @@ char * multiply(char * num1, char * num2)
     {
         return multisingle(num1,num2[0]);
     }
-    return NULL;
+	int id = ilen2 - 1;
+	int index = 0;
+	int size = 256;
+	char *pcount = (char*)malloc(sizeof(char)*size);
+	memset(pcount, 0, sizeof(char)*size);
+	strcpy(pcount, "0");
+	while (id >= 0)
+	{
+		char *p = multisingle(num1, num2[id]);
+		char *pplus = multi10(p, index);
+		char *plus = multiplus(pcount, pplus);
+		strcpy(pcount, plus);
+		index++;
+		id--;
+	}
+	return pcount;
 }
 void Other8Action()
 {
@@ -1440,6 +1555,22 @@ void Other8Action()
     cout<<ms1<<endl;
     free(ms1);
 
+	ms1 = multisingle("123456789", '3');
+	cout << ms1 << endl;
+
+	free(ms1);
+	ms1 = multisingle("1296", '5');
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multisingle("999", '9');
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multisingle("999", '3');
+	cout << ms1 << endl;
+	free(ms1);
+
     ms1 = multisingle("23",'3');
     cout<<ms1<<endl;
     free(ms1);
@@ -1460,4 +1591,27 @@ void Other8Action()
     cout<<ms1<<endl;
     free(ms1);
 
+	ms1 = multiplus("999", "29");
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multiplus("999", "0");
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multiplus("999", "0");
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multiply("123", "456");
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multiply("1236", "45");
+	cout << ms1 << endl;
+	free(ms1);
+
+	ms1 = multiply("123456789", "987654321");
+	cout << ms1 << endl;
+	free(ms1);
 }
