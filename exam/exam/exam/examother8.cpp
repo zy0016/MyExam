@@ -96,6 +96,42 @@ long reverse(int x) {
 	return res;
 }
 
+void myitoa(int n,char *str)
+{
+    char buf[20] = "";
+    int flag = 1;
+    if (n == 0)
+    {
+        strcpy(str,"0");
+        return;
+    }
+    if (n < 0)
+    {
+        flag = -1;
+    }
+    int temp = n;
+    int id = 0;
+    while(temp != 0)
+    {
+        buf[id++] = (temp % 10) * flag + '0';
+        temp = temp / 10;
+    }
+    int ilen = strlen(buf);
+    int i = 0;
+    int j = 0;
+
+    if (n < 0)
+    {
+        str[0] = '-';
+        j = 1;
+    }
+    for (i = ilen - 1;i >= 0;i--,j++)
+    {
+        str[j] = buf[i];
+    }
+    str[j] = '\0';
+}
+
 int myAtoi(char * str)
 {
 	if (strlen(str) == 0)
@@ -1102,10 +1138,7 @@ char *multiplus(char *num1, char *num2)
 	id = ilenres;
 	while (id1 >= 0 && id2 >= 0)
 	{
-		int unit1 = num1[id1] - '0';
-		int unit2 = num2[id2] - '0';
-		int singlesingleres = unit1 + unit2;
-
+		int singlesingleres = (num1[id1] - '0') + (num2[id2] - '0');
 		if (decade + singlesingleres >= 10)
 		{
 			pres[id] = (decade + singlesingleres - 10) + '0';
@@ -1168,48 +1201,52 @@ char *multisingle(char *num1,char ch)
     memset(pres,32,sizeof(char)*(ilen1+1));
     int id = 0;
     bool improve = false;
-    int decade = -1;
+    int decade = 0;
     for (int i = ilen1 - 1,id = ilen1;i >= 0 && id >= 0;i--,id--)
     {
         int num = num1[i] - '0';
         int singlesingleres = num * m;
         char str[3] = {0};
         sprintf(str,"%d",singlesingleres);
+        int n1,n2;
         if (singlesingleres >= 10)
         {
+            n1 = str[0] - '0';
+            n2 = str[1] - '0';
             if (improve)
             {
-				if (decade + (str[1] - '0') == 10)
+				if (decade + n2 >= 10)
 				{
-					pres[id] = '0';
-					decade = (str[0] - '0') + 1;
+					pres[id] = (decade + n2 - 10) + '0';
+					decade = (singlesingleres + decade) / 10;
 				}
 				else
 				{
-					pres[id] = (decade + str[1] - '0') + '0';
-					decade = (str[0] - '0');
+					pres[id] = (decade + n2) + '0';
+					decade = n1;
 				}
             }
             else
             {
-                decade = str[0] - '0';
+                decade = n1;
                 pres[id] = str[1];
             }
             improve = true;
         }
         else
         {
+            n2 = str[0] - '0';
             if (improve)
             {
-				if (decade + singlesingleres == 10)
+				if (decade + n2 >= 10)
 				{
-					pres[id] = '0';
-					decade = 1;
+					pres[id] = (decade + n2 - 10) + '0';
+					decade = (singlesingleres + decade) / 10;
 					improve = true;
 				}
 				else
 				{
-					pres[id] = (decade + singlesingleres) + '0';
+					pres[id] = (decade + n2) + '0';
 					decade = 0;
 					improve = false;
 				}
@@ -1220,8 +1257,6 @@ char *multisingle(char *num1,char ch)
 				decade = 0;
 				improve = false;
             }
-            //decade = 0;
-            //improve = false;
         }
     }
     if (decade != 0)
@@ -1273,6 +1308,12 @@ char * multiply(char * num1, char * num2)
 		char *pplus = multi10(p, index);
 		char *plus = multiplus(pcount, pplus);
 		strcpy(pcount, plus);
+        if (p != pplus)
+        {
+            free(p);
+        }
+        free(pplus);
+        free(plus);
 		index++;
 		id--;
 	}
@@ -1324,6 +1365,14 @@ void Other8Action()
 
 	i = reverse(-2147483648);
 	cout << i << endl;
+
+    char m1[15];
+    myitoa(-2147483648,m1);
+    cout<<m1<<endl;
+
+    char m2[15];
+    myitoa(2147483647,m2);
+    cout<<m2<<endl;
 
 	i = myAtoi("123");
 	cout << i << endl;
@@ -1557,9 +1606,13 @@ void Other8Action()
 
 	ms1 = multisingle("123456789", '3');
 	cout << ms1 << endl;
-
 	free(ms1);
-	ms1 = multisingle("1296", '5');
+
+	ms1 = multisingle("123456789", '4');
+	cout << ms1 << endl;
+	free(ms1);
+
+    ms1 = multisingle("1296", '5');
 	cout << ms1 << endl;
 	free(ms1);
 
