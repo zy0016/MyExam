@@ -25,75 +25,75 @@ using namespace std;
 
 int ch_contain(char * str,char c)
 {
-	int len = strlen(str);
-	for (int i = 0; i < len; i++)
-	{
-		if (c == str[i])
-		{
-			return 1;
-		}
-	}
-	return 0;
+    int len = strlen(str);
+    for (int i = 0; i < len; i++)
+    {
+        if (c == str[i])
+        {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 int lengthOfLongestSubstring(char * s) 
 {
-	char w[100] = { 0 }, res[100] = {0};
-	int index = 0,j = 0,i = 0;
-	for (i = 0; i < strlen(s) && j < strlen(s); i++)
-	{
-		if (ch_contain(w, s[i]))
-		{
-			j++;
-			if (strlen(w) > strlen(res))
-			{
-				strcpy(res, w);
-			}
-			memset(w, 0x00, sizeof(w));
-			index = 0;
-			i = j;
-		}
-		w[index++] = s[i];
-	}
-	if (strlen(w) > strlen(res))
-		return strlen(w);
-	else
-		return strlen(res);
+    char w[100] = { 0 }, res[100] = {0};
+    int index = 0,j = 0,i = 0;
+    for (i = 0; i < strlen(s) && j < strlen(s); i++)
+    {
+        if (ch_contain(w, s[i]))
+        {
+            j++;
+            if (strlen(w) > strlen(res))
+            {
+                strcpy(res, w);
+            }
+            memset(w, 0x00, sizeof(w));
+            index = 0;
+            i = j;
+        }
+        w[index++] = s[i];
+    }
+    if (strlen(w) > strlen(res))
+        return strlen(w);
+    else
+        return strlen(res);
 }
 
 long reverse(int x) {
-	long bak = x;
-	long res = 0;
-	char num[50] = {0};
-	if (x == 0)
-		return 0;
-	int id = 0,i,j,index = 1;
-	if (x < 0)
-	{
-		index = -1;
-	}
-	while (1)
-	{
-		i = index * (x % 10);
-		j = index * (x / 10);
-		num[id++] = '0' + i;
-		x = x / 10;
-		if (j == 0)
-		{
-			break;
-		}
-	}
-	char * pmax = "2147483647";
-	if (strlen(num) == 10)
-	{
-		if (strcmp(num, pmax) > 0)
-			return 0;
-	}
-	res = atol(num);
-	if (bak < 0)
-		res = -res;
+    long bak = x;
+    long res = 0;
+    char num[50] = {0};
+    if (x == 0)
+        return 0;
+    int id = 0,i,j,index = 1;
+    if (x < 0)
+    {
+        index = -1;
+    }
+    while (1)
+    {
+        i = index * (x % 10);
+        j = index * (x / 10);
+        num[id++] = '0' + i;
+        x = x / 10;
+        if (j == 0)
+        {
+            break;
+        }
+    }
+    char * pmax = "2147483647";
+    if (strlen(num) == 10)
+    {
+        if (strcmp(num, pmax) > 0)
+            return 0;
+    }
+    res = atol(num);
+    if (bak < 0)
+        res = -res;
 
-	return res;
+    return res;
 }
 
 void myitoa(int n,char *str)
@@ -134,290 +134,299 @@ void myitoa(int n,char *str)
 
 int myAtoi(char * str)
 {
-	if (strlen(str) == 0)
-		return 0;
-	char *p = (char*)malloc(strlen(str) + 1);
-	memset(p, 0x00, strlen(str) + 1);
-	strcpy(p, str);
-	char * s = Trim(p);
-	if (p[0] == '-' || p[0] == '+' || p[0] >= '0' && p[0] <= '9')
-	{
-		char *pbegin = p;
-		int i = 0, id = 0;
-		int n = 0;
-		if (p[0] == '-')
-		{
-			n = 1;
-			i++;
-			pbegin++;
-		}
-		else if (p[0] == '+')
-		{
-			i++;
-			pbegin++;
-		}
-		long count = 0;
-		char * pmax = "2147483647";
+    if (strlen(str) == 0)
+        return 0;
+    char *p = (char*)malloc(strlen(str) + 1);
+    memset(p, 0x00, strlen(str) + 1);
+    strcpy(p, str);
+    char * s = Trim(p);
+    if (p[0] == '-' || p[0] == '+' || p[0] >= '0' && p[0] <= '9')
+    {
+        char *pbegin = p;
+        int i = 0, id = 0;
+        int n = 0;
+        if (p[0] == '-')
+        {
+            n = 1;
+            i++;
+            pbegin++;
+        }
+        else if (p[0] == '+')
+        {
+            i++;
+            pbegin++;
+        }
+        long count = 0;
+        char * pmax = "2147483647";
 
-		for (; i < strlen(p); i++)
-		{
-			if (p[i] >= '0' && p[i] <= '9')
-			{
-				id++;
-				if (INT_MAX / 10 < count)
-				{
-					free(p);
-					return (n == 1) ? INT_MIN : INT_MAX;
-				}
-				count = count * 10 + p[i] - '0';
-				if (id == 10)
-				{
-					if (strcmp(pbegin, pmax) > 0)
-					{
-						free(p);
-						return (n == 1) ? INT_MIN : INT_MAX;
-					}
-				}
-			}
-			else
-			{
-				break;
-			}
-		}
-		if (n == 1)
-		{
-			count = -count;
-		}
-		free(p);
-		return count;
-	}
-	else
-	{
-		free(p);
-		return 0;
-	}
+        for (; i < strlen(p); i++)
+        {
+            if (p[i] >= '0' && p[i] <= '9')
+            {
+                id++;
+                if (INT_MAX / 10 < count)
+                {
+                    free(p);
+                    return (n == 1) ? INT_MIN : INT_MAX;
+                }
+                count = count * 10 + p[i] - '0';
+                if (id == 10)
+                {
+                    if (strcmp(pbegin, pmax) > 0)
+                    {
+                        free(p);
+                        return (n == 1) ? INT_MIN : INT_MAX;
+                    }
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+        if (n == 1)
+        {
+            count = -count;
+        }
+        free(p);
+        return count;
+    }
+    else
+    {
+        free(p);
+        return 0;
+    }
 }
 
 bool isPalindrome(int x) {
-	if (x < 0)
-		return false;
-	if (x == 0)
-		return true;
-	char num[50] = { 0 };
-	int i, j,id = 0;
-	while (1)
-	{
-		i = (x % 10);
-		j = (x / 10);
-		num[id++] = '0' + i;
-		x = x / 10;
-		if (j == 0)
-		{
-			break;
-		}
-	}
-	int len = strlen(num);
-	for (i = 0, j = len - 1; i < len && j >= 0 && i < j; i++, j--)
-	{
-		char c = num[i];
-		num[i] = num[j];
-		num[j] = c;
-	}
-	for (i = 0,j = len - 1; i < len && j >= 0; i++,j--)
-	{
-		if (i == j || i > j)
-		{
-			break;
-		}
-		if (num[i] == num[j])
-		{
-			continue;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	return true;
+    if (x < 0)
+        return false;
+    if (x == 0)
+        return true;
+    char num[50] = { 0 };
+    int i, j,id = 0;
+    while (1)
+    {
+        i = (x % 10);
+        j = (x / 10);
+        num[id++] = '0' + i;
+        x = x / 10;
+        if (j == 0)
+        {
+            break;
+        }
+    }
+    int len = strlen(num);
+    for (i = 0, j = len - 1; i < len && j >= 0 && i < j; i++, j--)
+    {
+        char c = num[i];
+        num[i] = num[j];
+        num[j] = c;
+    }
+    for (i = 0,j = len - 1; i < len && j >= 0; i++,j--)
+    {
+        if (i == j || i > j)
+        {
+            break;
+        }
+        if (num[i] == num[j])
+        {
+            continue;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 #define MIN(x,y) (((x)<(y))?(x):(y))
 
 int maxArea(int* height, int heightSize) {
-	int i, j;
-	long maxarea = 0;
-	for (i = 0; i < heightSize - 1; i++)
-	{
-		for (j = i + 1; j < heightSize; j++)
-		{
-			int area = (MIN(height[i], height[j])) * (j - i);
-			if (area > maxarea)
-			{
-				maxarea = area;
-			}
-		}
-	}
-	return maxarea;
+    int i, j;
+    long maxarea = 0;
+    for (i = 0; i < heightSize - 1; i++)
+    {
+        for (j = i + 1; j < heightSize; j++)
+        {
+            int area = (MIN(height[i], height[j])) * (j - i);
+            if (area > maxarea)
+            {
+                maxarea = area;
+            }
+        }
+    }
+    return maxarea;
 }
 
 char * intToRoman(int num) {
-	if (num <= 0) 
-		return "";
-	char ret[100] = {0};
-	int number[] = { 1000, 900, 500, 400, 100,90, 50, 40, 10, 9, 5, 4, 1 };
-	char *flags[] = { "M","CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
-	for (int i = 0; i < 13 && num > 0; i++)
-	{
-		if (num < number[i])
-			continue;
-		while (num >= number[i])
-		{
-			num -= number[i];
-			strcat(ret, flags[i]);
-		}
-	}
-	char *pres = (char*)malloc(strlen(ret) + 1);
-	strcpy(pres, ret);
-	return pres;
+    if (num <= 0) 
+        return "";
+    char ret[100] = {0};
+    int number[] = { 1000, 900, 500, 400, 100,90, 50, 40, 10, 9, 5, 4, 1 };
+    char *flags[] = { "M","CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+    for (int i = 0; i < 13 && num > 0; i++)
+    {
+        if (num < number[i])
+            continue;
+        while (num >= number[i])
+        {
+            num -= number[i];
+            strcat(ret, flags[i]);
+        }
+    }
+    char *pres = (char*)malloc(strlen(ret) + 1);
+    strcpy(pres, ret);
+    return pres;
 }
+//void handleRoman(int *i, int *count, char lastch,char ch,int num1,int num2)
+//{
+//	*count = *count + num1;
+//	if (*i > 0 && lastch == ch)
+//	{
+//		count = count - num2;
+//		(*i)--;
+//	}
+//}
 int romanToInt(char * s) 
 {
-	int count = 0,len = strlen(s);
-	for (int i = len - 1; i >= 0 ; i--)
-	{
-		switch (s[i])
-		{
-		case 'M'://1000
-			count = count + 1000;
-			if (i > 0 && s[i - 1] == 'C')
-			{
-				count = count - 100;
-				i--;
-			}
-			break;
-		case 'D'://500
-			count = count + 500;
-			if (i > 0 && s[i - 1] == 'C')
-			{
-				count = count - 100;
-				i--;
-			}
-			break;
-		case 'C'://100
-			count = count + 100;
-			if (i > 0 && s[i - 1] == 'X')
-			{
-				count = count - 10;
-				i--;
-			}
-			break;
-		case 'L'://50
-			count = count + 50;
-			if (i > 0 && s[i - 1] == 'X')
-			{
-				count = count - 10;
-				i--;
-			}
-			break;
-		case 'X'://10
-			count = count + 10;
-			if (i > 0 && s[i - 1] == 'I')
-			{
-				count--;
-				i--;
-			}
-			break;
-		case 'V'://5
-			count = count + 5;
-			if (i > 0 && s[i - 1] == 'I')
-			{
-				count--;
-				i--;
-			}
-			break;
-		case 'I'://1
-			count = count + 1;
-			break;
-		}
-	}
-	return count;
+    int count = 0,len = strlen(s);
+    for (int i = len - 1; i >= 0 ; i--)
+    {
+        switch (s[i])
+        {
+        case 'M'://1000
+            count = count + 1000;
+            if (i > 0 && s[i - 1] == 'C')
+            {
+                count = count - 100;
+                i--;
+            }
+            break;
+        case 'D'://500
+            count = count + 500;
+            if (i > 0 && s[i - 1] == 'C')
+            {
+                count = count - 100;
+                i--;
+            }
+            break;
+        case 'C'://100
+            count = count + 100;
+            if (i > 0 && s[i - 1] == 'X')
+            {
+                count = count - 10;
+                i--;
+            }
+            break;
+        case 'L'://50
+            count = count + 50;
+            if (i > 0 && s[i - 1] == 'X')
+            {
+                count = count - 10;
+                i--;
+            }
+            break;
+        case 'X'://10
+            count = count + 10;
+            if (i > 0 && s[i - 1] == 'I')
+            {
+                count--;
+                i--;
+            }
+            break;
+        case 'V'://5
+            count = count + 5;
+            if (i > 0 && s[i - 1] == 'I')
+            {
+                count--;
+                i--;
+            }
+            break;
+        case 'I'://1
+            count = count + 1;
+            break;
+        }
+    }
+    return count;
 }
 
 char * longestCommonPrefix(char ** strs, int strsSize) 
 {
     char **bak = strs;
-	bool finddiff = false;
-	int index = 0,id;
-	char c;
-	if (strs == NULL || strsSize == 0 || *strs == NULL)
-		return "";
-	if (strsSize == 1)
-	{
-		index = strlen(*strs);
+    bool finddiff = false;
+    int index = 0,id;
+    char c;
+    if (strs == NULL || strsSize == 0 || *strs == NULL)
+        return "";
+    if (strsSize == 1)
+    {
+        index = strlen(*strs);
         if (index == 0)
             return "";
 
         char *res = (char*)malloc(sizeof(char) * (index + 1));
-	    memset(res, 0, sizeof(char) * (index + 1));
-	    strncpy(res, *strs, index);
-	    return res;
-	}
-	else
-	{
-		while (1)
-		{
-			char *str = *bak;
-			if (str == NULL || strlen(str) == 0)
-			{
-				break;
-			}
-			c = '\0';
-			id = 0;
-			finddiff = false;
+        memset(res, 0, sizeof(char) * (index + 1));
+        strncpy(res, *strs, index);
+        return res;
+    }
+    else
+    {
+        while (1)
+        {
+            char *str = *bak;
+            if (str == NULL || strlen(str) == 0)
+            {
+                break;
+            }
+            c = '\0';
+            id = 0;
+            finddiff = false;
             bool bstudy = false;
-			while (id < strsSize && index < strlen(str))
-			{
+            while (id < strsSize && index < strlen(str))
+            {
                 bstudy = true;
-				if (c == '\0')
-				{
-					c = *(str + index);
-					id++;
-					str = strs[id];
-					continue;
-				}
-				else
-				{
-					if (c == *(str + index))
-					{
-						id++;
-						if (id == strsSize)
+                if (c == '\0')
+                {
+                    c = *(str + index);
+                    id++;
+                    str = strs[id];
+                    continue;
+                }
+                else
+                {
+                    if (c == *(str + index))
+                    {
+                        id++;
+                        if (id == strsSize)
                         {
                             break;
                         }
                         str = strs[id];
-						continue;
-					}
-					else
-					{
-						finddiff = true;
-						break;
-					}
-				}
-			}
-			if (finddiff || !bstudy || index == strlen(str))
-			{
-				break;
-			}
-			index++;
-		}
-	}
-	
-	if (index == 0)
-		return "";
-	char *res = (char*)malloc(sizeof(char) * (index + 1));
-	memset(res, 0, sizeof(char) * (index + 1));
-	strncpy(res, *strs, index);
-	return res;
+                        continue;
+                    }
+                    else
+                    {
+                        finddiff = true;
+                        break;
+                    }
+                }
+            }
+            if (finddiff || !bstudy || index == strlen(str))
+            {
+                break;
+            }
+            index++;
+        }
+    }
+    
+    if (index == 0)
+        return "";
+    char *res = (char*)malloc(sizeof(char) * (index + 1));
+    memset(res, 0, sizeof(char) * (index + 1));
+    strncpy(res, *strs, index);
+    return res;
 }
 
 static void InsertSort(int nums[] , unsigned int nNum)
@@ -440,14 +449,14 @@ static void InsertSort(int nums[] , unsigned int nNum)
 }
 vector<vector<int>> threeSum(vector<int>& nums) 
 {
-	vector<vector<int>> res;
-	sort(nums.begin(), nums.end());
-	int numsSize = nums.size();
+    vector<vector<int>> res;
+    sort(nums.begin(), nums.end());
+    int numsSize = nums.size();
     int m;
-	for (int i = 0; i < numsSize - 1; i++)
-	{
-		for (int j = numsSize - 1; j > 0; j--)
-		{
+    for (int i = 0; i < numsSize - 1; i++)
+    {
+        for (int j = numsSize - 1; j > 0; j--)
+        {
             /*if (i + j == numsSize)
             {
                 break;
@@ -459,31 +468,31 @@ vector<vector<int>> threeSum(vector<int>& nums)
                 {
                     bool bfind = false;
                     for (int m = 0; m < res.size(); m++)
-					{
-						vector<int> v = res.at(m);
+                    {
+                        vector<int> v = res.at(m);
                         int a[] = { nums[i],nums[j],nums[m] };
                         InsertSort(a, 3);
-						if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2])
-						{
-							bfind = true;
-							break;
-						}
-					}
+                        if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2])
+                        {
+                            bfind = true;
+                            break;
+                        }
+                    }
                     if (!bfind)
-					{
-						vector<int> vec;
+                    {
+                        vector<int> vec;
                         vec.push_back(nums.at(i));
                         vec.push_back(nums.at(j));
                         vec.push_back(nums.at(m));
                         sort(vec.begin(),vec.end());
-						res.push_back(vec);
-					}
+                        res.push_back(vec);
+                    }
                 }
                 m++;
             }
-		}
-	}
-	return res;
+        }
+    }
+    return res;
 }
 int abs(int x)
 {
@@ -547,11 +556,11 @@ char ** letterCombinations(char * digits, int* returnSize){
 vector<vector<int>> fourSum(vector<int>& nums, int target) 
 {
     vector<vector<int>> res;
-	vector<int> l2;
-	sort(nums.begin(), nums.end());
-	int numsSize = nums.size();
+    vector<int> l2;
+    sort(nums.begin(), nums.end());
+    int numsSize = nums.size();
     int m = 0,n = 0;
-	
+    
     for (int i = 0;i < numsSize - 2;i++)
     {
         for (int j = numsSize - 1;j > 1;j--)
@@ -559,7 +568,7 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
             m = i + 1;
             while(m < j)
             {
-				n = j - 1;
+                n = j - 1;
                 while(n > i)
                 {
                     if (m == n)
@@ -574,32 +583,32 @@ vector<vector<int>> fourSum(vector<int>& nums, int target)
                     int count = nums[i] + nums[j] + nums[m] + nums[n];
                     if (count == target)
                     {
-						bool bfind = false;
+                        bool bfind = false;
                         for (int l = 0; l < res.size(); l++)
-						{
-							vector<int> v = res.at(l);
-							int a[4] = { nums[i] ,nums[j],nums[m],nums[n] };
+                        {
+                            vector<int> v = res.at(l);
+                            int a[4] = { nums[i] ,nums[j],nums[m],nums[n] };
                             InsertSort(a, 4);
-							if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2] && v[3] == a[3])
-							{
-								bfind = true;
-								break;
-							}
-						}
-						if (!bfind)
-						{
-							vector<int> vec;
-							vec.push_back(nums.at(i));
-							vec.push_back(nums.at(j));
-							vec.push_back(nums.at(m));
-							vec.push_back(nums.at(n));
-							sort(vec.begin(), vec.end());
+                            if (v[0] == a[0] && v[1] == a[1] && v[2] == a[2] && v[3] == a[3])
+                            {
+                                bfind = true;
+                                break;
+                            }
+                        }
+                        if (!bfind)
+                        {
+                            vector<int> vec;
+                            vec.push_back(nums.at(i));
+                            vec.push_back(nums.at(j));
+                            vec.push_back(nums.at(m));
+                            vec.push_back(nums.at(n));
+                            sort(vec.begin(), vec.end());
                             res.push_back(vec);
-						}
+                        }
                     }
                     n--;
                 }
-				m++;
+                m++;
             }
         }
     }
@@ -678,43 +687,7 @@ char *getParenthesis2(int n)
     releaseNode(p1);
     return s1;
 }
-/*
-n = 3
-[
-  "((()))",
-  "(()())",
-  "(())()",
-  "()(())",
-  "()()()"
-]
-*/
-vector<string> generateParenthesis(int n) 
-{
-    vector<string> res;
-    int len = 0;
-    if (n == 0)
-        return res;
-    if (n == 1)
-    {
-        res.push_back("()");
-        return res;
-    }
-    //1//
-    char *s1 = getParenthesis1(n);
-    res.push_back(s1);
-    free(s1);
-    s1 = NULL;
-    //////////2//////////
-    char *s2 = getParenthesis2(n);
-    res.push_back(s2);
-    free(s2);
-    s2 = NULL;
-    ///3/////////
-    for (int i = 0;i < n - 1;i++)
-    {
 
-    }
-}
 int removeDuplicates(int* nums, int numsSize)
 {
     if (nums == NULL || numsSize == 0)
@@ -783,10 +756,10 @@ int divide(int dividend, int divisor)
         return 0;
     if (dividend == divisor || divisor == 1)
         return 1;
-	if (divisor == -1)
-	{
-		return (dividend == INT_MIN) ? INT_MAX : -dividend;
-	}
+    if (divisor == -1)
+    {
+        return (dividend == INT_MIN) ? INT_MAX : -dividend;
+    }
     if (dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)
     {
         positive = false;
@@ -881,132 +854,132 @@ void nextPermutation(int* nums, int numsSize)
         return;
     }
     generateNextOrder(nums,numsSize);
-	InsertSort(nums + 1, numsSize - 1);
+    InsertSort(nums + 1, numsSize - 1);
 }
 int * getRange(int start, int end)
 {
-	int *p = (int*)malloc(sizeof(int) * 2);
-	p[0] = start;
-	p[1] = end;
-	return p;
+    int *p = (int*)malloc(sizeof(int) * 2);
+    p[0] = start;
+    p[1] = end;
+    return p;
 }
 int* searchRange(int* nums, int numsSize, int target, int* returnSize)
 {
-	int start = -1, end = -1, i, j;
-	if (nums == NULL || numsSize == 0)
-	{
-		*returnSize = 2;
-		return getRange(start,end);
-	}
-	if (numsSize == 1)
-	{
-		if (nums[0] == target)
-		{
-			start = 0;
-			end = 0;
-		}
-		*returnSize = 2;
-		return getRange(start, end);
-	}
-	if (numsSize == 2)
-	{
-		if (nums[0] == target && nums[1] != target)
-		{
-			start = 0;
-			end = 0;
-		}
-		else if (nums[0] != target && nums[1] == target)
-		{
-			start = 1;
-			end = 1;
-		}
-		else if (nums[0] == target && nums[1] == target)
-		{
-			start = 0;
-			end = 1;
-		}
-		*returnSize = 2;
-		return getRange(start, end);
-	}
-	for (i = 0; i < numsSize - 1; i++)
-	{
-		if (nums[i] == target && nums[i + 1] == target)
-		{
-			if (start == -1)
-			{
-				start = i;
-			}
-			for (j = i + 1; j < numsSize; j++)
-			{
-				if (nums[j] != target)
-					break;
-			}
-			end = j - 1;
-		}
-	}
-	if (start == -1 && end == -1)
-	{
-		for (i = 0; i < numsSize; i++)
-		{
-			if (nums[i] == target)
-			{
-				start = i;
-				end = i;
-				break;
-			}
-		}
-	}
-	*returnSize = 2;
-	return getRange(start, end);
+    int start = -1, end = -1, i, j;
+    if (nums == NULL || numsSize == 0)
+    {
+        *returnSize = 2;
+        return getRange(start,end);
+    }
+    if (numsSize == 1)
+    {
+        if (nums[0] == target)
+        {
+            start = 0;
+            end = 0;
+        }
+        *returnSize = 2;
+        return getRange(start, end);
+    }
+    if (numsSize == 2)
+    {
+        if (nums[0] == target && nums[1] != target)
+        {
+            start = 0;
+            end = 0;
+        }
+        else if (nums[0] != target && nums[1] == target)
+        {
+            start = 1;
+            end = 1;
+        }
+        else if (nums[0] == target && nums[1] == target)
+        {
+            start = 0;
+            end = 1;
+        }
+        *returnSize = 2;
+        return getRange(start, end);
+    }
+    for (i = 0; i < numsSize - 1; i++)
+    {
+        if (nums[i] == target && nums[i + 1] == target)
+        {
+            if (start == -1)
+            {
+                start = i;
+            }
+            for (j = i + 1; j < numsSize; j++)
+            {
+                if (nums[j] != target)
+                    break;
+            }
+            end = j - 1;
+        }
+    }
+    if (start == -1 && end == -1)
+    {
+        for (i = 0; i < numsSize; i++)
+        {
+            if (nums[i] == target)
+            {
+                start = i;
+                end = i;
+                break;
+            }
+        }
+    }
+    *returnSize = 2;
+    return getRange(start, end);
 }
 int searchInsert(int* nums, int numsSize, int target) 
 {
-	if (nums == NULL || numsSize == 0 || target < nums[0] || numsSize == 1 && nums[0] == target)
-		return 0;
-	if (target == nums[numsSize - 1])
-		return numsSize - 1;
-	if (target > nums[numsSize - 1])
-		return numsSize;
-	for (int i = 0; i < numsSize - 1; i++)
-	{
-		if (nums[i] == target)
-			return i;
-		if (nums[i] < target && target < nums[i + 1])
-			return i + 1;
-	}
-	return 0;
+    if (nums == NULL || numsSize == 0 || target < nums[0] || numsSize == 1 && nums[0] == target)
+        return 0;
+    if (target == nums[numsSize - 1])
+        return numsSize - 1;
+    if (target > nums[numsSize - 1])
+        return numsSize;
+    for (int i = 0; i < numsSize - 1; i++)
+    {
+        if (nums[i] == target)
+            return i;
+        if (nums[i] < target && target < nums[i + 1])
+            return i + 1;
+    }
+    return 0;
 }
 #ifdef CPLUSPLUS_11
 string countAndSay(int n) {
-	string inputString = "1";
-	int nCount = 1;
-	string output = inputString;
-	char currString = '0';
-	while (nCount < n) 
-	{
-		output = "";
-		int count = 0;
-		currString = inputString[0];
-		for (const auto &chr : inputString) 
-		{
-			if (chr == currString) 
-			{
-				count++;
-			}
-			else 
-			{
-				output += (std::to_string(count) + currString);
-				currString = chr;
-				count = 1;
-			}
-		}
-		output += (std::to_string(count) + currString);
-		inputString = output;
-		nCount++;
-	}
+    string inputString = "1";
+    int nCount = 1;
+    string output = inputString;
+    char currString = '0';
+    while (nCount < n) 
+    {
+        output = "";
+        int count = 0;
+        currString = inputString[0];
+        for (const auto &chr : inputString) 
+        {
+            if (chr == currString) 
+            {
+                count++;
+            }
+            else 
+            {
+                output += (std::to_string(count) + currString);
+                currString = chr;
+                count = 1;
+            }
+        }
+        output += (std::to_string(count) + currString);
+        inputString = output;
+        nCount++;
+    }
 
-	std::cout << output << std::endl;
-	return output;
+    std::cout << output << std::endl;
+    return output;
 }
 #endif
 /**
@@ -1055,60 +1028,60 @@ int** combinationSum(int* candidates, int candidatesSize, int target, int* retur
 }
 int firstMissingPositive(int* nums, int numsSize) 
 {
-	if (nums == NULL || numsSize == 0)
-		return 1;
-	if (numsSize == 1)
-	{
-		if (nums[0] <= 0 || nums[0] == INT_MAX || nums[0] > 1)
-			return 1;
-		else
-			return ++nums[0];
-	}
-	int id = 1;
-	InsertSort(nums, numsSize);
-	if (nums[0] > 1 || nums[numsSize - 1] < 0)
-		return 1;
-	
-	for (int i = 0; i < numsSize; i++)
-	{
-		if (nums[i] < 0 || nums[i] == id)
-			continue;
-		if (nums[i] == 0)
-		{
-			id = 1;
-			continue;
-		}
-		if (i == 0)
-		{
-			id = nums[i];
-			continue;
-		}
-		if (nums[i] > id)
-		{
-			if (nums[i] > nums[i - 1])
-			{
-				if (nums[i] - nums[i - 1] >= 2)
-				{
-					if (nums[i - 1] <= 0)
-					{
-						id = 1;
-					}
-					else
-					{
-						id = nums[i - 1] + 1;
-					}
-					return id;
-				}
-			}
-			id = nums[i];
-		}
-	}
-	return id + 1;
+    if (nums == NULL || numsSize == 0)
+        return 1;
+    if (numsSize == 1)
+    {
+        if (nums[0] <= 0 || nums[0] == INT_MAX || nums[0] > 1)
+            return 1;
+        else
+            return ++nums[0];
+    }
+    int id = 1;
+    InsertSort(nums, numsSize);
+    if (nums[0] > 1 || nums[numsSize - 1] < 0)
+        return 1;
+    
+    for (int i = 0; i < numsSize; i++)
+    {
+        if (nums[i] < 0 || nums[i] == id)
+            continue;
+        if (nums[i] == 0)
+        {
+            id = 1;
+            continue;
+        }
+        if (i == 0)
+        {
+            id = nums[i];
+            continue;
+        }
+        if (nums[i] > id)
+        {
+            if (nums[i] > nums[i - 1])
+            {
+                if (nums[i] - nums[i - 1] >= 2)
+                {
+                    if (nums[i - 1] <= 0)
+                    {
+                        id = 1;
+                    }
+                    else
+                    {
+                        id = nums[i - 1] + 1;
+                    }
+                    return id;
+                }
+            }
+            id = nums[i];
+        }
+    }
+    return id + 1;
 }
 char *multi10(char *num ,int mul)
 {
-	if (mul == 0)
-		return num;
+    if (mul == 0)
+        return num;
     int ilen1 = strlen(num) + mul;
     char *pres = (char*)malloc(sizeof(char)*(ilen1+2));
     memset(pres,0,sizeof(char)*(ilen1+2));
@@ -1121,76 +1094,76 @@ char *multi10(char *num ,int mul)
 }
 char *multiplus(char *num1, char *num2)
 {
-	int ilen1 = strlen(num1);
-	int ilen2 = strlen(num2);
-	int id1 = ilen1 - 1;
-	int id2 = ilen2 - 1;
-	int ilenres = 0, decade = 0;
-	int id = 0;
-	if (ilen1 > ilen2)
-		ilenres = ilen1 * 2 + 1;
-	else
-		ilenres = ilen2 * 2 + 1;
+    int ilen1 = strlen(num1);
+    int ilen2 = strlen(num2);
+    int id1 = ilen1 - 1;
+    int id2 = ilen2 - 1;
+    int ilenres = 0, decade = 0;
+    int id = 0;
+    if (ilen1 > ilen2)
+        ilenres = ilen1 * 2 + 1;
+    else
+        ilenres = ilen2 * 2 + 1;
 
-	char *pres = (char*)malloc(sizeof(char)*(ilenres + 2));
-	memset(pres, 0, sizeof(char)*(ilenres + 2));
-	memset(pres, 32, sizeof(char)*(ilenres + 1));
-	id = ilenres;
-	while (id1 >= 0 && id2 >= 0)
-	{
-		int singlesingleres = (num1[id1] - '0') + (num2[id2] - '0');
-		if (decade + singlesingleres >= 10)
-		{
-			pres[id] = (decade + singlesingleres - 10) + '0';
-			decade = 1;
-		}
-		else
-		{
-			pres[id] = (decade + singlesingleres) + '0';
-			decade = 0;
-		}
-		id--;
-		id1--;
-		id2--;
-	}
-	while (id1 >= 0)
-	{
-		int singlesingleres = num1[id1] - '0';
-		if (decade + singlesingleres >= 10)
-		{
-			pres[id] = (decade + singlesingleres - 10) + '0';
-			decade = 1;
-		}
-		else
-		{
-			pres[id] = (decade + singlesingleres) + '0';
-			decade = 0;
-		}
-		id--;
-		id1--;
-	}
-	while (id2 >= 0)
-	{
-		int singlesingleres = num2[id2] - '0';
-		if (decade + singlesingleres >= 10)
-		{
-			pres[id] = (decade + singlesingleres - 10) + '0';
-			decade = 1;
-		}
-		else
-		{
-			pres[id] = (decade + singlesingleres) + '0';
-			decade = 0;
-		}
-		id--;
-		id2--;
-	}
-	if (decade > 0)
-	{
-		pres[id] = '1';
-	}
-	Trim(pres);
-	return pres;
+    char *pres = (char*)malloc(sizeof(char)*(ilenres + 2));
+    memset(pres, 0, sizeof(char)*(ilenres + 2));
+    memset(pres, 32, sizeof(char)*(ilenres + 1));
+    id = ilenres;
+    while (id1 >= 0 && id2 >= 0)
+    {
+        int singlesingleres = (num1[id1] - '0') + (num2[id2] - '0');
+        if (decade + singlesingleres >= 10)
+        {
+            pres[id] = (decade + singlesingleres - 10) + '0';
+            decade = 1;
+        }
+        else
+        {
+            pres[id] = (decade + singlesingleres) + '0';
+            decade = 0;
+        }
+        id--;
+        id1--;
+        id2--;
+    }
+    while (id1 >= 0)
+    {
+        int singlesingleres = num1[id1] - '0';
+        if (decade + singlesingleres >= 10)
+        {
+            pres[id] = (decade + singlesingleres - 10) + '0';
+            decade = 1;
+        }
+        else
+        {
+            pres[id] = (decade + singlesingleres) + '0';
+            decade = 0;
+        }
+        id--;
+        id1--;
+    }
+    while (id2 >= 0)
+    {
+        int singlesingleres = num2[id2] - '0';
+        if (decade + singlesingleres >= 10)
+        {
+            pres[id] = (decade + singlesingleres - 10) + '0';
+            decade = 1;
+        }
+        else
+        {
+            pres[id] = (decade + singlesingleres) + '0';
+            decade = 0;
+        }
+        id--;
+        id2--;
+    }
+    if (decade > 0)
+    {
+        pres[id] = '1';
+    }
+    Trim(pres);
+    return pres;
 }
 char *multisingle(char *num1,char ch)
 {
@@ -1215,16 +1188,16 @@ char *multisingle(char *num1,char ch)
             n2 = str[1] - '0';
             if (improve)
             {
-				if (decade + n2 >= 10)
-				{
-					pres[id] = (decade + n2 - 10) + '0';
-					decade = (singlesingleres + decade) / 10;
-				}
-				else
-				{
-					pres[id] = (decade + n2) + '0';
-					decade = n1;
-				}
+                if (decade + n2 >= 10)
+                {
+                    pres[id] = (decade + n2 - 10) + '0';
+                    decade = (singlesingleres + decade) / 10;
+                }
+                else
+                {
+                    pres[id] = (decade + n2) + '0';
+                    decade = n1;
+                }
             }
             else
             {
@@ -1238,24 +1211,24 @@ char *multisingle(char *num1,char ch)
             n2 = str[0] - '0';
             if (improve)
             {
-				if (decade + n2 >= 10)
-				{
-					pres[id] = (decade + n2 - 10) + '0';
-					decade = (singlesingleres + decade) / 10;
-					improve = true;
-				}
-				else
-				{
-					pres[id] = (decade + n2) + '0';
-					decade = 0;
-					improve = false;
-				}
+                if (decade + n2 >= 10)
+                {
+                    pres[id] = (decade + n2 - 10) + '0';
+                    decade = (singlesingleres + decade) / 10;
+                    improve = true;
+                }
+                else
+                {
+                    pres[id] = (decade + n2) + '0';
+                    decade = 0;
+                    improve = false;
+                }
             }
             else
             {
                 pres[id] = singlesingleres + '0';
-				decade = 0;
-				improve = false;
+                decade = 0;
+                improve = false;
             }
         }
     }
@@ -1296,75 +1269,157 @@ char * multiply(char * num1, char * num2)
     {
         return multisingle(num1,num2[0]);
     }
-	int id = ilen2 - 1;
-	int index = 0;
-	int size = 256;
-	char *pcount = (char*)malloc(sizeof(char)*size);
-	memset(pcount, 0, sizeof(char)*size);
-	strcpy(pcount, "0");
-	while (id >= 0)
-	{
-		char *p = multisingle(num1, num2[id]);
-		char *pplus = multi10(p, index);
-		char *plus = multiplus(pcount, pplus);
-		strcpy(pcount, plus);
+    int id = ilen2 - 1;
+    int index = 0;
+    int size = 256;
+    char *pcount = (char*)malloc(sizeof(char)*size);
+    memset(pcount, 0, sizeof(char)*size);
+    strcpy(pcount, "0");
+    while (id >= 0)
+    {
+        char *p = multisingle(num1, num2[id]);
+        char *pplus = multi10(p, index);
+        char *plus = multiplus(pcount, pplus);
+        strcpy(pcount, plus);
         if (p != pplus)
         {
             free(p);
         }
         free(pplus);
         free(plus);
-		index++;
-		id--;
-	}
-	return pcount;
+        index++;
+        id--;
+    }
+    return pcount;
 }
+void backtrack(vector<vector<int>>& res, vector<int>& nums, vector<int>& current)
+{
+	if (current.size() == nums.size())
+	{
+		res.push_back(current);
+		return;
+	}
+	for (int i = 0; i < nums.size(); i++)
+	{
+		if (count(current.begin(), current.end(), nums[i]) == 0)
+		{
+			current.push_back(nums[i]);
+			backtrack(res, nums, current);
+			current.pop_back();
+		}
+	}
+}
+vector<vector<int>> permute(vector<int>& nums) 
+{
+	vector<vector<int>> res;
+	vector<int> current;
+	backtrack(res, nums, current);
+	return res;
+}
+///////////////////////////////////////////////////
+void backtrackUnique(vector<vector<int>>& res, vector<int>& nums, vector<int>& current)
+{
+	if (current.size() == nums.size())
+	{
+		res.push_back(current);
+		return;
+	}
+	for (int i = 0; i < nums.size(); i++)
+	{
+		//if (count(current.begin(), current.end(), nums[i]) == 0)
+		{
+			current.push_back(nums[i]);
+			backtrackUnique(res, nums, current);
+			current.pop_back();
+		}
+	}
+}
+string num2str(int i)
+{
+	stringstream ss;
+	ss << i;
+	return ss.str();
+}
+vector<vector<int>> permuteUnique(vector<int>& nums) 
+{
+	vector<vector<int>> res;
+	vector<int> current;
+	backtrackUnique(res, nums, current);
+	//set<string> s1;
+	for (int i = 0; i < res.size(); i++)
+	{
+		vector<int> p = res.at(i);
+		string singleline = "";
+		for (int j = 0; j < p.size(); j++)
+		{
+			singleline = singleline + num2str(p[j]) + " ";
+		}
+	}
+	return res;
+}
+
 void Other8Action()
 {
-	cout << "\n===========================Other8Action===========================" << endl;
-	char * p = "abcabcbb";
-	long i = lengthOfLongestSubstring(p);
-	cout << i << " for " << p <<endl;
-	char * p1 = "bbbbb";
-	i = lengthOfLongestSubstring(p1);
-	cout << i << " for " << p1 << endl;
+    cout << "\n===========================Other8Action===========================" << endl;
 
-	char * p2 = "pwwkew";
-	i = lengthOfLongestSubstring(p2);
-	cout << i << " for " << p2 << endl;
+	vector<int> numsp;
+	numsp.push_back(1);
+	numsp.push_back(1);
+	numsp.push_back(2);
+	vector<vector<int>> permuteUniqueres = permuteUnique(numsp);
+	for (int i = 0; i < permuteUniqueres.size(); i++)
+	{
+		vector<int> p = permuteUniqueres.at(i);
+		for (int j = 0; j < p.size(); j++)
+		{
+			cout << p[j];
+		}
+		cout << endl;
+	}
 
-	char * p3 = " ";
-	i = lengthOfLongestSubstring(p3);
-	cout << i << " for " << p3 << endl;
+    char * p = "abcabcbb";
+    long i = lengthOfLongestSubstring(p);
+    cout << i << " for " << p <<endl;
+    char * p1 = "bbbbb";
+    i = lengthOfLongestSubstring(p1);
+    cout << i << " for " << p1 << endl;
 
-	char *p4 = "dvdf";
-	i = lengthOfLongestSubstring(p4);
-	cout << i << " for " << p4 << endl;
+    char * p2 = "pwwkew";
+    i = lengthOfLongestSubstring(p2);
+    cout << i << " for " << p2 << endl;
 
-	char *p5 = "hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	i = lengthOfLongestSubstring(p5);
-	cout << i << " for " << p5 << endl;
-	/////////////////////
-	/*char *p6 = "babad";
-	char *p = longestPalindrome(p6);
-	cout << p << endl;*/
-	i = reverse(123);
-	cout << i << endl;
+    char * p3 = " ";
+    i = lengthOfLongestSubstring(p3);
+    cout << i << " for " << p3 << endl;
 
-	i = reverse(-123);
-	cout << i << endl;
+    char *p4 = "dvdf";
+    i = lengthOfLongestSubstring(p4);
+    cout << i << " for " << p4 << endl;
 
-	i = reverse(120);
-	cout << i << endl;
+    char *p5 = "hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    i = lengthOfLongestSubstring(p5);
+    cout << i << " for " << p5 << endl;
+    /////////////////////
+    /*char *p6 = "babad";
+    char *p = longestPalindrome(p6);
+    cout << p << endl;*/
+    i = reverse(123);
+    cout << i << endl;
 
-	i = reverse(INT_MIN);
-	cout << i << endl;
+    i = reverse(-123);
+    cout << i << endl;
 
-	i = reverse(1534236469);
-	cout << i << endl;
+    i = reverse(120);
+    cout << i << endl;
 
-	i = reverse(-2147483648);
-	cout << i << endl;
+    i = reverse(INT_MIN);
+    cout << i << endl;
+
+    i = reverse(1534236469);
+    cout << i << endl;
+
+    i = reverse(-2147483648);
+    cout << i << endl;
 
     char m1[15];
     myitoa(-2147483648,m1);
@@ -1374,84 +1429,84 @@ void Other8Action()
     myitoa(2147483647,m2);
     cout<<m2<<endl;
 
-	i = myAtoi("123");
-	cout << i << endl;
+    i = myAtoi("123");
+    cout << i << endl;
 
-	i = myAtoi("-123");
-	cout << i << endl;
+    i = myAtoi("-123");
+    cout << i << endl;
 
-	char arr[] = "     42";
-	i = myAtoi("    -42");
-	cout << i << endl;
+    char arr[] = "     42";
+    i = myAtoi("    -42");
+    cout << i << endl;
 
-	i = myAtoi("4193 fhdsk fjsdf");
-	cout << i << endl;
+    i = myAtoi("4193 fhdsk fjsdf");
+    cout << i << endl;
 
-	i = myAtoi("fsde 123");
-	cout << i << endl;
+    i = myAtoi("fsde 123");
+    cout << i << endl;
 
-	i = myAtoi("-91283472332");
-	cout << i << endl;
+    i = myAtoi("-91283472332");
+    cout << i << endl;
 
-	i = myAtoi("-91283472332");
-	cout << i << endl;
+    i = myAtoi("-91283472332");
+    cout << i << endl;
 
-	bool b = isPalindrome(121);
-	cout << b << endl;
+    bool b = isPalindrome(121);
+    cout << b << endl;
 
-	b = isPalindrome(-121);
-	cout << b << endl;
+    b = isPalindrome(-121);
+    cout << b << endl;
 
-	b = isPalindrome(12);
-	cout << b << endl;
+    b = isPalindrome(12);
+    cout << b << endl;
 
-	int a[] = { 1,8,6,2,5,4,8,3,7 };
-	i = maxArea(a, sizeof(a) / sizeof(int));
-	cout << i << endl;
+    int a[] = { 1,8,6,2,5,4,8,3,7 };
+    i = maxArea(a, sizeof(a) / sizeof(int));
+    cout << i << endl;
 
-	//////////////
-	i = romanToInt("III");
-	cout << i << endl;
+    //////////////
+    i = romanToInt("III");
+    cout << i << endl;
 
-	i = romanToInt("IV");
-	cout << i << endl;
+    i = romanToInt("IV");
+    cout << i << endl;
 
-	i = romanToInt("IX");
-	cout << i << endl;
+    i = romanToInt("IX");
+    cout << i << endl;
 
-	i = romanToInt("LVIII");
-	cout << i << endl;
+    i = romanToInt("LVIII");
+    cout << i << endl;
 
-	i = romanToInt("MCMXCIV");
-	cout << i << endl;
-	/////////////////
-	char *pp[] = { "flower","flow","flight" };
-	char *pp2 = longestCommonPrefix(pp, 3);
-	cout << pp2 << endl;
+    i = romanToInt("MCMXCIV");
+    cout << i << endl;
+    /////////////////
+    char *pp[] = { "flower","flow","flight" };
+    char *pp2 = longestCommonPrefix(pp, 3);
+    cout << pp2 << endl;
 
-	char *pparr[] = { "dog","racecar","car" };
-	char *ppr = longestCommonPrefix(pparr, 3);
-	cout << ppr << endl;
+    char *pparr[] = { "dog","racecar","car" };
+    char *ppr = longestCommonPrefix(pparr, 3);
+    cout << ppr << endl;
 
-	char *pparr2[] = { "a" };
-	char *ppr2 = longestCommonPrefix(pparr2, 1);
-	cout << ppr2 << endl;
+    char *pparr2[] = { "a" };
+    char *ppr2 = longestCommonPrefix(pparr2, 1);
+    cout << ppr2 << endl;
 
-	char *pparr3[] = { NULL };
-	char *ppr3 = longestCommonPrefix(pparr3, 1);
-	cout << ppr3 << endl;
+    char *pparr3[] = { NULL };
+    char *ppr3 = longestCommonPrefix(pparr3, 1);
+    cout << ppr3 << endl;
 
-	char *pparr4 = NULL;
-	char *ppr4 = longestCommonPrefix(&pparr4, 1);
-	cout << ppr4 << endl;
+    char *pparr4 = NULL;
+    char *ppr4 = longestCommonPrefix(&pparr4, 1);
+    cout << ppr4 << endl;
 
-	char *pparr5[] = { NULL,NULL };
-	char *ppr5 = longestCommonPrefix(NULL, 1);
-	cout << ppr5 << endl;
+    char *pparr5[] = { NULL,NULL };
+    char *ppr5 = longestCommonPrefix(NULL, 1);
+    cout << ppr5 << endl;
 
-	char *pparr6[] = { 0};
-	char *ppr6 = longestCommonPrefix(pparr6, 1);
-	cout << ppr6 << endl;
+    char *pparr6[] = { 0};
+    char *ppr6 = longestCommonPrefix(pparr6, 1);
+    cout << ppr6 << endl;
     //////////////////////////
     
     vector<int> num;
@@ -1561,68 +1616,68 @@ void Other8Action()
     int r22[] = {5,7,7,8,8,10};
     int *rp2 = searchRange(r22,sizeof(r22)/sizeof(int),6,&r2);
 
-	int r33[] = { 3,3,3 };
-	int *rp3 = searchRange(r33, sizeof(r33) / sizeof(int), 3, &r2);
-	//////////////
+    int r33[] = { 3,3,3 };
+    int *rp3 = searchRange(r33, sizeof(r33) / sizeof(int), 3, &r2);
+    //////////////
 #ifdef CPLUSPLUS_11
-	string ra = countAndSay(5);
+    string ra = countAndSay(5);
 #endif
-	/////////////////
-	int count[] = { 1,2,0 };
-	int ic = firstMissingPositive(count, sizeof(count) / sizeof(int));
-	cout << ic << endl;
+    /////////////////
+    int count[] = { 1,2,0 };
+    int ic = firstMissingPositive(count, sizeof(count) / sizeof(int));
+    cout << ic << endl;
 
-	int count1[] = { 7,8,9,11,12 };
-	int ic1 = firstMissingPositive(count1, sizeof(count1) / sizeof(int));
-	cout << ic1 << endl;
+    int count1[] = { 7,8,9,11,12 };
+    int ic1 = firstMissingPositive(count1, sizeof(count1) / sizeof(int));
+    cout << ic1 << endl;
 
-	int count2[] = { 3,4,-1,1 };
-	int ic2 = firstMissingPositive(count2, sizeof(count2) / sizeof(int));
-	cout << ic2 << endl;
+    int count2[] = { 3,4,-1,1 };
+    int ic2 = firstMissingPositive(count2, sizeof(count2) / sizeof(int));
+    cout << ic2 << endl;
 
-	int count3[] = { -1,-2 };
-	int ic3 = firstMissingPositive(count3, sizeof(count3) / sizeof(int));
-	cout << ic3 << endl;
+    int count3[] = { -1,-2 };
+    int ic3 = firstMissingPositive(count3, sizeof(count3) / sizeof(int));
+    cout << ic3 << endl;
 
-	int count4[] = { 1,1 };
-	int ic4 = firstMissingPositive(count4, sizeof(count4) / sizeof(int));
-	cout << ic4 << endl;
+    int count4[] = { 1,1 };
+    int ic4 = firstMissingPositive(count4, sizeof(count4) / sizeof(int));
+    cout << ic4 << endl;
 
-	int count5[] = { 2,1 };
-	int ic5 = firstMissingPositive(count5, sizeof(count5) / sizeof(int));
-	cout << ic5 << endl;
+    int count5[] = { 2,1 };
+    int ic5 = firstMissingPositive(count5, sizeof(count5) / sizeof(int));
+    cout << ic5 << endl;
 
-	int count6[] = { 1000,-1 };
-	int ic6 = firstMissingPositive(count6, sizeof(count6) / sizeof(int));
-	cout << ic6 << endl;
+    int count6[] = { 1000,-1 };
+    int ic6 = firstMissingPositive(count6, sizeof(count6) / sizeof(int));
+    cout << ic6 << endl;
 
-	int count7[] = { 1000,1 };
-	int ic7 = firstMissingPositive(count7, sizeof(count7) / sizeof(int));
-	cout << ic7 << endl;
+    int count7[] = { 1000,1 };
+    int ic7 = firstMissingPositive(count7, sizeof(count7) / sizeof(int));
+    cout << ic7 << endl;
     /////////////////
     char *ms1 = multisingle("99",'9');
     cout<<ms1<<endl;
     free(ms1);
 
-	ms1 = multisingle("123456789", '3');
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multisingle("123456789", '3');
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multisingle("123456789", '4');
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multisingle("123456789", '4');
+    cout << ms1 << endl;
+    free(ms1);
 
     ms1 = multisingle("1296", '5');
-	cout << ms1 << endl;
-	free(ms1);
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multisingle("999", '9');
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multisingle("999", '9');
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multisingle("999", '3');
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multisingle("999", '3');
+    cout << ms1 << endl;
+    free(ms1);
 
     ms1 = multisingle("23",'3');
     cout<<ms1<<endl;
@@ -1644,27 +1699,27 @@ void Other8Action()
     cout<<ms1<<endl;
     free(ms1);
 
-	ms1 = multiplus("999", "29");
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multiplus("999", "29");
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multiplus("999", "0");
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multiplus("999", "0");
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multiplus("999", "0");
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multiplus("999", "0");
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multiply("123", "456");
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multiply("123", "456");
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multiply("1236", "45");
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multiply("1236", "45");
+    cout << ms1 << endl;
+    free(ms1);
 
-	ms1 = multiply("123456789", "987654321");
-	cout << ms1 << endl;
-	free(ms1);
+    ms1 = multiply("123456789", "987654321");
+    cout << ms1 << endl;
+    free(ms1);
 }

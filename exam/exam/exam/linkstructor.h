@@ -30,7 +30,17 @@ struct pnode_
     struct pnode_ *next;
 };
 typedef struct pnode_ pnode;
+struct cnode_
+{
+	char* val;
+	struct cnode_ *next;
+};
+typedef struct cnode_ cnode;
+
 pnode * AddNode(int* value ,int len, pnode *a);
+cnode * AddNode(char* value, int len, cnode *a);
+bool FindNode(cnode *s, const char *str);
+void DeleteAllNodes(cnode *s);
 
 charnode * pushNode(char value , charnode *a);
 charnode * popupNode(charnode *a,char *c);

@@ -352,6 +352,47 @@ pnode * AddNode(int* value,int len , pnode *a)
     pNext->next = p;
     return a;
 }
+cnode * AddNode(char* value, int len, cnode *a)
+{
+	cnode *p = NULL;
+	cnode *pNext = a;
+
+	p = (cnode*)malloc(sizeof(cnode));
+	p->val = (char*)malloc(sizeof(int) * (len+1));
+	memset(p->val, 0, sizeof(int) * (len + 1));
+	strcpy(p->val, value);
+	p->next = NULL;
+	if (a == NULL)
+	{
+		return p;
+	}
+	while (pNext->next != NULL)
+	{
+		pNext = pNext->next;
+	}
+	pNext->next = p;
+	return a;
+}
+bool FindNode(cnode *s,const char *str)
+{
+	while (s != NULL)
+	{
+		if (strcmp(s->val, str) == 0)
+			return true;
+		s = s->next;
+	}
+	return false;
+}
+void DeleteAllNodes(cnode *s)
+{
+	cnode *p = s;
+	while (s != NULL)
+	{
+		p = s;
+		s = s->next;
+		free(p);
+	}
+}
 
 node *merge_1(node *a,node *b)
 {
