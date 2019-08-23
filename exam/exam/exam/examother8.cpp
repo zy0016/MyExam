@@ -1317,47 +1317,108 @@ vector<vector<int>> permute(vector<int>& nums)
 	return res;
 }
 ///////////////////////////////////////////////////
-void backtrackUnique(vector<vector<int>>& res, vector<int>& nums, vector<int>& current)
+void helper(vector<vector<int>> &pRes, vector<int> &pNums, vector<int> &pTemp, vector<bool> pUsed) 
 {
-	if (current.size() == nums.size())
+	if (pTemp.size() == pNums.size()) 
 	{
-		res.push_back(current);
+		pRes.push_back(pTemp);
 		return;
 	}
-	for (int i = 0; i < nums.size(); i++)
+	for (int i = 0; i<pNums.size(); i++) 
 	{
-		//if (count(current.begin(), current.end(), nums[i]) == 0)
-		{
-			current.push_back(nums[i]);
-			backtrackUnique(res, nums, current);
-			current.pop_back();
-		}
+		if (pUsed[i]) 
+			continue;
+		if (i > 0 && pNums[i] == pNums[i - 1] && pUsed[i - 1] == false) 
+			continue;
+
+		pTemp.push_back(pNums[i]);
+		pUsed[i] = true;
+
+		helper(pRes, pNums, pTemp, pUsed);
+
+		pTemp.pop_back();
+		pUsed[i] = false;
 	}
-}
-string num2str(int i)
-{
-	stringstream ss;
-	ss << i;
-	return ss.str();
 }
 vector<vector<int>> permuteUnique(vector<int>& nums) 
 {
-	vector<vector<int>> res;
-	vector<int> current;
-	backtrackUnique(res, nums, current);
-	//set<string> s1;
-	for (int i = 0; i < res.size(); i++)
+	sort(nums.begin(), nums.end());
+
+	vector<vector<int>> aRes;
+	vector<int> aTemp;
+	vector<bool> aUsed(nums.size() + 1, false);
+
+	helper(aRes, nums, aTemp, aUsed);
+
+	return aRes;
+}
+void move4(int *i1, int *i2, int *i3, int *i4)
+{
+	int temp = *i4;
+	*i4 = *i3;
+	*i3 = *i2;
+	*i2 = *i1;
+	*i1 = temp;
+}
+void rotate(int** matrix, int matrixSize, int* matrixColSize)
+{
+	int i = 0, j = 0;
+	bool oddmatrix = (matrixSize % 2 != 0);
+	int imiddleid_odd = 0, imiddleid_even = 0;
+	int *i1 = NULL, *i2 = NULL, *i3 = NULL, *i4 = NULL;
+	if (oddmatrix)
 	{
-		vector<int> p = res.at(i);
-		string singleline = "";
-		for (int j = 0; j < p.size(); j++)
+		imiddleid_odd = matrixSize / 2 + 1;
+	}
+	else
+	{
+		imiddleid_even = matrixSize / 2;
+	}
+	while (true)
+	{
+		i1 = &matrix[i][j];
+		i2 = &matrix[i + matrixSize][j];
+		i3 = &matrix[i + matrixSize][j + matrixSize];
+		i4 = &matrix[i][j + matrixSize];
+		move4(i1,i2,i3,i4);
+		i++;
+		j++;
+		if (i == matrixSize - 1)
 		{
-			singleline = singleline + num2str(p[j]) + " ";
+			i = 1;
+			j = 1;
+		}
+		if (oddmatrix && i == imiddleid_odd)
+		{
+			break;
+		}
+		if (imiddleid_even && i == imiddleid_even)
+		{
+			i1 = &matrix[i][j];
+			i2 = &matrix[i + matrixSize][j];
+			i3 = &matrix[i + matrixSize][j + matrixSize];
+			i4 = &matrix[i][j + matrixSize];
+			move4(i1, i2, i3, i4);
+			break;
 		}
 	}
-	return res;
 }
+void rotate(vector<vector<int>>& matrix) 
+{
+	int i = 0, j = 0;
+	//while (true)
+	//{
+	//	//int i1 = 
+	//}
+	/*for (int i = 0; i < matrix.size(); i++)
+	{
+		vector<int> v2 = matrix[i];
+		for (int j = 0; j < v2.size(); j++)
+		{
 
+		}
+	}*/
+}
 void Other8Action()
 {
     cout << "\n===========================Other8Action===========================" << endl;
