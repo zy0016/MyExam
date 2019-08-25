@@ -58,9 +58,10 @@ node* DeleteNodeByValue(node *head, int value);
 node* DeleteNodeById(node *head, unsigned int id);
 void ShowNode(node *s);
 node * reverse( node *n);
+node * reverse( node *n,int k);
 node *merge_1(node *a,node *b);
 node *merge_2(node *a,node *b);
 node *merge_3(node *a,node *b);
-
+int GetLinkLength(node *s);
 void LinkAction();
 #endif /*_LINK_STRUCTOR_*/

@@ -1354,74 +1354,147 @@ vector<vector<int>> permuteUnique(vector<int>& nums)
 }
 void move4(int *i1, int *i2, int *i3, int *i4)
 {
-	int temp = *i4;
-	*i4 = *i3;
-	*i3 = *i2;
-	*i2 = *i1;
-	*i1 = temp;
-}
-void rotate(int** matrix, int matrixSize, int* matrixColSize)
-{
-	int i = 0, j = 0;
-	bool oddmatrix = (matrixSize % 2 != 0);
-	int imiddleid_odd = 0, imiddleid_even = 0;
-	int *i1 = NULL, *i2 = NULL, *i3 = NULL, *i4 = NULL;
-	if (oddmatrix)
-	{
-		imiddleid_odd = matrixSize / 2 + 1;
-	}
-	else
-	{
-		imiddleid_even = matrixSize / 2;
-	}
-	while (true)
-	{
-		i1 = &matrix[i][j];
-		i2 = &matrix[i + matrixSize][j];
-		i3 = &matrix[i + matrixSize][j + matrixSize];
-		i4 = &matrix[i][j + matrixSize];
-		move4(i1,i2,i3,i4);
-		i++;
-		j++;
-		if (i == matrixSize - 1)
-		{
-			i = 1;
-			j = 1;
-		}
-		if (oddmatrix && i == imiddleid_odd)
-		{
-			break;
-		}
-		if (imiddleid_even && i == imiddleid_even)
-		{
-			i1 = &matrix[i][j];
-			i2 = &matrix[i + matrixSize][j];
-			i3 = &matrix[i + matrixSize][j + matrixSize];
-			i4 = &matrix[i][j + matrixSize];
-			move4(i1, i2, i3, i4);
-			break;
-		}
-	}
+	int temp = *i4;*i4 = *i3;*i3 = *i2;*i2 = *i1;*i1 = temp;
 }
 void rotate(vector<vector<int>>& matrix) 
 {
-	int i = 0, j = 0;
-	//while (true)
-	//{
-	//	//int i1 = 
-	//}
-	/*for (int i = 0; i < matrix.size(); i++)
+    int j = 0;
+	bool oddmatrix = (matrix.size() % 2 != 0);
+	int imiddleid_odd = 0, imiddleid_even = 0;
+	if (matrix.size() == 1)
+		return;
+	if (matrix.size() == 2)
 	{
-		vector<int> v2 = matrix[i];
-		for (int j = 0; j < v2.size(); j++)
-		{
+		move4(&matrix[0][0],&matrix[0][1],&matrix[1][1],&matrix[1][0]);
+		return;
+	}
+    if (oddmatrix)
+		imiddleid_odd = matrix.size() / 2;
+	else
+		imiddleid_even = matrix.size() / 2 - 1;
 
+	int stepx1 = 0,stepx2 = matrix.size() - 1,stepx3 = matrix.size() - 1,stepx4 = 0;
+	int stepy1 = 0,stepy2 = 0,stepy3 = matrix.size() - 1,stepy4 = matrix.size() - 1;
+	int stepx2_bak = stepx2;
+    while(true)
+	{
+		move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
+		stepx1++;
+		stepy2++;
+		stepx3--;
+		stepy4--;
+		if (oddmatrix && stepx1 == imiddleid_odd && stepy1 == imiddleid_odd)
+			break;
+		if (!oddmatrix && stepx1 == imiddleid_even && stepy1 == imiddleid_even)
+		{
+			move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
+			break;
 		}
-	}*/
+		if (stepx1 == stepx2_bak)
+		{
+			j++;
+			stepx1 = j;
+			stepy1 = j;
+			stepx2 = matrix.size() - 1 - j;
+			stepy2 = j;
+			stepx3 = matrix.size() - 1 - j;
+			stepy3 = matrix.size() - 1 - j;
+			stepx4 = j;
+			stepy4 = matrix.size() - 1 - j;
+			stepx2_bak = stepx2;
+			if (oddmatrix && stepx1 == imiddleid_odd && stepy1 == imiddleid_odd)
+				break;
+			if (!oddmatrix && stepx1 == imiddleid_even && stepy1 == imiddleid_even)
+			{
+				move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],
+						&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
+				break;
+			}
+		}
+	}
+}
+int cmp0(char& a, char&  b)
+{
+	return a>b;
+}
+void stringsort(string &str)
+{
+    int len = str.length();
+    for (int i = 0;i < len - 1;i++)
+    {
+        for (int j = i + 1;j < len;j++)
+        {
+            if (str[i] > str[j])
+            {
+                char tmp = str[i];
+                str[i]=str[j];
+                str[j]=tmp;
+            }
+        }
+    }
+}
+vector<vector<string>> groupAnagrams(vector<string>& strs) 
+{
+    vector<vector<string>> result;
+    int len = strs.size();
+    vector<string> sortedstrs;
+    for (int i = 0;i < len;i++)
+    {
+        string s = strs[i];
+        stringsort(s);
+        if (sortedstrs.size() == 0)
+        {
+            sortedstrs.push_back(s);
+            vector<string> initstr;
+            initstr.push_back(strs[i]);
+        }
+        else
+        {
+            for (int j = 0;j < sortedstrs.size();j++)
+            {
+                if (s == sortedstrs[j])
+                {
+
+                }
+            }
+        }
+    }
+    return result;
 }
 void Other8Action()
 {
     cout << "\n===========================Other8Action===========================" << endl;
+    //string s1 = "aje";
+    //stringsort(s1);
+    vector<string> strs;
+    strs.push_back("eat");
+    strs.push_back("tea");
+    strs.push_back("tan");
+    strs.push_back("ate");
+    strs.push_back("nat");
+    strs.push_back("bat");
+    vector<vector<string>> s2 = groupAnagrams(strs);
+    ///////////////////////
+    vector<vector<int>> matrix;
+    vector<int> matrix1;
+    matrix1.push_back(1);
+    matrix1.push_back(2);
+    matrix1.push_back(3);
+
+    vector<int> matrix2;
+    matrix2.push_back(4);
+    matrix2.push_back(5);
+    matrix2.push_back(6);
+
+    vector<int> matrix3;
+    matrix3.push_back(7);
+    matrix3.push_back(8);
+    matrix3.push_back(9);
+    matrix.push_back(matrix1);
+    matrix.push_back(matrix2);
+    matrix.push_back(matrix3);
+    rotate(matrix);
+    //////////////////////
 
 	vector<int> numsp;
 	numsp.push_back(1);

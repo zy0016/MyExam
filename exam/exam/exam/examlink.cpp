@@ -19,6 +19,16 @@ int getNum(struct ListNode* l1)
 	}
 	return count;
 }
+int getcount(struct ListNode* l1)
+{
+	int count = 0;
+	while (l1 != NULL)
+	{
+		count++;
+		l1 = l1->next;
+	}
+	return count;
+}
 struct ListNode *addNode(int value, struct ListNode* a)
 {
 	struct ListNode *p = NULL;
@@ -505,6 +515,69 @@ node* swapPairs(node* head)
 	head->next = swapPairs(next);
 	return start;
 }
+
+node * reverse( node *begin,node *end)
+{
+    node *head = NULL;
+    while (begin != end)
+    {
+        node *temp = begin->next;
+        begin->next = head ;
+        head = begin;
+        begin = temp;
+    }
+    node *p = head;
+    while(p->next!=NULL)
+    {
+        p = p->next;
+    }
+    p->next = end;
+    return head;
+}
+node* reverseKGroup(node* head, int k)
+{
+    node* cur = head;
+    for(int t = 1; t < k; t++) 
+    {
+        if(cur) 
+            cur = cur->next;
+        else 
+            break;
+    }
+    if(!cur) 
+        return head;
+    node* end = cur->next;
+    node* rev = reverse(head, end);
+    head->next = reverseKGroup(end, k);
+    return rev;
+    //if(k==1 || head==NULL) 
+    //    return head;
+    ////判断当前链表剩余节点数是否满足翻转条件
+    //node* tail = head;
+    //int cnt = 1;
+    //while(cnt<k)
+    //{
+    //    tail = tail->next;
+    //    if(tail==NULL) //当前长度不支持reverse
+    //        return head;
+    //    cnt++;
+    //}
+    ////局部reverse
+    //node* pre = head;
+    //node* cur = pre->next;
+    //cnt = 1;
+    //while(cnt<k)
+    //{
+    //    node* next = cur->next;
+    //    cur->next = pre;
+    //    pre = cur;
+    //    cur = next;
+    //    cnt++;
+    //}
+    ////翻转结束后，pre指向当前k个元素的最后一个元素，翻转后会变成头元素，而cur则是下次待翻转元素的开头
+    //head->next = reverseKGroup(cur, k); //翻转前的head会变成翻转后的最后一个元素
+    //return pre;
+}
 node * reverse( node *n)
 {
     node *head = NULL;
@@ -733,6 +806,15 @@ void LinkAction()
     pb = swapPairs(pb);
     ShowNode(pb);
 
+    node * psk = NULL;
+    for (int i = 1;i < 6;i++)
+    {
+        psk = AddNode(i,psk);
+    }
+    ShowNode(psk);
+    psk = reverseKGroup(psk,2);
+    ShowNode(psk);
+    
 	///////////////////////
 	struct ListNode *l1 = NULL;
 	struct ListNode *l2 = NULL;
@@ -764,4 +846,6 @@ void LinkAction()
 	l1 = addNode(9, l1);
 	l2 = addNode(9, l2);
 	l3 = addTwoNumbers(l1, l2);
+    /////////////////////
+
 }
