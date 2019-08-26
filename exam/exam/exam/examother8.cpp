@@ -1001,9 +1001,11 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target)
     vector<int> single;
     while(true)
     {
+        if (id >= candidates.size())
+            break;
         if (candidates[id] == target)
         {
-            head = AddNode(candidates[id],head);
+            single.clear();
             single.push_back(target);
             result.push_back(single);
             single.clear();
@@ -1022,15 +1024,19 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target)
             node *p = head;
             while(p != NULL)
             {
+                node *tmp = p;
                 single.push_back(p->val);
                 p = p->next;
+                free(tmp);
             }
+            head = NULL;
             result.push_back(single);
             id++;
             continue;
         }
         if (count > target)
         {
+            head = DeleteNodeByValue(head,candidates[id]);
             head = DeleteNodeByValue(head,candidates[id]);
             id++;
             continue;
@@ -1495,9 +1501,15 @@ void Other8Action()
     vector<int> v1;
     v1.push_back(2);
     v1.push_back(3);
-    v1.push_back(4);
-    v1.push_back(5);
+    v1.push_back(6);
+    v1.push_back(7);
     vector<vector<int>> vv1 = combinationSum(v1,7);
+
+    vector<int> v2;
+    v2.push_back(2);
+    v2.push_back(3);
+    v2.push_back(5);
+    vector<vector<int>> vv2 = combinationSum(v2,8);
     //string s1 = "aje";
     //stringsort(s1);
     vector<string> strs;
