@@ -11,6 +11,7 @@
 #include <iostream>
 #include <algorithm>
 
+
 struct node_ 
 {
     int val ;
@@ -37,8 +38,18 @@ struct cnode_
 };
 typedef struct cnode_ cnode;
 
+struct nodem_
+{
+	cnode *pcnode;
+	char* str_sorted;
+	struct nodem_ *next;
+};
+typedef struct nodem_ nodem;
+
+
 pnode * AddNode(int* value ,int len, pnode *a);
-cnode * AddNode(char* value, int len, cnode *a);
+cnode * AddNode(const char* value, int len, cnode *a);
+nodem * AddNode(string str_ori, string str_sorted, nodem *a);
 bool FindNode(cnode *s, const char *str);
 void DeleteAllNodes(cnode *s);
 

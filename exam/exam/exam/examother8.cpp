@@ -1354,64 +1354,64 @@ vector<vector<int>> permuteUnique(vector<int>& nums)
 }
 void move4(int *i1, int *i2, int *i3, int *i4)
 {
-	int temp = *i4;*i4 = *i3;*i3 = *i2;*i2 = *i1;*i1 = temp;
+    int temp = *i4;*i4 = *i3;*i3 = *i2;*i2 = *i1;*i1 = temp;
 }
 void rotate(vector<vector<int>>& matrix) 
 {
     int j = 0;
-	bool oddmatrix = (matrix.size() % 2 != 0);
-	int imiddleid_odd = 0, imiddleid_even = 0;
-	if (matrix.size() == 1)
-		return;
-	if (matrix.size() == 2)
-	{
-		move4(&matrix[0][0],&matrix[0][1],&matrix[1][1],&matrix[1][0]);
-		return;
-	}
+    bool oddmatrix = (matrix.size() % 2 != 0);
+    int imiddleid_odd = 0, imiddleid_even = 0;
+    if (matrix.size() == 1)
+        return;
+    if (matrix.size() == 2)
+    {
+        move4(&matrix[0][0],&matrix[0][1],&matrix[1][1],&matrix[1][0]);
+        return;
+    }
     if (oddmatrix)
-		imiddleid_odd = matrix.size() / 2;
-	else
-		imiddleid_even = matrix.size() / 2 - 1;
+        imiddleid_odd = matrix.size() / 2;
+    else
+        imiddleid_even = matrix.size() / 2 - 1;
 
-	int stepx1 = 0,stepx2 = matrix.size() - 1,stepx3 = matrix.size() - 1,stepx4 = 0;
-	int stepy1 = 0,stepy2 = 0,stepy3 = matrix.size() - 1,stepy4 = matrix.size() - 1;
-	int stepx2_bak = stepx2;
+    int stepx1 = 0,stepx2 = matrix.size() - 1,stepx3 = matrix.size() - 1,stepx4 = 0;
+    int stepy1 = 0,stepy2 = 0,stepy3 = matrix.size() - 1,stepy4 = matrix.size() - 1;
+    int stepx2_bak = stepx2;
     while(true)
-	{
-		move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
-		stepx1++;
-		stepy2++;
-		stepx3--;
-		stepy4--;
-		if (oddmatrix && stepx1 == imiddleid_odd && stepy1 == imiddleid_odd)
-			break;
-		if (!oddmatrix && stepx1 == imiddleid_even && stepy1 == imiddleid_even)
-		{
-			move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
-			break;
-		}
-		if (stepx1 == stepx2_bak)
-		{
-			j++;
-			stepx1 = j;
-			stepy1 = j;
-			stepx2 = matrix.size() - 1 - j;
-			stepy2 = j;
-			stepx3 = matrix.size() - 1 - j;
-			stepy3 = matrix.size() - 1 - j;
-			stepx4 = j;
-			stepy4 = matrix.size() - 1 - j;
-			stepx2_bak = stepx2;
-			if (oddmatrix && stepx1 == imiddleid_odd && stepy1 == imiddleid_odd)
-				break;
-			if (!oddmatrix && stepx1 == imiddleid_even && stepy1 == imiddleid_even)
-			{
-				move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],
-						&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
-				break;
-			}
-		}
-	}
+    {
+        move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
+        stepx1++;
+        stepy2++;
+        stepx3--;
+        stepy4--;
+        if (oddmatrix && stepx1 == imiddleid_odd && stepy1 == imiddleid_odd)
+            break;
+        if (!oddmatrix && stepx1 == imiddleid_even && stepy1 == imiddleid_even)
+        {
+            move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],&matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
+            break;
+        }
+        if (stepx1 == stepx2_bak)
+        {
+            j++;
+            stepx1 = j;
+            stepy1 = j;
+            stepx2 = matrix.size() - 1 - j;
+            stepy2 = j;
+            stepx3 = matrix.size() - 1 - j;
+            stepy3 = matrix.size() - 1 - j;
+            stepx4 = j;
+            stepy4 = matrix.size() - 1 - j;
+            stepx2_bak = stepx2;
+            if (oddmatrix && stepx1 == imiddleid_odd && stepy1 == imiddleid_odd)
+                break;
+            if (!oddmatrix && stepx1 == imiddleid_even && stepy1 == imiddleid_even)
+            {
+                move4(&matrix[stepy1][stepx1],&matrix[stepy2][stepx2],
+                        &matrix[stepy3][stepx3],&matrix[stepy4][stepx4]);
+                break;
+            }
+        }
+    }
 }
 int cmp0(char& a, char&  b)
 {
@@ -1438,27 +1438,20 @@ vector<vector<string>> groupAnagrams(vector<string>& strs)
     vector<vector<string>> result;
     int len = strs.size();
     vector<string> sortedstrs;
+	nodem *p = NULL;
     for (int i = 0;i < len;i++)
     {
-        string s = strs[i];
-        stringsort(s);
-        if (sortedstrs.size() == 0)
-        {
-            sortedstrs.push_back(s);
-            vector<string> initstr;
-            initstr.push_back(strs[i]);
-        }
-        else
-        {
-            for (int j = 0;j < sortedstrs.size();j++)
-            {
-                if (s == sortedstrs[j])
-                {
-
-                }
-            }
-        }
+		string str_ori = strs[i];
+        string sorted = strs[i];
+        stringsort(sorted);
+		//p = AddNode(str_ori, sorted, p);
     }
+	nodem *pbak = p;
+	while (p != NULL)
+	{
+
+		p = p->next;
+	}
     return result;
 }
 void Other8Action()

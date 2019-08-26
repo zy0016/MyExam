@@ -202,6 +202,49 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 	}
 }
 
+nodem * AddNode(string str_ori, string str_sorted, nodem *a)
+{
+	int len_ori,len_sorted;
+	nodem *p = NULL;
+	nodem *pNext = a;
+	p = (nodem*)malloc(sizeof(nodem));
+	if (p == NULL)
+		return NULL;
+	const char *pstr_ori = str_ori.c_str();
+	const char *pstr_sorted = str_sorted.c_str();
+	len_ori = str_ori.length() + 1;
+	len_sorted = str_sorted.length() + 1;
+
+	p->str_sorted = (char*)malloc(sizeof(char) * len_sorted);
+	memset(p->str_sorted, 0, sizeof(char) * len_sorted);
+	strcpy(p->str_sorted, pstr_sorted);
+
+	p->next = NULL;
+	p->pcnode = NULL;
+	if (a == NULL)
+	{
+		p->pcnode = AddNode(pstr_ori, len_ori, p->pcnode);
+		return p;
+	}
+	while (pNext != NULL)
+	{
+		if (strcmp(pNext->str_sorted, pstr_sorted) == 0)
+		{
+			pNext->pcnode = AddNode(pstr_ori, len_ori, pNext->pcnode);
+			return a;
+		}
+		pNext = pNext->next;
+	}
+	pNext = a;
+	while (pNext->next != NULL)
+	{
+		pNext = pNext->next;
+	}
+	p->pcnode = AddNode(pstr_ori, len_ori, p->pcnode);
+	pNext->next = p;
+	return a;
+}
+
 node **findNode(node *root, int key)
 {
     node **prev = &root->next;
@@ -362,7 +405,7 @@ pnode * AddNode(int* value,int len , pnode *a)
     pNext->next = p;
     return a;
 }
-cnode * AddNode(char* value, int len, cnode *a)
+cnode * AddNode(const char* value, int len, cnode *a)
 {
 	cnode *p = NULL;
 	cnode *pNext = a;
