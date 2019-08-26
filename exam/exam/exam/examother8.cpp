@@ -982,50 +982,67 @@ string countAndSay(int n) {
     return output;
 }
 #endif
-/**
- * Return an array of arrays of size *returnSize.
- * The sizes of the arrays are returned as *returnColumnSizes array.
- * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
- */
-int** combinationSum(int* candidates, int candidatesSize, int target, int* returnSize, int** returnColumnSizes)
+
+vector<vector<int>> combinationSum(vector<int>& candidates, int target) 
 {
-    int **result = NULL;
-    //int *pindex = NULL;
-    int *p1 = NULL;
-    pnode *pall = NULL;
-    if (candidates == NULL || candidatesSize == 0)
-        return NULL;
-    for (int i = 0;i < candidatesSize;i++)
+    sort(candidates.begin(),candidates.end());
+    vector<vector<int>> result;
+    if (candidates.size() == 0)
+        return result;
+    if (candidates.size() == 1 && candidates[0] == target)
     {
-        if (target % candidates[i] == 0)
+        vector<int> single;
+        single.push_back(target);
+        result.push_back(single);
+        return result;
+    }
+    node *head = NULL;
+    int id = 0;
+    vector<int> single;
+    while(true)
+    {
+        if (candidates[id] == target)
         {
-            int num = target / candidates[i];
-            p1 = (int*)malloc(sizeof(int) * num);
-            for (int j = 0;j < num;j++)
-                p1[j] = candidates[i];
-            pall = AddNode(p1,num,pall);
-            free(p1);
-            p1 = NULL;
+            head = AddNode(candidates[id],head);
+            single.push_back(target);
+            result.push_back(single);
+            single.clear();
+            id++;
+            continue;
         }
-        int k = target - candidates[i];
-        if (k > 0)
+        int count = getAmountLink(head);
+        while(count < target)
         {
-            for (int m = 0;m < candidatesSize && m!=i;m++)
+            head = AddNode(candidates[id],head);
+            count = getAmountLink(head);
+        }
+        if (count == target)
+        {
+            single.clear();
+            node *p = head;
+            while(p != NULL)
             {
-                if (target % k == 0)
-                {
-                    int num = target / candidates[m];
-                    p1 = (int*)malloc(sizeof(int) * num);
-                    for (int j = 0;j < num;j++)
-                        p1[j] = candidates[m];
-                    pall = AddNode(p1,num,pall);
-                    free(p1);
-                    p1 = NULL;
-                }
+                single.push_back(p->val);
+                p = p->next;
             }
+            result.push_back(single);
+            id++;
+            continue;
+        }
+        if (count > target)
+        {
+            head = DeleteNodeByValue(head,candidates[id]);
+            id++;
+            continue;
+        }
+        if (id == candidates.size())
+        {
+            break;
         }
     }
+    return result;
 }
+
 int firstMissingPositive(int* nums, int numsSize) 
 {
     if (nums == NULL || numsSize == 0)
@@ -1413,10 +1430,6 @@ void rotate(vector<vector<int>>& matrix)
         }
     }
 }
-int cmp0(char& a, char&  b)
-{
-	return a>b;
-}
 void stringsort(string &str)
 {
     int len = str.length();
@@ -1444,19 +1457,47 @@ vector<vector<string>> groupAnagrams(vector<string>& strs)
 		string str_ori = strs[i];
         string sorted = strs[i];
         stringsort(sorted);
-		//p = AddNode(str_ori, sorted, p);
+        p = AddNode(str_ori.c_str(), sorted.c_str(), p);
     }
+    vector<string> single;
 	nodem *pbak = p;
 	while (p != NULL)
 	{
-
+        single.clear();
+        cnode * pc = p->pcnode;
+        while(pc!= NULL)
+        {
+            string s(pc->val);
+            single.push_back(s);
+            pc = pc->next;
+        }
+        result.push_back(single);
 		p = p->next;
 	}
+    while(pbak != NULL)
+    {
+        nodem *pb = pbak;
+        cnode * pc = pbak->pcnode;
+        while(pc != NULL)
+        {
+            cnode *tmp = pc;
+            pc = pc->next;
+            free(tmp);
+        }
+        pbak = pbak->next;
+        free(pb);
+    }
     return result;
 }
 void Other8Action()
 {
     cout << "\n===========================Other8Action===========================" << endl;
+    vector<int> v1;
+    v1.push_back(2);
+    v1.push_back(3);
+    v1.push_back(4);
+    v1.push_back(5);
+    vector<vector<int>> vv1 = combinationSum(v1,7);
     //string s1 = "aje";
     //stringsort(s1);
     vector<string> strs;

@@ -48,10 +48,11 @@ typedef struct nodem_ nodem;
 
 
 pnode * AddNode(int* value ,int len, pnode *a);
-cnode * AddNode(const char* value, int len, cnode *a);
-nodem * AddNode(string str_ori, string str_sorted, nodem *a);
+cnode * AddNode(const char* value, cnode *a);
+nodem * AddNode(const char* str_ori, const char* str_sorted, nodem *a);
 bool FindNode(cnode *s, const char *str);
 void DeleteAllNodes(cnode *s);
+int getAmountLink(node *p);
 
 charnode * pushNode(char value , charnode *a);
 charnode * popupNode(charnode *a,char *c);

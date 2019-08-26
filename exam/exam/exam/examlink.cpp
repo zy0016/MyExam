@@ -202,7 +202,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 	}
 }
 
-nodem * AddNode(string str_ori, string str_sorted, nodem *a)
+nodem * AddNode(const char* str_ori, const char* str_sorted, nodem *a)
 {
 	int len_ori,len_sorted;
 	nodem *p = NULL;
@@ -210,10 +210,10 @@ nodem * AddNode(string str_ori, string str_sorted, nodem *a)
 	p = (nodem*)malloc(sizeof(nodem));
 	if (p == NULL)
 		return NULL;
-	const char *pstr_ori = str_ori.c_str();
-	const char *pstr_sorted = str_sorted.c_str();
-	len_ori = str_ori.length() + 1;
-	len_sorted = str_sorted.length() + 1;
+	const char *pstr_ori = str_ori;
+	const char *pstr_sorted = str_sorted;
+	len_ori = strlen(str_ori) + 1;
+	len_sorted = strlen(str_sorted) + 1;
 
 	p->str_sorted = (char*)malloc(sizeof(char) * len_sorted);
 	memset(p->str_sorted, 0, sizeof(char) * len_sorted);
@@ -223,14 +223,15 @@ nodem * AddNode(string str_ori, string str_sorted, nodem *a)
 	p->pcnode = NULL;
 	if (a == NULL)
 	{
-		p->pcnode = AddNode(pstr_ori, len_ori, p->pcnode);
+		p->pcnode = AddNode(pstr_ori, p->pcnode);
 		return p;
 	}
 	while (pNext != NULL)
 	{
 		if (strcmp(pNext->str_sorted, pstr_sorted) == 0)
 		{
-			pNext->pcnode = AddNode(pstr_ori, len_ori, pNext->pcnode);
+			pNext->pcnode = AddNode(pstr_ori, pNext->pcnode);
+            free(p);
 			return a;
 		}
 		pNext = pNext->next;
@@ -240,7 +241,7 @@ nodem * AddNode(string str_ori, string str_sorted, nodem *a)
 	{
 		pNext = pNext->next;
 	}
-	p->pcnode = AddNode(pstr_ori, len_ori, p->pcnode);
+	p->pcnode = AddNode(pstr_ori, p->pcnode);
 	pNext->next = p;
 	return a;
 }
@@ -341,6 +342,16 @@ charnode* popupNode(charnode *a,char *c)
     free(p);
     return a;
 }
+int getAmountLink(node *p)
+{
+    int count = 0;
+    while(p != NULL)
+    {
+        count += p->val;
+        p = p->next;
+    }
+    return count;
+}
 int getTopNode(charnode *a,char *c)
 {
     if (a == NULL)
@@ -405,11 +416,11 @@ pnode * AddNode(int* value,int len , pnode *a)
     pNext->next = p;
     return a;
 }
-cnode * AddNode(const char* value, int len, cnode *a)
+cnode * AddNode(const char* value, cnode *a)
 {
 	cnode *p = NULL;
 	cnode *pNext = a;
-
+    int len = strlen(value);
 	p = (cnode*)malloc(sizeof(cnode));
 	p->val = (char*)malloc(sizeof(int) * (len+1));
 	memset(p->val, 0, sizeof(int) * (len + 1));
