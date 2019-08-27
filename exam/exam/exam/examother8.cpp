@@ -983,9 +983,31 @@ string countAndSay(int n) {
 }
 #endif
 
+vector<int> m_curr;
+vector<vector<int>> m_ans;
+void search(const vector<int>& candidates, int idx, int target)
+{
+	if (target == 0) return m_ans.push_back(m_curr);
+	else if (idx == candidates.size()) return;
+	else if (candidates[idx] > target) return;
+
+	int count = target / candidates[idx];
+	int num = candidates[idx];
+
+	for (int i = count; i >= 0; --i)
+	{
+		m_curr.insert(m_curr.end(), i, num);
+		search(candidates, idx + 1, target - num * i);
+		m_curr.resize(m_curr.size() - i);
+	}
+}
 vector<vector<int>> combinationSum(vector<int>& candidates, int target) 
 {
-    sort(candidates.begin(),candidates.end());
+	m_curr.reserve(candidates.size());
+	sort(candidates.begin(), candidates.end());
+	search(candidates, 0, target);
+	return move(m_ans);
+    /*sort(candidates.begin(),candidates.end());
     vector<vector<int>> result;
     if (candidates.size() == 0)
         return result;
@@ -1038,7 +1060,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target)
         {
             head = DeleteNodeByValue(head,candidates[id]);
             head = DeleteNodeByValue(head,candidates[id]);
-            id++;
+			id++;
             continue;
         }
         if (id == candidates.size())
@@ -1046,7 +1068,7 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target)
             break;
         }
     }
-    return result;
+    return result;*/
 }
 
 int firstMissingPositive(int* nums, int numsSize) 
