@@ -1007,68 +1007,36 @@ vector<vector<int>> combinationSum(vector<int>& candidates, int target)
 	sort(candidates.begin(), candidates.end());
 	search(candidates, 0, target);
 	return move(m_ans);
-    /*sort(candidates.begin(),candidates.end());
-    vector<vector<int>> result;
-    if (candidates.size() == 0)
-        return result;
-    if (candidates.size() == 1 && candidates[0] == target)
+}
+
+void dfs(vector<vector<int>>& sum, const vector<int>& candidates, int idx, int val, int target, vector<int>& res) 
+{
+    if (val == target) 
     {
-        vector<int> single;
-        single.push_back(target);
-        result.push_back(single);
-        return result;
+        sum.push_back(res);
+        return;
     }
-    node *head = NULL;
-    int id = 0;
-    vector<int> single;
-    while(true)
+    if (idx == candidates.size() || val > target) {
+        return;
+    }
+        
+    for (int i = idx; i < candidates.size(); i++) 
     {
-        if (id >= candidates.size())
-            break;
-        if (candidates[id] == target)
-        {
-            single.clear();
-            single.push_back(target);
-            result.push_back(single);
-            single.clear();
-            id++;
-            continue;
-        }
-        int count = getAmountLink(head);
-        while(count < target)
-        {
-            head = AddNode(candidates[id],head);
-            count = getAmountLink(head);
-        }
-        if (count == target)
-        {
-            single.clear();
-            node *p = head;
-            while(p != NULL)
-            {
-                node *tmp = p;
-                single.push_back(p->val);
-                p = p->next;
-                free(tmp);
-            }
-            head = NULL;
-            result.push_back(single);
-            id++;
-            continue;
-        }
-        if (count > target)
-        {
-            head = DeleteNodeByValue(head,candidates[id]);
-            head = DeleteNodeByValue(head,candidates[id]);
-			id++;
-            continue;
-        }
-        if (id == candidates.size())
-        {
-            break;
-        }
+        if (val + candidates[i] > target || i > idx && candidates[i] == candidates[i - 1]) continue;
+        res.push_back(candidates[i]);
+        dfs(sum, candidates, i + 1, val + candidates[i], target, res);
+        res.pop_back();
+            
     }
-    return result;*/
+}
+vector<vector<int>> combinationSum2(vector<int>& candidates, int target) 
+{
+    sort(candidates.begin(), candidates.end());
+    vector<vector<int>> sum;
+    if (candidates.size() == 0) return sum;
+    vector<int> res;
+    dfs(sum, candidates, 0, 0, target, res);
+    return sum; 
 }
 
 int firstMissingPositive(int* nums, int numsSize) 
@@ -1532,6 +1500,16 @@ void Other8Action()
     v2.push_back(3);
     v2.push_back(5);
     vector<vector<int>> vv2 = combinationSum(v2,8);
+
+    vector<int> v3;
+    v3.push_back(10);
+    v3.push_back(1);
+    v3.push_back(2);
+    v3.push_back(7);
+    v3.push_back(6);
+    v3.push_back(1);
+    v3.push_back(5);
+    vector<vector<int>> vv3 = combinationSum2(v3,7);
     //string s1 = "aje";
     //stringsort(s1);
     vector<string> strs;

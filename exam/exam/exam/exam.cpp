@@ -13,6 +13,7 @@
 #include "other6.h"
 #include "other7.h"
 #include "other8.h"
+#include "other9.h"
 #include "class2.h"
 #include "class3.h"
 #include "class4.h"
@@ -52,6 +53,7 @@ int _tmain(int argc, _TCHAR* argv[])
     Other6Action();
 	Other7Action();
 	Other8Action();
+    Other9Action();
 	//testmytree();
 	//testmytree2();
 	//testmytree3();
