@@ -82,10 +82,11 @@ int maxSubArray(int* nums, int numsSize)
 }
 vector<int> spiralOrder(vector<vector<int>>& matrix)
 {
+    vector<int> ans;
 	if (matrix.size() == 0)
-		return{};
+		return ans;
 	int l = 0, r = matrix[0].size() - 1, t = 0, b = matrix.size() - 1;
-	vector<int> ans;
+	
 	int dir = 0;
 	while (l <= r && t <= b)
 	{
@@ -141,7 +142,23 @@ bool canJump(vector<int>& nums)
 	while (true)
 	{
 		int value = nums[i];
-		if (value == 0 && i < len - 1)
+        /*if (value > 0)
+        {
+            if (i + value >= len - 1)
+		    {
+			    return true;
+		    }
+            i = i + value;
+        }
+        else
+        {
+
+        }*/
+        
+
+
+
+        if (value == 0 && i < len - 1)
 		{
 			zeroid = i;
 			if (id == i && !beyondzero)
@@ -157,7 +174,7 @@ bool canJump(vector<int>& nums)
 			}
 			else
 			{
-
+                break;
 			}
 			continue;
 		}
@@ -181,9 +198,128 @@ bool canJump(vector<int>& nums)
 	return false;
 }
 
+int lengthOfLastWord(char * s)
+{
+    if (s == NULL)
+        return 0;
+    int len = strlen(s);
+    if (len == 0)
+        return 0;
+    if (len == 1 && s[0] == ' ')
+        return 0;
+
+    s = Trim(s);
+    len = strlen(s);
+
+    if (len == 1 && s[0] != ' ')
+        return 1;
+    
+    for (int i = len - 1;i >= 0;i--)
+    {
+        if (s[i] == ' ')
+        {
+            int r = len - i - 1;
+            return r;
+        }
+    }
+    return len;
+}
+vector<int> spiralOrder(vector<vector<int>>& matrix)
+{
+    vector<int> ans;
+    vector<vector<int>> result;
+    //vector<int> single;
+    int count = 1;
+	if (matrix.size() == 0)
+		return ans;
+	int l = 0, r = matrix[0].size() - 1, t = 0, b = matrix.size() - 1;
+	int dir = 0;
+	while (l <= r && t <= b)
+	{
+		switch (dir)
+		{
+		case 0:
+			for (int i = l; i <= r; i++)
+			{
+                vector<int> single;
+                single.push_back(t);
+                single.push_back(i);
+                single.push_back(count++);
+                result.push_back(single);
+				
+                ans.push_back(matrix[t][i]);
+			}
+			t++;
+			break;
+		case 1:
+			for (int i = t; i <= b; i++) 
+			{
+                vector<int> single;
+                single.push_back(t);
+                single.push_back(i);
+                single.push_back(count++);
+                result.push_back(single);
+
+				ans.push_back(matrix[i][r]);
+			}
+			r--;
+			break;
+		case 2:
+			for (int i = r; i >= l; i--) 
+			{
+                vector<int> single;
+                single.push_back(t);
+                single.push_back(i);
+                single.push_back(count++);
+                result.push_back(single);
+
+				ans.push_back(matrix[b][i]);
+			}
+			b--;
+			break;
+		case 3:
+			for (int i = b; i >= t; i--) 
+			{
+                vector<int> single;
+                single.push_back(t);
+                single.push_back(i);
+                single.push_back(count++);
+                result.push_back(single);
+
+				ans.push_back(matrix[i][l]);
+			}
+			l++;
+			break;
+		}
+		dir = (dir + 1) % 4;
+	}
+	return ans;
+}
+
+vector<vector<int>> generateMatrix(int n) 
+{
+    int count = 1;
+    vector<vector<int>> result;
+    for (int i = 0;i < n;i++)
+    {
+        vector<int> r1;
+        for (int j = 0;j < n;j++)
+        {
+            r1.push_back(count);
+            count++;
+        }
+        result.push_back(r1);
+    }
+    return result;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    char arr[] = " a";
+    int i = lengthOfLastWord(arr);
+
+    vector<vector<int>> result = generateMatrix(3);
+
 	vector<int> nums;
 	nums.push_back(2);
 	nums.push_back(3);
@@ -235,6 +371,14 @@ void Other9Action()
 	for (int i = 0; i < sizeof(n2) / sizeof(int); i++)
 	{
 		nums.push_back(n2[i]);
+	}
+	b1 = canJump(nums);
+
+    nums.clear();
+	int n3[] = { 5,4,0,2,0,1,0,1,0 };
+	for (int i = 0; i < sizeof(n3) / sizeof(int); i++)
+	{
+		nums.push_back(n3[i]);
 	}
 	b1 = canJump(nums);
 	////////////////
