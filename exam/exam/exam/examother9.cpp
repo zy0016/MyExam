@@ -127,7 +127,19 @@ vector<int> spiralOrder(vector<vector<int>>& matrix)
 }
 bool canJump(vector<int>& nums) 
 {
-	int len = nums.size();
+    int start = 0;
+    int end = nums[0];
+                
+    for (int i = 0; i <= end; i++) 
+    {                    
+        if (nums[i] + i > end)
+            end = nums[i] + i;
+            
+        if (end >= nums.size() - 1) 
+            return true;            
+    }
+    return false;
+	/*int len = nums.size();
 	if (len == 0)
 		return false;
 	if (len == 1)
@@ -142,22 +154,6 @@ bool canJump(vector<int>& nums)
 	while (true)
 	{
 		int value = nums[i];
-        /*if (value > 0)
-        {
-            if (i + value >= len - 1)
-		    {
-			    return true;
-		    }
-            i = i + value;
-        }
-        else
-        {
-
-        }*/
-        
-
-
-
         if (value == 0 && i < len - 1)
 		{
 			zeroid = i;
@@ -195,7 +191,7 @@ bool canJump(vector<int>& nums)
 		}
 		i = i + value;
 	}
-	return false;
+	return false;*/
 }
 
 int lengthOfLastWord(char * s)
@@ -224,77 +220,77 @@ int lengthOfLastWord(char * s)
     }
     return len;
 }
-vector<int> spiralOrder(vector<vector<int>>& matrix)
-{
-    vector<int> ans;
-    vector<vector<int>> result;
-    //vector<int> single;
-    int count = 1;
-	if (matrix.size() == 0)
-		return ans;
-	int l = 0, r = matrix[0].size() - 1, t = 0, b = matrix.size() - 1;
-	int dir = 0;
-	while (l <= r && t <= b)
-	{
-		switch (dir)
-		{
-		case 0:
-			for (int i = l; i <= r; i++)
-			{
-                vector<int> single;
-                single.push_back(t);
-                single.push_back(i);
-                single.push_back(count++);
-                result.push_back(single);
-				
-                ans.push_back(matrix[t][i]);
-			}
-			t++;
-			break;
-		case 1:
-			for (int i = t; i <= b; i++) 
-			{
-                vector<int> single;
-                single.push_back(t);
-                single.push_back(i);
-                single.push_back(count++);
-                result.push_back(single);
-
-				ans.push_back(matrix[i][r]);
-			}
-			r--;
-			break;
-		case 2:
-			for (int i = r; i >= l; i--) 
-			{
-                vector<int> single;
-                single.push_back(t);
-                single.push_back(i);
-                single.push_back(count++);
-                result.push_back(single);
-
-				ans.push_back(matrix[b][i]);
-			}
-			b--;
-			break;
-		case 3:
-			for (int i = b; i >= t; i--) 
-			{
-                vector<int> single;
-                single.push_back(t);
-                single.push_back(i);
-                single.push_back(count++);
-                result.push_back(single);
-
-				ans.push_back(matrix[i][l]);
-			}
-			l++;
-			break;
-		}
-		dir = (dir + 1) % 4;
-	}
-	return ans;
-}
+//vector<int> spiralOrder(vector<vector<int>>& matrix)
+//{
+//    vector<int> ans;
+//    vector<vector<int>> result;
+//    //vector<int> single;
+//    int count = 1;
+//	if (matrix.size() == 0)
+//		return ans;
+//	int l = 0, r = matrix[0].size() - 1, t = 0, b = matrix.size() - 1;
+//	int dir = 0;
+//	while (l <= r && t <= b)
+//	{
+//		switch (dir)
+//		{
+//		case 0:
+//			for (int i = l; i <= r; i++)
+//			{
+//                vector<int> single;
+//                single.push_back(t);
+//                single.push_back(i);
+//                single.push_back(count++);
+//                result.push_back(single);
+//				
+//                ans.push_back(matrix[t][i]);
+//			}
+//			t++;
+//			break;
+//		case 1:
+//			for (int i = t; i <= b; i++) 
+//			{
+//                vector<int> single;
+//                single.push_back(t);
+//                single.push_back(i);
+//                single.push_back(count++);
+//                result.push_back(single);
+//
+//				ans.push_back(matrix[i][r]);
+//			}
+//			r--;
+//			break;
+//		case 2:
+//			for (int i = r; i >= l; i--) 
+//			{
+//                vector<int> single;
+//                single.push_back(t);
+//                single.push_back(i);
+//                single.push_back(count++);
+//                result.push_back(single);
+//
+//				ans.push_back(matrix[b][i]);
+//			}
+//			b--;
+//			break;
+//		case 3:
+//			for (int i = b; i >= t; i--) 
+//			{
+//                vector<int> single;
+//                single.push_back(t);
+//                single.push_back(i);
+//                single.push_back(count++);
+//                result.push_back(single);
+//
+//				ans.push_back(matrix[i][l]);
+//			}
+//			l++;
+//			break;
+//		}
+//		dir = (dir + 1) % 4;
+//	}
+//	return ans;
+//}
 
 vector<vector<int>> generateMatrix(int n) 
 {
@@ -312,9 +308,98 @@ vector<vector<int>> generateMatrix(int n)
     }
     return result;
 }
+
+vector<int> mergetwo(vector<int> v1,vector<int> v2,bool *canmerge)
+{
+    vector<int> result;
+    int start,end;
+    if ((v2[0] > v1[1]) || (v1[0] > v2[1]))
+    {
+        *canmerge = false;
+        return result;
+    }
+    if ((v2[0] > v1[0] && v2[0] < v1[1]) || (v1[0] > v2[0] && v1[0] < v2[1]))
+    {
+        *canmerge = true;
+
+        start = (v1[0] < v2[0]) ? v1[0] : v2[0];
+        end = (v1[1] > v2[1]) ? v1[1] : v2[1];
+
+        result.push_back(start);
+        result.push_back(end);
+    }
+    else
+    {
+        *canmerge = false;
+    }
+    return result;
+}
+vector<vector<int>> merge(vector<vector<int>>& intervals) 
+{
+    int b = intervals.size();
+    vector<vector<int>> result;
+    set<vector<int>> re;
+    if (b == 0)
+    {
+        return result;
+    }
+    if (b == 1)
+    {
+        return intervals;
+    }
+    int i = 0,j = i + 1;
+    for (i = b - 1;i >= 1;i--)
+    {
+        bool canmerge = false;
+        vector<int> v1 = intervals[i];
+        for(j = i - 1;j >= 0;j--)
+        {
+            vector<int> v2 = intervals[j];
+            vector<int> m = mergetwo(v1,v2,&canmerge);
+            if (canmerge)
+            {
+                re.insert(m);
+                intervals[i].pop_back();
+                intervals[j].pop_back();
+                b = intervals.size();
+            }
+        }
+        if (!canmerge)
+        {
+            re.insert(v1);
+        }
+    }
+    for (set<vector<int>>::iterator it = re.begin(); it != re.end(); it++)//for (i = 0;i < re.size();i++)
+    {
+        vector<int> r1 = *it;
+        result.push_back(r1);
+    }
+    return result;
+}
+
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        vector<int> v1,v2,v3,v4;
+        v1.push_back(1);
+        v1.push_back(3);
+        v2.push_back(2);
+        v2.push_back(6);
+        v3.push_back(8);
+        v3.push_back(10);
+        v4.push_back(15);
+        v4.push_back(18);
+        vector<vector<int>> intervals,vres;
+        /*intervals.push_back(v1);
+        intervals.push_back(v2);
+        intervals.push_back(v3);
+        intervals.push_back(v4);*/
+        vres = merge(intervals);
+    }
+    
+
+
     char arr[] = " a";
     int i = lengthOfLastWord(arr);
 
