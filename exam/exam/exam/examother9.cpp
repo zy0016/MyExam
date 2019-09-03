@@ -220,99 +220,79 @@ int lengthOfLastWord(char * s)
     }
     return len;
 }
-//vector<int> spiralOrder(vector<vector<int>>& matrix)
-//{
-//    vector<int> ans;
-//    vector<vector<int>> result;
-//    //vector<int> single;
-//    int count = 1;
-//	if (matrix.size() == 0)
-//		return ans;
-//	int l = 0, r = matrix[0].size() - 1, t = 0, b = matrix.size() - 1;
-//	int dir = 0;
-//	while (l <= r && t <= b)
-//	{
-//		switch (dir)
-//		{
-//		case 0:
-//			for (int i = l; i <= r; i++)
-//			{
-//                vector<int> single;
-//                single.push_back(t);
-//                single.push_back(i);
-//                single.push_back(count++);
-//                result.push_back(single);
-//				
-//                ans.push_back(matrix[t][i]);
-//			}
-//			t++;
-//			break;
-//		case 1:
-//			for (int i = t; i <= b; i++) 
-//			{
-//                vector<int> single;
-//                single.push_back(t);
-//                single.push_back(i);
-//                single.push_back(count++);
-//                result.push_back(single);
-//
-//				ans.push_back(matrix[i][r]);
-//			}
-//			r--;
-//			break;
-//		case 2:
-//			for (int i = r; i >= l; i--) 
-//			{
-//                vector<int> single;
-//                single.push_back(t);
-//                single.push_back(i);
-//                single.push_back(count++);
-//                result.push_back(single);
-//
-//				ans.push_back(matrix[b][i]);
-//			}
-//			b--;
-//			break;
-//		case 3:
-//			for (int i = b; i >= t; i--) 
-//			{
-//                vector<int> single;
-//                single.push_back(t);
-//                single.push_back(i);
-//                single.push_back(count++);
-//                result.push_back(single);
-//
-//				ans.push_back(matrix[i][l]);
-//			}
-//			l++;
-//			break;
-//		}
-//		dir = (dir + 1) % 4;
-//	}
-//	return ans;
-//}
+void matrixOrder(vector<vector<int>>& matrix)
+{
+    int count = 1;
+	if (matrix.size() == 0)
+		return ;
+	int l = 0, r = matrix[0].size() - 1, t = 0, b = matrix.size() - 1;
+	int dir = 0;
+	while (l <= r && t <= b)
+	{
+		switch (dir)
+		{
+		case 0:
+			for (int i = l; i <= r; i++)
+			{
+                matrix[t][i] = count++;
+			}
+			t++;
+			break;
+		case 1:
+			for (int i = t; i <= b; i++) 
+			{
+                matrix[i][r] = count++;
+			}
+			r--;
+			break;
+		case 2:
+			for (int i = r; i >= l; i--) 
+			{
+                matrix[b][i] = count++;
+			}
+			b--;
+			break;
+		case 3:
+			for (int i = b; i >= t; i--) 
+			{
+                
+                matrix[i][l] = count++;
+			}
+			l++;
+			break;
+		}
+		dir = (dir + 1) % 4;
+	}
+}
 
 vector<vector<int>> generateMatrix(int n) 
 {
-    int count = 1;
     vector<vector<int>> result;
+    if (n == 0)
+        return result;
+    if (n == 1)
+    {
+        vector<int> r1;
+        r1.push_back(1);
+        result.push_back(r1);
+        return result;
+    }
     for (int i = 0;i < n;i++)
     {
         vector<int> r1;
         for (int j = 0;j < n;j++)
         {
-            r1.push_back(count);
-            count++;
+            r1.push_back(-1);
         }
         result.push_back(r1);
     }
+    matrixOrder(result);
     return result;
 }
 
 vector<int> mergetwo(vector<int> v1,vector<int> v2,bool *canmerge)
 {
     vector<int> result;
-    int start,end;
 	if (v1[0] == -1)
 	{
 		return v2;
@@ -337,11 +317,8 @@ vector<int> mergetwo(vector<int> v1,vector<int> v2,bool *canmerge)
     {
         *canmerge = true;
 
-        start = (v1[0] < v2[0]) ? v1[0] : v2[0];
-        end = (v1[1] > v2[1]) ? v1[1] : v2[1];
-
-        result.push_back(start);
-        result.push_back(end);
+        result.push_back((v1[0] < v2[0]) ? v1[0] : v2[0]);
+        result.push_back((v1[1] > v2[1]) ? v1[1] : v2[1]);
     }
     else
     {
@@ -352,29 +329,26 @@ vector<int> mergetwo(vector<int> v1,vector<int> v2,bool *canmerge)
 vector<vector<int>> merge(vector<vector<int>>& intervals)
 {
 	int b = intervals.size();
-	vector<vector<int>> result;
 	vector<int> m;
 	if (b == 0)
 	{
+        vector<vector<int>> result;
 		return result;
 	}
 	if (b == 1)
 	{
 		return intervals;
 	}
-	int i = 0, j = i + 1;
-	for (i = b - 1; i >= 1; i--)
+	for (int i = b - 1; i >= 1; i--)
 	{
 		bool canmerge = false;
-		for (j = i - 1; j >= 0; j--)
+		for (int j = i - 1; j >= 0; j--)
 		{
 			m = mergetwo(intervals[i], intervals[j], &canmerge);
 			if (canmerge)
 			{
 				intervals[j][0] = m[0];
 				intervals[j][1] = m[1];
-				//intervals[i][0] = -1;
-				//intervals[i][1] = -1;
 				intervals[i][0] = intervals[b - 1][0];
 				intervals[i][1] = intervals[b - 1][1];
 				intervals.resize(b - 1);
@@ -384,20 +358,90 @@ vector<vector<int>> merge(vector<vector<int>>& intervals)
 		}
 	}
 	return intervals;
-	/*for (vector<vector<int>>::iterator it = intervals.begin(); it != intervals.end(); it++)
+}
+//string getPermutation(int n, int k) 
+//{
+//    string s = "";
+//    for (int i = 0;i < n;i++)
+//    {
+//        
+//    }
+//
+//    return s;
+//}
+void backtrack_Permutation(vector<vector<int>>& res, vector<int>& nums, vector<int>& current)
+{
+	if (current.size() == nums.size())
 	{
-		vector<int> r1 = *it;
-		if (r1[0] != -1 && r1[1] != -1)
+		res.push_back(current);
+		return;
+	}
+	for (int i = 0; i < nums.size(); i++)
+	{
+		if (count(current.begin(), current.end(), nums[i]) == 0)
 		{
-			result.push_back(r1);
+			current.push_back(nums[i]);
+			backtrack_Permutation(res, nums, current);
+			current.pop_back();
 		}
 	}
-	return result;*/
 }
+vector<vector<int>> permute_Permutation(vector<int>& nums) 
+{
+	vector<vector<int>> res;
+	vector<int> current;
+	backtrack_Permutation(res, nums, current);
+	return res;
+}
+string getPermutation(int n, int k) 
+{
+    string res = "";
+    vector<int> nums;
+    for (int i = 0;i < n;i++)
+    {
+        nums.push_back(i + 1);
+    }
+    vector<vector<int>> result = permute_Permutation(nums);
+    nums = result[k - 1];
+    for (int i = 0;i < nums.size();i++)
+    {
+        ostringstream oss;
+        oss<<nums[i];
+        res = res + oss.str();
+    }
+    return res;
+}
+//char * getPermutation(int n, int k)
+//{
+//    char *res = (char*)malloc(sizeof(char) * (n + 1));
+//    memset(res,0,(sizeof(char) * (n + 1)));
+//    int i;
+//    vector<int> nums;
+//    for (i = 0;i < n;i++)
+//    {
+//        nums.push_back(i + 1);
+//    }
+//    vector<vector<int>> result = permute_Permutation(nums);
+//    nums = result[k - 1];
+//    for (i = 0;i < nums.size();i++)
+//    {
+//        char c[2] = "";
+//        c[0] = nums[i] + '0';
+//        strcat(res,c);
+//    }
+//    return res;
+//}
 
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        string p = getPermutation(3,3);
+        cout<<p<<endl;
+        
+        p = getPermutation(4,9);
+        cout<<p<<endl;
+    }
     {
         vector<int> v1,v2,v3,v4;
         v1.push_back(1);
@@ -448,8 +492,6 @@ void Other9Action()
 		vres = merge(intervals);
     }
     
-
-
     char arr[] = " a";
     int i = lengthOfLastWord(arr);
 
