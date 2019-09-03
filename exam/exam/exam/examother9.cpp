@@ -313,12 +313,27 @@ vector<int> mergetwo(vector<int> v1,vector<int> v2,bool *canmerge)
 {
     vector<int> result;
     int start,end;
+	if (v1[0] == -1)
+	{
+		return v2;
+	}
+	if (v2[0] == -1)
+	{
+		return v1;
+	}
     if ((v2[0] > v1[1]) || (v1[0] > v2[1]))
     {
         *canmerge = false;
         return result;
     }
-    if ((v2[0] > v1[0] && v2[0] < v1[1]) || (v1[0] > v2[0] && v1[0] < v2[1]))
+	if (v1[0] == v2[0] && v1[1] == v2[1])
+	{
+		*canmerge = true;
+		result.push_back(v1[0]);
+		result.push_back(v1[1]);
+		return result;
+	}
+	if ((v2[0] >= v1[0] && v2[0] <= v1[1]) || (v1[0] >= v2[0] && v1[0] <= v2[1]))
     {
         *canmerge = true;
 
@@ -334,47 +349,50 @@ vector<int> mergetwo(vector<int> v1,vector<int> v2,bool *canmerge)
     }
     return result;
 }
-vector<vector<int>> merge(vector<vector<int>>& intervals) 
+vector<vector<int>> merge(vector<vector<int>>& intervals)
 {
-    int b = intervals.size();
-    vector<vector<int>> result;
-    set<vector<int>> re;
-    if (b == 0)
-    {
-        return result;
-    }
-    if (b == 1)
-    {
-        return intervals;
-    }
-    int i = 0,j = i + 1;
-    for (i = b - 1;i >= 1;i--)
-    {
-        bool canmerge = false;
-        vector<int> v1 = intervals[i];
-        for(j = i - 1;j >= 0;j--)
-        {
-            vector<int> v2 = intervals[j];
-            vector<int> m = mergetwo(v1,v2,&canmerge);
-            if (canmerge)
-            {
-                re.insert(m);
-                intervals[i].pop_back();
-                intervals[j].pop_back();
-                b = intervals.size();
-            }
-        }
-        if (!canmerge)
-        {
-            re.insert(v1);
-        }
-    }
-    for (set<vector<int>>::iterator it = re.begin(); it != re.end(); it++)//for (i = 0;i < re.size();i++)
-    {
-        vector<int> r1 = *it;
-        result.push_back(r1);
-    }
-    return result;
+	int b = intervals.size();
+	vector<vector<int>> result;
+	vector<int> m;
+	if (b == 0)
+	{
+		return result;
+	}
+	if (b == 1)
+	{
+		return intervals;
+	}
+	int i = 0, j = i + 1;
+	for (i = b - 1; i >= 1; i--)
+	{
+		bool canmerge = false;
+		for (j = i - 1; j >= 0; j--)
+		{
+			m = mergetwo(intervals[i], intervals[j], &canmerge);
+			if (canmerge)
+			{
+				intervals[j][0] = m[0];
+				intervals[j][1] = m[1];
+				//intervals[i][0] = -1;
+				//intervals[i][1] = -1;
+				intervals[i][0] = intervals[b - 1][0];
+				intervals[i][1] = intervals[b - 1][1];
+				intervals.resize(b - 1);
+				b = intervals.size();
+				break;
+			}
+		}
+	}
+	return intervals;
+	/*for (vector<vector<int>>::iterator it = intervals.begin(); it != intervals.end(); it++)
+	{
+		vector<int> r1 = *it;
+		if (r1[0] != -1 && r1[1] != -1)
+		{
+			result.push_back(r1);
+		}
+	}
+	return result;*/
 }
 
 void Other9Action()
@@ -391,11 +409,43 @@ void Other9Action()
         v4.push_back(15);
         v4.push_back(18);
         vector<vector<int>> intervals,vres;
-        /*intervals.push_back(v1);
+        intervals.push_back(v1);
         intervals.push_back(v2);
         intervals.push_back(v3);
-        intervals.push_back(v4);*/
+        intervals.push_back(v4);
         vres = merge(intervals);
+		////////////////////////////////
+		v1.clear();
+		v2.clear();
+		v3.clear();
+		v4.clear();
+		intervals.clear();
+		vres.clear();
+		////////////////////////////////
+		v1.push_back(1);
+		v1.push_back(4);
+		v2.push_back(0);
+		v2.push_back(2);
+		v3.push_back(3);
+		v3.push_back(5);
+		intervals.push_back(v1);
+		intervals.push_back(v2);
+		intervals.push_back(v3);
+		vres = merge(intervals);
+		//////////////////////////////
+		v1.clear();
+		v2.clear();
+		v3.clear();
+		v4.clear();
+		intervals.clear();
+		vres.clear();
+		v1.push_back(1);
+		v1.push_back(4);
+		v2.push_back(4);
+		v2.push_back(5);
+		intervals.push_back(v1);
+		intervals.push_back(v2);
+		vres = merge(intervals);
     }
     
 
