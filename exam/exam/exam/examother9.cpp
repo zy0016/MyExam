@@ -369,29 +369,38 @@ vector<vector<int>> merge(vector<vector<int>>& intervals)
 //
 //    return s;
 //}
-void backtrack_Permutation(vector<vector<int>>& res, vector<int>& nums, vector<int>& current)
+vector<int> bfindvector;
+bool bfind = false;
+void backtrack_Permutation(vector<vector<int>>& res, vector<int>& nums, vector<int>& current,int k)
 {
-	if (current.size() == nums.size())
-	{
-		res.push_back(current);
+    if (bfind)
 		return;
-	}
-	for (int i = 0; i < nums.size(); i++)
-	{
-		if (count(current.begin(), current.end(), nums[i]) == 0)
-		{
-			current.push_back(nums[i]);
-			backtrack_Permutation(res, nums, current);
-			current.pop_back();
-		}
-	}
+    if (current.size() == nums.size())
+    {
+        res.push_back(current);
+        if (res.size() == k)
+        {
+            bfindvector = current;
+            bfind = true;
+        }
+        return;
+    }
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (count(current.begin(), current.end(), nums[i]) == 0)
+        {
+            current.push_back(nums[i]);
+            backtrack_Permutation(res, nums, current,k);
+            current.pop_back();
+        }
+    }
 }
-vector<vector<int>> permute_Permutation(vector<int>& nums) 
+vector<int> permute_Permutation(vector<int>& nums,int k) 
 {
-	vector<vector<int>> res;
-	vector<int> current;
-	backtrack_Permutation(res, nums, current);
-	return res;
+    vector<vector<int>> res;
+    vector<int> current;
+    backtrack_Permutation(res, nums, current,k);
+    return bfindvector;
 }
 string getPermutation(int n, int k) 
 {
@@ -401,12 +410,12 @@ string getPermutation(int n, int k)
     {
         nums.push_back(i + 1);
     }
-    vector<vector<int>> result = permute_Permutation(nums);
-    nums = result[k - 1];
-    for (int i = 0;i < nums.size();i++)
+    vector<int> result = permute_Permutation(nums,k);
+
+    for (int i = 0;i < result.size();i++)
     {
         ostringstream oss;
-        oss<<nums[i];
+        oss<< result[i];
         res = res + oss.str();
     }
     return res;

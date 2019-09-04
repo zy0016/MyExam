@@ -7,6 +7,41 @@ struct ListNode {
 	int val;
 	struct ListNode *next;
 };
+node* rotateRight(node* head, int k)
+{
+    if (head == NULL)
+        return NULL;
+    int len = 0;
+    node* pcur = head;
+    node* pcurpre = NULL;
+    
+    while(pcur != NULL)
+    {
+        pcur = pcur->next;
+        len++;
+    }
+    k = k % len;
+    int i = 0;
+    while(i < k)
+    {
+        pcur = head;
+        pcurpre = NULL;
+        while(pcur->next != NULL)
+        {
+            pcurpre = pcur;
+            pcur = pcur->next;
+        }
+        if (pcurpre == NULL)
+        {
+            return head;
+        }
+        pcur->next = head;
+        pcurpre->next = NULL;
+        head = pcur;
+        i++;
+    }
+    return head;
+}
 int getNum(struct ListNode* l1)
 {
 	int count = 0;
@@ -868,7 +903,15 @@ void LinkAction()
     ShowNode(psk);
     psk = reverseKGroup(psk,2);
     ShowNode(psk);
-    
+    ///////////////////////
+    node *pr = NULL;
+    for (int i = 0;i < 5;i++)
+    {
+        pr = AddNode(i+1,pr);
+    }
+    ShowNode(pr);
+    pr = rotateRight(pr,2);
+    ShowNode(pr);
 	///////////////////////
 	struct ListNode *l1 = NULL;
 	struct ListNode *l2 = NULL;
