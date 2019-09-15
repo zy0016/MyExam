@@ -420,30 +420,171 @@ string getPermutation(int n, int k)
     }
     return res;
 }
-//char * getPermutation(int n, int k)
-//{
-//    char *res = (char*)malloc(sizeof(char) * (n + 1));
-//    memset(res,0,(sizeof(char) * (n + 1)));
-//    int i;
-//    vector<int> nums;
-//    for (i = 0;i < n;i++)
-//    {
-//        nums.push_back(i + 1);
-//    }
-//    vector<vector<int>> result = permute_Permutation(nums);
-//    nums = result[k - 1];
-//    for (i = 0;i < nums.size();i++)
-//    {
-//        char c[2] = "";
-//        c[0] = nums[i] + '0';
-//        strcat(res,c);
-//    }
-//    return res;
-//}
+int minPathSum(vector<vector<int>>& grid) 
+{
+    int minval = INT_MAX,count = 0;
+    int r = grid[0].size() - 1,b = grid.size() - 1;
+    int i = 0,j = 0;
+    int istep = 0,jstep = 1;
+    while(true)
+    {
+        count = count + grid[i][j];
+        if (count < minval)
+        {
+            minval = count;
+        }
+        if (j < r)
+        {
+            j += jstep;
+            i += istep;
+            continue;
+        }
+        jstep = 0;
+        if (j == r && i < b)
+        {
+            i += istep;
+            j += jstep;
+            continue;
+        }
+        if (j == r && i == b)
+        {
 
+        }
+    }
+    return minval;
+}
+int mySqrt(int x) 
+{
+    if (x == 0 || x == 1)
+        return x;
+    int middle = 46340;
+    while(middle > 0)
+    {
+        if (middle * middle > x)
+        {
+            middle--;
+            continue;
+        }
+        break;
+    }
+    return middle;
+}
+int climbStairs(int n) 
+{
+    if (n < 4)
+        return n;
+
+    int* dp = (int*)malloc(sizeof(int) * (n+1));
+    memset(dp,0,sizeof(int)*(n+1));
+    for(int i=1;i<=n;i++)
+    {
+        if(i==1)
+        {
+            dp[i]= 1;
+        }
+        else if(i==2)
+        {
+            dp[i]=2;
+        }
+        else
+        {
+            dp[i]=dp[i-1]+dp[i-2];
+        }
+    }
+    int res = dp[n];
+    free(dp);
+    return res;
+}
+
+void setZeroes(vector<vector<int>>& matrix) 
+{
+    int index = -1;
+    int r = matrix[0].size() - 1,b = matrix.size() - 1;
+
+    for (int iRow = 0;iRow <= b;iRow++)
+    {
+        for (int iCol = 0;iCol <= r;iCol++ )
+        {
+            if (matrix[iRow][iCol] < 0 && matrix[iRow][iCol] == index)
+            {
+                index--;
+            }
+        }
+    }
+
+    for (int iRow = 0;iRow <= b;iRow++)
+    {
+        for (int iCol = 0;iCol <= r;iCol++ )
+        {
+            if (matrix[iRow][iCol] == 0)
+            {
+                for (int i = 0;i <= r;i++)
+                {
+                    if (matrix[iRow][i] != 0)
+                        matrix[iRow][i] = index;
+                }
+                for (int i = 0;i <= b;i++)
+                {
+                    if (matrix[i][iCol] != 0)
+                        matrix[i][iCol] = index;
+                }
+            }
+        }
+    }
+    for (int iRow = 0;iRow <= b;iRow++)
+    {
+        for (int iCol = 0;iCol <= r;iCol++ )
+        {
+            if (matrix[iRow][iCol] == index)
+            {
+                matrix[iRow][iCol] = 0;
+            }
+        }
+    }
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        vector<int> v1,v2,v3;
+        vector<vector<int>> matrix;
+        v1.push_back(1);
+        v1.push_back(1);
+        v1.push_back(1);
+        v2.push_back(1);
+        v2.push_back(0);
+        v2.push_back(1);
+        v3.push_back(1);
+        v3.push_back(1);
+        v3.push_back(1);
+        matrix.push_back(v1);
+        matrix.push_back(v2);
+        matrix.push_back(v3);
+        setZeroes(matrix);
+        /////////////////
+        v1.clear();
+        v2.clear();
+        v3.clear();
+        matrix.clear();
+        v1.push_back(0);
+        v1.push_back(1);
+        v1.push_back(2);
+        v1.push_back(0);
+
+        v2.push_back(3);
+        v2.push_back(4);
+        v2.push_back(5);
+        v2.push_back(2);
+
+        v3.push_back(1);
+        v3.push_back(3);
+        v3.push_back(1);
+        v3.push_back(5);
+        matrix.push_back(v1);
+        matrix.push_back(v2);
+        matrix.push_back(v3);
+        setZeroes(matrix);
+    }
     {
         string p = getPermutation(3,3);
         cout<<p<<endl;
