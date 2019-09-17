@@ -763,10 +763,101 @@ private:
 	DIRECTION Direction;//move direction
 	bool moving;//The car is moving or not
 };
-
+bool exist(vector<vector<char>>& board, string word) 
+{
+    int id = 0;
+    char cbegin = word[0];
+    int i = 0,j = 0;
+    int r = board[0].size() - 1,b = board.size() - 1;
+    bool bfindbegin = false;
+    for (j = 0;j <= b;j++)
+    {
+        if (bfindbegin)
+            break;
+        for (i = 0;i <= r;i++)
+        {
+            if (cbegin == board[j][i])
+            {
+                id++;
+                bfindbegin = true;
+                break;
+            }
+        }
+    }
+    if (!bfindbegin)
+        return false;
+    for(int k = 0;k < word.length();k++)
+    {
+        char c = word[k];
+        char cnext = '\0';
+        if (k < word.length() - 1)
+            cnext = word[k + 1];
+        if (c == board[j][i])
+        {
+            if (i > 0)
+            {
+                if (cnext == board[j][i - 1])
+                {
+                    i--;
+                    continue;
+                }
+            }
+            if (i < r)
+            {
+                if (cnext == board[j][i + 1])
+                {
+                    i++;
+                    continue;
+                }
+            }
+            if (j > 0)
+            {
+                if (cnext == board[j - 1][i])
+                {
+                    j--;
+                    continue;
+                }
+            }
+            if (j < b)
+            {
+                if (cnext == board[j + 1][i])
+                {
+                    j++;
+                    continue;
+                }
+            }
+        }
+    }
+    while(true)
+    {
+        
+    }
+    return false;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        vector<vector<char>> board;
+        vector<char> v1,v2,v3;
+        char c1[] = "ABCE";
+        char c2[] = "SFCS";
+        char c3[] = "ADEE";
+        for (int i = 0;i < sizeof(c1)/sizeof(char);i++)
+            v1.push_back(c1[i]);
+
+        for (int i = 0;i < sizeof(c2)/sizeof(char);i++)
+            v1.push_back(c2[i]);
+
+        for (int i = 0;i < sizeof(c3)/sizeof(char);i++)
+            v1.push_back(c3[i]);
+
+        board.push_back(v1);
+        board.push_back(v2);
+        board.push_back(v3);
+
+        exist(board,"ABCCED");
+    }
 	{
 		StackTemplate<int> is;
 		for (int i = 0; i < 100; i++)
