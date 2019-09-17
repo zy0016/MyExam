@@ -231,6 +231,46 @@ void LevelTraverse(BiTree T)
 		cout << endl;
 	}
 }
+//////////////////////////////////////////////////////
+void DepthFirstSearch(BiTreeNode *root)
+{
+	stack<BiTreeNode*> nodeStack;
+	nodeStack.push(root);
+	while (!nodeStack.empty())
+	{
+		BiTreeNode *node = nodeStack.top();
+		cout << node->data << ' ';
+		nodeStack.pop();
+		if (node->rightChild)
+		{
+			nodeStack.push(node->rightChild);
+		}
+		if (node->leftChild)
+		{
+			nodeStack.push(node->leftChild);
+		}
+	}
+}
+void BreadthFirstSearch(BiTreeNode *root)
+{
+	queue<BiTreeNode*> nodeQueue;
+	nodeQueue.push(root);
+	while (!nodeQueue.empty())
+	{
+		BiTreeNode *node = nodeQueue.front();
+		cout << node->data << ' ';
+		nodeQueue.pop();
+		if (node->leftChild)
+		{
+			nodeQueue.push(node->leftChild);
+		}
+		if (node->rightChild)
+		{
+			nodeQueue.push(node->rightChild);
+		}
+	}
+}
+
 
 void testmytree()
 {
@@ -252,6 +292,13 @@ void testmytree()
 	cout << "post browers:";
 	traversePost(T);
 	cout << endl;
+
+	cout << "depth browser:";
+	DepthFirstSearch(T);
+	cout << endl;
+
+	cout << "width breadth browers:";
+	BreadthFirstSearch(T);
 
 	cout << "destroy tree:" << endl;
 	destroytree(T);

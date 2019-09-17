@@ -280,77 +280,50 @@ char * intToRoman(int num) {
     strcpy(pres, ret);
     return pres;
 }
-//void handleRoman(int *i, int *count, char lastch,char ch,int num1,int num2)
-//{
-//	*count = *count + num1;
-//	if (*i > 0 && lastch == ch)
-//	{
-//		count = count - num2;
-//		(*i)--;
-//	}
-//}
-int romanToInt(char * s) 
+void handleRoman(int *i, int *count, char *s, char ch, int num1, int num2)
 {
-    int count = 0,len = strlen(s);
-    for (int i = len - 1; i >= 0 ; i--)
+    *count = *count + num1;
+    if (*i > 0 && s[*i - 1] == ch)
+    {
+        *count = *count - num2;
+        *i = *i - 1;
+    }
+}
+int romanToInt(char * s)
+{
+    int count = 0, len = strlen(s);
+    for (int i = len - 1; i >= 0; i--)
     {
         switch (s[i])
         {
         case 'M'://1000
-            count = count + 1000;
-            if (i > 0 && s[i - 1] == 'C')
-            {
-                count = count - 100;
-                i--;
-            }
+            handleRoman(&i, &count, s, 'C', 1000, 100);
             break;
         case 'D'://500
-            count = count + 500;
-            if (i > 0 && s[i - 1] == 'C')
-            {
-                count = count - 100;
-                i--;
-            }
+            handleRoman(&i, &count, s, 'C', 500, 100);
             break;
         case 'C'://100
-            count = count + 100;
-            if (i > 0 && s[i - 1] == 'X')
-            {
-                count = count - 10;
-                i--;
-            }
+            handleRoman(&i, &count, s, 'X', 100, 10);
             break;
         case 'L'://50
-            count = count + 50;
-            if (i > 0 && s[i - 1] == 'X')
-            {
-                count = count - 10;
-                i--;
-            }
+            handleRoman(&i, &count, s, 'X', 50, 10);
             break;
         case 'X'://10
-            count = count + 10;
-            if (i > 0 && s[i - 1] == 'I')
-            {
-                count--;
-                i--;
-            }
+            handleRoman(&i, &count, s, 'I', 10, 1);
             break;
         case 'V'://5
-            count = count + 5;
-            if (i > 0 && s[i - 1] == 'I')
-            {
-                count--;
-                i--;
-            }
+            handleRoman(&i, &count, s, 'I', 5, 1);
             break;
         case 'I'://1
-            count = count + 1;
+            count++;
+            break;
+        default:
             break;
         }
     }
     return count;
 }
+
 
 char * longestCommonPrefix(char ** strs, int strsSize) 
 {
@@ -987,26 +960,26 @@ vector<int> m_curr;
 vector<vector<int>> m_ans;
 void search(const vector<int>& candidates, int idx, int target)
 {
-	if (target == 0) return m_ans.push_back(m_curr);
-	else if (idx == candidates.size()) return;
-	else if (candidates[idx] > target) return;
+    if (target == 0) return m_ans.push_back(m_curr);
+    else if (idx == candidates.size()) return;
+    else if (candidates[idx] > target) return;
 
-	int count = target / candidates[idx];
-	int num = candidates[idx];
+    int count = target / candidates[idx];
+    int num = candidates[idx];
 
-	for (int i = count; i >= 0; --i)
-	{
-		m_curr.insert(m_curr.end(), i, num);
-		search(candidates, idx + 1, target - num * i);
-		m_curr.resize(m_curr.size() - i);
-	}
+    for (int i = count; i >= 0; --i)
+    {
+        m_curr.insert(m_curr.end(), i, num);
+        search(candidates, idx + 1, target - num * i);
+        m_curr.resize(m_curr.size() - i);
+    }
 }
 vector<vector<int>> combinationSum(vector<int>& candidates, int target) 
 {
-	m_curr.reserve(candidates.size());
-	sort(candidates.begin(), candidates.end());
-	search(candidates, 0, target);
-	return move(m_ans);
+    m_curr.reserve(candidates.size());
+    sort(candidates.begin(), candidates.end());
+    search(candidates, 0, target);
+    return move(m_ans);
 }
 
 void dfs(vector<vector<int>>& sum, const vector<int>& candidates, int idx, int val, int target, vector<int>& res) 
@@ -1105,6 +1078,25 @@ char *multi10(char *num ,int mul)
     }
     return pres;
 }
+void handlesinglenum(int* id,int index,int* decade, char *num, char *pres)
+{
+	while (index >= 0)
+	{
+		int singlesingleres = num[index] - '0';
+		if (*decade + singlesingleres >= 10)
+		{
+			pres[*id] = (*decade + singlesingleres - 10) + '0';
+			*decade = 1;
+		}
+		else
+		{
+			pres[*id] = (*decade + singlesingleres) + '0';
+			*decade = 0;
+		}
+		*id = *id - 1;
+		index--;
+	}
+}
 char *multiplus(char *num1, char *num2)
 {
     int ilen1 = strlen(num1);
@@ -1139,38 +1131,8 @@ char *multiplus(char *num1, char *num2)
         id1--;
         id2--;
     }
-    while (id1 >= 0)
-    {
-        int singlesingleres = num1[id1] - '0';
-        if (decade + singlesingleres >= 10)
-        {
-            pres[id] = (decade + singlesingleres - 10) + '0';
-            decade = 1;
-        }
-        else
-        {
-            pres[id] = (decade + singlesingleres) + '0';
-            decade = 0;
-        }
-        id--;
-        id1--;
-    }
-    while (id2 >= 0)
-    {
-        int singlesingleres = num2[id2] - '0';
-        if (decade + singlesingleres >= 10)
-        {
-            pres[id] = (decade + singlesingleres - 10) + '0';
-            decade = 1;
-        }
-        else
-        {
-            pres[id] = (decade + singlesingleres) + '0';
-            decade = 0;
-        }
-        id--;
-        id2--;
-    }
+	handlesinglenum(&id, id1, &decade, num1, pres);
+	handlesinglenum(&id, id2, &decade, num2, pres);
     if (decade > 0)
     {
         pres[id] = '1';
@@ -1307,63 +1269,63 @@ char * multiply(char * num1, char * num2)
 }
 void backtrack(vector<vector<int>>& res, vector<int>& nums, vector<int>& current)
 {
-	if (current.size() == nums.size())
-	{
-		res.push_back(current);
-		return;
-	}
-	for (int i = 0; i < nums.size(); i++)
-	{
-		if (count(current.begin(), current.end(), nums[i]) == 0)
-		{
-			current.push_back(nums[i]);
-			backtrack(res, nums, current);
-			current.pop_back();
-		}
-	}
+    if (current.size() == nums.size())
+    {
+        res.push_back(current);
+        return;
+    }
+    for (int i = 0; i < nums.size(); i++)
+    {
+        if (count(current.begin(), current.end(), nums[i]) == 0)
+        {
+            current.push_back(nums[i]);
+            backtrack(res, nums, current);
+            current.pop_back();
+        }
+    }
 }
 vector<vector<int>> permute(vector<int>& nums) 
 {
-	vector<vector<int>> res;
-	vector<int> current;
-	backtrack(res, nums, current);
-	return res;
+    vector<vector<int>> res;
+    vector<int> current;
+    backtrack(res, nums, current);
+    return res;
 }
 ///////////////////////////////////////////////////
 void helper(vector<vector<int>> &pRes, vector<int> &pNums, vector<int> &pTemp, vector<bool> pUsed) 
 {
-	if (pTemp.size() == pNums.size()) 
-	{
-		pRes.push_back(pTemp);
-		return;
-	}
-	for (int i = 0; i<pNums.size(); i++) 
-	{
-		if (pUsed[i]) 
-			continue;
-		if (i > 0 && pNums[i] == pNums[i - 1] && pUsed[i - 1] == false) 
-			continue;
+    if (pTemp.size() == pNums.size()) 
+    {
+        pRes.push_back(pTemp);
+        return;
+    }
+    for (int i = 0; i<pNums.size(); i++) 
+    {
+        if (pUsed[i]) 
+            continue;
+        if (i > 0 && pNums[i] == pNums[i - 1] && pUsed[i - 1] == false) 
+            continue;
 
-		pTemp.push_back(pNums[i]);
-		pUsed[i] = true;
+        pTemp.push_back(pNums[i]);
+        pUsed[i] = true;
 
-		helper(pRes, pNums, pTemp, pUsed);
+        helper(pRes, pNums, pTemp, pUsed);
 
-		pTemp.pop_back();
-		pUsed[i] = false;
-	}
+        pTemp.pop_back();
+        pUsed[i] = false;
+    }
 }
 vector<vector<int>> permuteUnique(vector<int>& nums) 
 {
-	sort(nums.begin(), nums.end());
+    sort(nums.begin(), nums.end());
 
-	vector<vector<int>> aRes;
-	vector<int> aTemp;
-	vector<bool> aUsed(nums.size() + 1, false);
+    vector<vector<int>> aRes;
+    vector<int> aTemp;
+    vector<bool> aUsed(nums.size() + 1, false);
 
-	helper(aRes, nums, aTemp, aUsed);
+    helper(aRes, nums, aTemp, aUsed);
 
-	return aRes;
+    return aRes;
 }
 void move4(int *i1, int *i2, int *i3, int *i4)
 {
@@ -1447,18 +1409,18 @@ vector<vector<string>> groupAnagrams(vector<string>& strs)
     vector<vector<string>> result;
     int len = strs.size();
     vector<string> sortedstrs;
-	nodem *p = NULL;
+    nodem *p = NULL;
     for (int i = 0;i < len;i++)
     {
-		string str_ori = strs[i];
+        string str_ori = strs[i];
         string sorted = strs[i];
         stringsort(sorted);
         p = AddNode(str_ori.c_str(), sorted.c_str(), p);
     }
     vector<string> single;
-	nodem *pbak = p;
-	while (p != NULL)
-	{
+    nodem *pbak = p;
+    while (p != NULL)
+    {
         single.clear();
         cnode * pc = p->pcnode;
         while(pc!= NULL)
@@ -1468,8 +1430,8 @@ vector<vector<string>> groupAnagrams(vector<string>& strs)
             pc = pc->next;
         }
         result.push_back(single);
-		p = p->next;
-	}
+        p = p->next;
+    }
     while(pbak != NULL)
     {
         nodem *pb = pbak;
@@ -1542,20 +1504,20 @@ void Other8Action()
     rotate(matrix);
     //////////////////////
 
-	vector<int> numsp;
-	numsp.push_back(1);
-	numsp.push_back(1);
-	numsp.push_back(2);
-	vector<vector<int>> permuteUniqueres = permuteUnique(numsp);
-	for (int i = 0; i < permuteUniqueres.size(); i++)
-	{
-		vector<int> p = permuteUniqueres.at(i);
-		for (int j = 0; j < p.size(); j++)
-		{
-			cout << p[j];
-		}
-		cout << endl;
-	}
+    vector<int> numsp;
+    numsp.push_back(1);
+    numsp.push_back(1);
+    numsp.push_back(2);
+    vector<vector<int>> permuteUniqueres = permuteUnique(numsp);
+    for (int i = 0; i < permuteUniqueres.size(); i++)
+    {
+        vector<int> p = permuteUniqueres.at(i);
+        for (int j = 0; j < p.size(); j++)
+        {
+            cout << p[j];
+        }
+        cout << endl;
+    }
 
     char * p = "abcabcbb";
     long i = lengthOfLongestSubstring(p);

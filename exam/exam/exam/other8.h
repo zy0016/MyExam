@@ -13,6 +13,6 @@
 #include "linkstructor.h"
 #include "sortstructor.h"
 //////////////////////////////
-
+char *multiplus(char *num1, char *num2);
 void Other8Action();
 #endif

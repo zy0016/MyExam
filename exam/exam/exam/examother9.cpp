@@ -420,38 +420,102 @@ string getPermutation(int n, int k)
     }
     return res;
 }
-int minPathSum(vector<vector<int>>& grid) 
+//char * getPermutation(int n, int k)
+//{
+//    char *res = (char*)malloc(sizeof(char) * (n + 1));
+//    memset(res,0,(sizeof(char) * (n + 1)));
+//    int i;
+//    vector<int> nums;
+//    for (i = 0;i < n;i++)
+//    {
+//        nums.push_back(i + 1);
+//    }
+//    vector<vector<int>> result = permute_Permutation(nums);
+//    nums = result[k - 1];
+//    for (i = 0;i < nums.size();i++)
+//    {
+//        char c[2] = "";
+//        c[0] = nums[i] + '0';
+//        strcat(res,c);
+//    }
+//    return res;
+//}
+void getPathSum(vector<vector<int>>& grid, int i, int j,int *count)
 {
-    int minval = INT_MAX,count = 0;
-    int r = grid[0].size() - 1,b = grid.size() - 1;
-    int i = 0,j = 0;
-    int istep = 0,jstep = 1;
-    while(true)
-    {
-        count = count + grid[i][j];
-        if (count < minval)
-        {
-            minval = count;
-        }
-        if (j < r)
-        {
-            j += jstep;
-            i += istep;
-            continue;
-        }
-        jstep = 0;
-        if (j == r && i < b)
-        {
-            i += istep;
-            j += jstep;
-            continue;
-        }
-        if (j == r && i == b)
-        {
+	int r = grid[0].size() - 1, b = grid.size() - 1;
+	*count = *count + grid[i][j];
+	if (i == b && j == r)
+	{
+		return;
+	}
+	if (j < r)
+	{
+		getPathSum(grid, i, j + 1, count);
+	}
+	if (j == r)
+	{
+		getPathSum(grid, i + 1, j, count);
+		i = 0;
+		j = 0;
+	}
+	getPathSum(grid, i + 1, j + 1, count);
+}
+int minPathSum(vector<vector<int>>& grid)
+{
+	/*int minval = INT_MAX, count = 0;
+	int r = grid[0].size() - 1, b = grid.size() - 1;
+	int i = 0, j = 0;
+	int istep = 0, jstep = 1;
+	while (true)
+	{
+		count = count + grid[i][j];
+		if (count < minval)
+		{
+			minval = count;
+		}
+		if (j < r)
+		{
+			j += jstep;
+			i += istep;
+			continue;
+		}
+		jstep = 0;
+		if (j == r && i < b)
+		{
+			i += istep;
+			j += jstep;
+			continue;
+		}
+		if (j == r && i == b)
+		{
 
-        }
-    }
-    return minval;
+		}
+	}
+	return minval;*/
+	return 0;
+}
+vector<int> plusOne(vector<int>& digits) 
+{
+	int len = digits.size();
+	vector<int> result;
+	if (len == 0)
+		return result;
+	char *pdigit = (char*)malloc(sizeof(char) * (len + 1));
+	memset(pdigit, 0, sizeof(char) * (len + 1));
+	for (int i = 0; i < len; i++)
+	{
+		char dig[2] = { digits[i] + '0' ,'\0'};
+		strcat(pdigit, dig);
+	}
+	char *res = multiplus(pdigit, "1");
+	char reslen = strlen(res);
+	for (int i = 0; i < reslen; i++)
+	{
+		int r = res[i] - '0';
+		result.push_back(r);
+	}
+	free(res);
+	return result;
 }
 int mySqrt(int x) 
 {
@@ -542,49 +606,258 @@ void setZeroes(vector<vector<int>>& matrix)
         }
     }
 }
+vector<vector<int>> subsets(vector<int>& nums) 
+{
+	int len = nums.size();
+	vector<vector<int>> result;
+	vector<int> vecnull;
+	if (len == 0)
+		return result;
+
+	result.push_back(vecnull);
+	result.push_back(nums);
+	if (len == 1)
+	{
+		return result;
+	}
+	for (int i = 0; i < len; i++)
+	{
+		vector<int> vec;
+		vec.push_back(nums[i]);
+		result.push_back(vec);
+	}
+	for (int i = 0; i < len; i++)
+	{
+		for (int j = 0; j < len; j++)
+		{
+
+		}
+	}
+	return result;
+}
+vector<vector<int>> GetPairSum(vector<int>& nums, int k)
+{
+	vector<vector<int>> result;
+	int size = nums.size();
+	if (size < 2)
+		return result;
+
+	for (int i = size - 1; i >= 1; i--)
+	{
+		for (int j = i - 1; j >= 0; j--)
+		{
+			if ((nums[i] != INT_MIN) && (nums[j] != INT_MIN) && (nums[i] + nums[j] == k))
+			{
+				vector<int> single;
+				single.push_back(nums[i]);
+				single.push_back(nums[j]);
+				result.push_back(single);
+				nums[i] = INT_MIN;
+				nums[j] = INT_MIN;
+			}
+		}
+	}
+	return result;
+}
+template<class T>
+class StackTemplate
+{
+public:
+	StackTemplate() :top(0) {}
+	void push(const T & i)
+	{
+		assert(top<Stacksize);
+		stack[top++] = i;
+	}
+	T pop()
+	{
+		assert(top>0);
+		return stack[--top];
+	}
+	int size()
+	{
+		return top;
+	}
+private:
+	enum { Stacksize = 100 };
+	T stack[Stacksize];
+	int top;
+};
+enum COLOR { RED, BLUE, WHITE, BLACK };//color for car
+enum ENGINE { ENGINE1, ENGINE2 };//engine type for car
+enum DIRECTION { 
+	NONE,//no direction when car stop.
+	FORWARD, 
+	BACKWARD, 
+	LEFT, 
+	RIGHT 
+};//move direction
+class Car
+{
+public:
+	Car(unsigned int len, unsigned int w, COLOR c, string model, ENGINE e, unsigned int seat) :Length(len), 
+		Width(w), Color(c), Model(model), Engine(e), iSeats(seat)
+	{
+		iSpeed = 0;
+		moving = false;
+	}
+	void ChangeEngine(ENGINE newengine)//change the engine for current car
+	{
+		Engine = newengine;
+	}
+	void ChangeColor(COLOR newcolor)//change the color for current car
+	{
+		Color = newcolor;
+	}
+	void SetSeats(unsigned int count)//set seat number for car
+	{
+		iSeats = count;
+	}
+	COLOR GetColor()//get color for car
+	{
+		return Color;
+	}
+	string GetModelNumber()//get the model number for car
+	{
+		return Model;
+	}
+	unsigned int GetSpeed()//get the speed of the car
+	{
+		return iSpeed;
+	}
+	void SetSpeed(unsigned int speed)//set speed for car
+	{
+		iSpeed = speed;
+	}
+	void SetDirection(DIRECTION d)// set direction
+	{
+		if (moving)
+			Direction = d;
+		else
+			Direction = NONE;
+	}
+	DIRECTION GetDirection()//get direction.
+	{
+		return ((moving) ? Direction : NONE);
+	}
+	void ChangeDirection(DIRECTION newdirection)//change direction for car
+	{
+		if (moving)
+			Direction = newdirection;
+		else
+			Direction = NONE;
+	}
+	void SetMoveStatus(bool b)//set the car is moving or not
+	{
+		moving = b;
+	}
+	virtual ~Car() {}
+private:
+	unsigned int Length;//The car length
+	unsigned int Width;//The car width
+	COLOR Color;//color of the car
+	string Model;//model number for the car
+	ENGINE Engine;//engine type
+	unsigned int iSeats;//seat number in car
+	unsigned int iSpeed;//current speed for car
+	DIRECTION Direction;//move direction
+	bool moving;//The car is moving or not
+};
+
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
-    {
-        vector<int> v1,v2,v3;
-        vector<vector<int>> matrix;
-        v1.push_back(1);
-        v1.push_back(1);
-        v1.push_back(1);
-        v2.push_back(1);
-        v2.push_back(0);
-        v2.push_back(1);
-        v3.push_back(1);
-        v3.push_back(1);
-        v3.push_back(1);
-        matrix.push_back(v1);
-        matrix.push_back(v2);
-        matrix.push_back(v3);
-        setZeroes(matrix);
-        /////////////////
-        v1.clear();
-        v2.clear();
-        v3.clear();
-        matrix.clear();
-        v1.push_back(0);
-        v1.push_back(1);
-        v1.push_back(2);
-        v1.push_back(0);
+	{
+		StackTemplate<int> is;
+		for (int i = 0; i < 100; i++)
+		{
+			is.push(i);
+		}
+		StackTemplate<int> is1;
+		for (int i = 0; i < 100; i++)
+			is1.push(i);
 
-        v2.push_back(3);
-        v2.push_back(4);
-        v2.push_back(5);
-        v2.push_back(2);
+		cout << "==================end==================" << endl;
+	}
+	{
+		vector<int> v1, v2, v3,v4;
+		vector<vector<int>> matrix;
+		int arr[] = { 10,5,6,7,2,8,1,9,14 };
+		for (int i = 0; i < sizeof(arr) / sizeof(int); i++)
+		{
+			v1.push_back(arr[i]);
+		}
+		matrix = GetPairSum(v1, 15);
+		//////////////////////////
+		matrix.clear();
+		matrix = GetPairSum(v2, 15);
+		/////////////////
+		matrix.clear();
+		v3.push_back(2);
+		v3.push_back(13);
+		matrix = GetPairSum(v3, 15);
+		//////////////////////////
+		matrix.clear();
+		v1.clear();
+		for (int i = 0; i < sizeof(arr) / sizeof(int); i++)
+		{
+			v1.push_back(arr[i]);
+		}
+		matrix = GetPairSum(v1, 13);
+		//////////////////
+		matrix.clear();
+		v4.push_back(12);
+		matrix = GetPairSum(v4, 15);
+	}
 
-        v3.push_back(1);
-        v3.push_back(3);
-        v3.push_back(1);
-        v3.push_back(5);
-        matrix.push_back(v1);
-        matrix.push_back(v2);
-        matrix.push_back(v3);
-        setZeroes(matrix);
-    }
+	{
+		vector<int> v1, v2, v3;
+		vector<vector<int>> matrix;
+		v1.push_back(1);
+		v1.push_back(1);
+		v1.push_back(1);
+		v2.push_back(1);
+		v2.push_back(0);
+		v2.push_back(1);
+		v3.push_back(1);
+		v3.push_back(1);
+		v3.push_back(1);
+		matrix.push_back(v1);
+		matrix.push_back(v2);
+		matrix.push_back(v3);
+		setZeroes(matrix);
+		/////////////////
+		v1.clear();
+		v2.clear();
+		v3.clear();
+		matrix.clear();
+		v1.push_back(0);
+		v1.push_back(1);
+		v1.push_back(2);
+		v1.push_back(0);
+
+		v2.push_back(3);
+		v2.push_back(4);
+		v2.push_back(5);
+		v2.push_back(2);
+
+		v3.push_back(1);
+		v3.push_back(3);
+		v3.push_back(1);
+		v3.push_back(5);
+		matrix.push_back(v1);
+		matrix.push_back(v2);
+		matrix.push_back(v3);
+		setZeroes(matrix);
+	}
+	{
+		vector<int> v1;
+		v1.push_back(1);
+		v1.push_back(2);
+		v1.push_back(3);
+		v1.push_back(4);
+		vector<int> v2 = plusOne(v1);
+	}
     {
         string p = getPermutation(3,3);
         cout<<p<<endl;
