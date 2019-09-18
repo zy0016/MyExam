@@ -786,12 +786,16 @@ bool exist(vector<vector<char>>& board, string word)
     }
     if (!bfindbegin)
         return false;
+    i = 0;
+    j = 0;
     for(int k = 0;k < word.length();k++)
     {
         char c = word[k];
         char cnext = '\0';
         if (k < word.length() - 1)
             cnext = word[k + 1];
+        else
+            return true;
         if (c == board[j][i])
         {
             if (i > 0)
@@ -826,13 +830,14 @@ bool exist(vector<vector<char>>& board, string word)
                     continue;
                 }
             }
+            //return false;
+        }
+        else
+        {
+            //return false;
         }
     }
-    while(true)
-    {
-        
-    }
-    return false;
+    return true;
 }
 void Other9Action()
 {
@@ -847,16 +852,16 @@ void Other9Action()
             v1.push_back(c1[i]);
 
         for (int i = 0;i < sizeof(c2)/sizeof(char);i++)
-            v1.push_back(c2[i]);
+            v2.push_back(c2[i]);
 
         for (int i = 0;i < sizeof(c3)/sizeof(char);i++)
-            v1.push_back(c3[i]);
+            v3.push_back(c3[i]);
 
         board.push_back(v1);
         board.push_back(v2);
         board.push_back(v3);
 
-        exist(board,"ABCCED");
+        exist(board,"SEE");
     }
 	{
 		StackTemplate<int> is;
