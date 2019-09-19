@@ -767,7 +767,7 @@ bool exist(vector<vector<char>>& board, string word)
 {
     int id = 0;
     char cbegin = word[0];
-    int i = 0,j = 0;
+    int i = 0,j = 0,k=0;
     int r = board[0].size() - 1,b = board.size() - 1;
     bool bfindbegin = false;
     for (j = 0;j <= b;j++)
@@ -788,56 +788,66 @@ bool exist(vector<vector<char>>& board, string word)
         return false;
     i = 0;
     j = 0;
-    for(int k = 0;k < word.length();k++)
-    {
-        char c = word[k];
-        char cnext = '\0';
-        if (k < word.length() - 1)
-            cnext = word[k + 1];
-        else
-            return true;
-        if (c == board[j][i])
-        {
-            if (i > 0)
-            {
-                if (cnext == board[j][i - 1])
-                {
-                    i--;
-                    continue;
-                }
-            }
-            if (i < r)
-            {
-                if (cnext == board[j][i + 1])
-                {
-                    i++;
-                    continue;
-                }
-            }
-            if (j > 0)
-            {
-                if (cnext == board[j - 1][i])
-                {
-                    j--;
-                    continue;
-                }
-            }
-            if (j < b)
-            {
-                if (cnext == board[j + 1][i])
-                {
-                    j++;
-                    continue;
-                }
-            }
-            //return false;
-        }
-        else
-        {
-            //return false;
-        }
-    }
-    return true;
+	bool bsame = false;
+	while (i <= r && j <= b)
+	{
+		bsame = false;
+		for (k = 0; k < word.length() - 1; k++)
+		{
+			char c = word[k];
+			char cnext = '\0';
+			if (k < word.length() - 1)
+			{
+				cnext = word[k + 1];
+				if (c == board[j][i])
+				{
+					if ((i > 0) && (cnext == board[j][i - 1]))
+					{
+						i--;
+						bsame = true;
+						continue;
+					}
+					if ((i < r) && (cnext == board[j][i + 1]))
+					{
+						i++;
+						bsame = true;
+						continue;
+					}
+					if ((j > 0) && (cnext == board[j - 1][i]))
+					{
+						j--;
+						bsame = true;
+						continue;
+					}
+					if ((j < b) && (cnext == board[j + 1][i]))
+					{
+						j++;
+						bsame = true;
+						continue;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		if (k == word.length())
+		{
+			return true;
+		}
+		if (i <= r)
+		{
+			i++;
+			continue;
+		}
+		if (j <= b)
+		{
+			i = 0;
+			j++;
+		}
+	}
+    return false;
 }
 void Other9Action()
 {
