@@ -792,53 +792,71 @@ bool exist(vector<vector<char>>& board, string word)
 	while (i <= r && j <= b)
 	{
 		bsame = false;
-		for (k = 0; k < word.length() - 1; k++)
+		for (k = 0; k < word.length(); k++)
 		{
 			char c = word[k];
-			char cnext = '\0';
-			if (k < word.length() - 1)
-			{
-				cnext = word[k + 1];
-				if (c == board[j][i])
-				{
-					if ((i > 0) && (cnext == board[j][i - 1]))
-					{
-						i--;
-						bsame = true;
-						continue;
-					}
-					if ((i < r) && (cnext == board[j][i + 1]))
-					{
-						i++;
-						bsame = true;
-						continue;
-					}
-					if ((j > 0) && (cnext == board[j - 1][i]))
-					{
-						j--;
-						bsame = true;
-						continue;
-					}
-					if ((j < b) && (cnext == board[j + 1][i]))
-					{
-						j++;
-						bsame = true;
-						continue;
-					}
-				}
-				else
-				{
-					break;
-				}
-			}
+            char cmatrix = board[j][i];
+		    if (c == cmatrix)
+		    {
+                if (k == word.length() - 1)
+                {
+                    if (((i > 0) && (c == board[j][i - 1])) || ((i < r) && (c == board[j][i + 1])) || 
+                        ((j > 0) && (c == board[j - 1][i])) || ((j < b) && (c == board[j + 1][i])))
+                    {
+                        bsame = true;
+                    }
+                    else
+                    {
+                        bsame = false;
+                    }
+                    break;
+                }
+                char cnext = word[k + 1];
+			    if ((i > 0) && (cnext == board[j][i - 1]))
+			    {
+				    i--;
+				    bsame = true;
+				    continue;
+			    }
+			    if ((i < r) && (cnext == board[j][i + 1]))
+			    {
+				    i++;
+				    bsame = true;
+				    continue;
+			    }
+			    if ((j > 0) && (cnext == board[j - 1][i]))
+			    {
+				    j--;
+				    bsame = true;
+				    continue;
+			    }
+			    if ((j < b) && (cnext == board[j + 1][i]))
+			    {
+				    j++;
+				    bsame = true;
+				    continue;
+			    }
+		    }
+		    else
+		    {
+                bsame = false;
+			    break;
+		    }
 		}
-		if (k == word.length())
+		if (k == word.length() - 1)
 		{
-			return true;
+            //if (bsame)
+            //    return true;
+            return bsame;
 		}
 		if (i <= r)
 		{
 			i++;
+            if (i > r)
+            {
+                i = 0;
+                j++;
+            }
 			continue;
 		}
 		if (j <= b)
@@ -858,7 +876,7 @@ void Other9Action()
         char c1[] = "ABCE";
         char c2[] = "SFCS";
         char c3[] = "ADEE";
-        for (int i = 0;i < sizeof(c1)/sizeof(char);i++)
+    for (int i = 0;i < sizeof(c1)/sizeof(char);i++)
             v1.push_back(c1[i]);
 
         for (int i = 0;i < sizeof(c2)/sizeof(char);i++)
@@ -871,7 +889,9 @@ void Other9Action()
         board.push_back(v2);
         board.push_back(v3);
 
-        exist(board,"SEE");
+        /*bool b3 = exist(board,"ABCB");
+        bool b1 = exist(board,"ABCCED");
+        bool b2 = exist(board,"SEE");*/
     }
 	{
 		StackTemplate<int> is;
