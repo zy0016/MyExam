@@ -661,7 +661,7 @@ char *getParenthesis2(int n)
     return s1;
 }
 
-int removeDuplicates(int* nums, int numsSize)
+static int removeDuplicates(int* nums, int numsSize)
 {
     if (nums == NULL || numsSize == 0)
         return 0;

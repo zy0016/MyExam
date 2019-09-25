@@ -351,6 +351,68 @@ node * AddNode(int value , node *a)
     pNext->next = p;
     return a;
 }
+node * deleteDuplicates(node *head)
+{
+    int value = 0;
+    vector<int> ids;
+    node *pCur = head,*pCurPre = NULL,*pCurNext,*pCurNextNext;
+    if (head == NULL || head ->next == NULL)
+        return head;
+
+    int id = 0;
+    pCur = head;
+    pCurNext = pCur->next;
+    while(pCur != NULL)
+    {
+        pCurNext = pCur->next;
+        if (pCurNext != NULL)
+        {
+            if (pCur->val == pCurNext->val)
+            {
+                value = pCur->val;
+                ids.push_back(id);
+            }
+        }
+        else
+        {
+            break;
+        }
+        id++;
+        pCur = pCur->next;
+    }
+
+    //pCurNext = pCur->next;
+    //while (pCur->next != NULL)    
+    //{
+    //    pCurPre = pCur;
+    //    pCur = pCur->next;
+    //    pCurNext = pCur->next;
+    //    /////////////////
+    //    if (pCurPre->val == pCur->val)
+    //    {
+    //        if (pCurPre == head)
+    //        {
+    //            head = pCur;
+    //            free(pCurPre);
+    //            pCur = head;
+    //            continue;
+    //        }
+    //        else
+    //        {
+    //        }
+    //    }
+    //    if (pCur->val == pCurNext->val)
+    //    {
+    //        pCurNextNext = pCurNext->next;
+    //        pCurPre->next = pCurNext->next;
+    //        free(pCur);
+    //        free(pCurNext);
+    //        pCur = pCurNextNext;
+    //        continue;
+    //    }
+    //}
+    return head;
+}
 charnode * pushNode(char value , charnode *a)
 {
     charnode *p = NULL;
@@ -912,6 +974,37 @@ void LinkAction()
     ShowNode(pr);
     pr = rotateRight(pr,2);
     ShowNode(pr);
+    {
+        node *pd = NULL;
+        int ad[] = {1,1,2,2,3,4,4,5};
+        for (int i = 0;i < sizeof(ad) / sizeof(int);i++)
+        {
+            pd = AddNode(ad[i],pd);
+        }
+        ShowNode(pd);
+        pd = deleteDuplicates(pd);
+        ShowNode(pd);
+
+        node *pd2 = NULL;
+        int ad2[] = {1,2,3,3,4,4,5};
+        for (int i = 0;i < sizeof(ad2) / sizeof(int);i++)
+        {
+            pd2 = AddNode(ad2[i],pd2);
+        }
+        ShowNode(pd2);
+        pd2 = deleteDuplicates(pd2);
+        ShowNode(pd2);
+
+        node *pd3 = NULL;
+        int ad3[] = {1,1,1,2,3};
+        for (int i = 0;i < sizeof(ad3) / sizeof(int);i++)
+        {
+            pd3 = AddNode(ad3[i],pd3);
+        }
+        ShowNode(pd3);
+        pd3 = deleteDuplicates(pd3);
+        ShowNode(pd3);
+    }
 	///////////////////////
 	struct ListNode *l1 = NULL;
 	struct ListNode *l2 = NULL;

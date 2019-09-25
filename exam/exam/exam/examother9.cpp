@@ -867,16 +867,72 @@ bool exist(vector<vector<char>>& board, string word)
 	}
     return false;
 }
+static int removeDuplicates(int* nums, int numsSize)
+{
+    if (nums == NULL || numsSize == 0)
+        return 0;
+    bool bfind = false;
+    int all = 0,numsSizebak = numsSize;
+    int i = 0,j = 1;
+    while(i < numsSize)
+    {
+        j = i + 1;
+        bfind = false;
+        int idup = 0;
+        while(j < numsSize)
+        {
+            if ((nums[i] == nums[j]) && (idup == 1))
+            {
+                all++;
+                for (int m = j;m < numsSize;m++)
+                {
+                    nums[m - 1] = nums[m];
+                }
+                bfind = true;
+                numsSize--;
+                break;
+            }
+            else if ((nums[i] == nums[j]) && (idup == 0))
+            {
+                idup = 1;
+            }
+            j++;
+        }
+        if (bfind)
+        {
+            continue;
+        }
+        i++;
+    }
+    return numsSizebak - all;
+}
+bool search(vector<int>& nums, int target) 
+{
+    for (int i = 0;i < nums.size();i++)
+    {
+        if (target == nums[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        int ar[] = {1,1,1,2};
+        int ir = removeDuplicates(ar,sizeof(ar)/sizeof(int));
+        cout<<ir<<endl;
+    }
     {
         vector<vector<char>> board;
         vector<char> v1,v2,v3;
         char c1[] = "ABCE";
         char c2[] = "SFCS";
         char c3[] = "ADEE";
-    for (int i = 0;i < sizeof(c1)/sizeof(char);i++)
+        for (int i = 0;i < sizeof(c1)/sizeof(char);i++)
             v1.push_back(c1[i]);
 
         for (int i = 0;i < sizeof(c2)/sizeof(char);i++)
