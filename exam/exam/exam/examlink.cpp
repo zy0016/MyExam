@@ -351,6 +351,94 @@ node * AddNode(int value , node *a)
     pNext->next = p;
     return a;
 }
+node * deleteDuplicates(node *head,int)
+{
+    node *pCur = head, *pCurNext = NULL, *pCurNextNext = NULL, *p, *pCurPre = NULL;
+    if (head == NULL || head->next == NULL)
+        return head;
+
+    pCurNext = pCur->next;
+    if (pCurNext->next == NULL)
+    {
+        //only has 2 node.
+        if (pCur->val == pCurNext->val)
+        {
+            pCur->next = NULL;
+            free(pCurNext);
+        }
+        return head;
+    }
+    pCurNextNext = pCurNext->next;
+    while (pCur->next != NULL)
+    {
+        if (pCurNextNext == NULL)
+        {
+            if (pCur->val == pCurNext->val)
+            {
+                if (pCurPre == NULL)
+                {
+                    free(pCurNext);
+                    head->next = NULL;;
+                }
+                else
+                {
+                    pCur->next = pCurNext->next;
+                    free(pCurNext);
+                }
+            }
+            break;
+        }
+        if (pCur->val == pCurNext->val && pCur->val == pCurNextNext->val)
+        {
+            if (pCurPre == NULL)
+            {
+                head = head->next;
+            }
+            else
+            {
+                pCurPre->next = pCur->next;
+            }
+            p = pCur;
+            pCur = pCurNext;
+            if (pCurNext != NULL)
+            {
+                pCurNext = pCurNext->next;
+            }
+            if (pCurNext != NULL)
+            {
+                pCurNextNext = pCurNext->next;
+            }
+            free(p);
+        }
+        else if (pCur->val == pCurNext->val && pCur->val != pCurNextNext->val)
+        {
+            pCur->next = pCurNext->next;
+            free(pCurNext);
+            if (pCur != NULL)
+            {
+                pCurNext = pCur->next;
+            }
+            if (pCurNext != NULL)
+            {
+                pCurNextNext = pCurNext->next;
+            }
+        }
+        else
+        {
+            pCurPre = pCur;
+            pCur = pCur->next;
+            if (pCurNext != NULL)
+            {
+                pCurNext = pCurNext->next;
+            }
+            if (pCurNextNext != NULL)
+            {
+                pCurNextNext = pCurNextNext->next;
+            }
+        }
+    }
+    return head;
+}
 node * deleteDuplicates(node *head)
 {
     node *pCur = head, *pCurNext = NULL, *pCurNextNext = NULL, *p, *pCurPre = NULL;
@@ -450,6 +538,33 @@ node * deleteDuplicates(node *head)
         }
     }
     return head;
+}
+node* partition(node* head, int x)
+{
+    node *pNew = NULL,*pNewHead = NULL;
+    node *pCur = head;
+    while(pCur != NULL)
+    {
+        if (pCur->val < x)
+        {
+            if (pNewHead == NULL)
+            {
+                pNewHead = pCur;
+                pNew = pCur;
+            }
+            else
+            {
+                pNew = pNewHead;
+                while(pNew->next != NULL)
+                {
+                    pNew = pNew->next;
+                }
+                pNew->next = pCur;
+            }
+        }
+        pCur = pCur->next;
+    }
+    return pNewHead;
 }
 charnode * pushNode(char value , charnode *a)
 {
@@ -1052,6 +1167,47 @@ void LinkAction()
 		ShowNode(pd4);
 		pd4 = deleteDuplicates(pd4);
 		ShowNode(pd4);
+
+        node *pd5 = NULL;
+		int ad5[] = { 1,1,2 };
+		for (int i = 0; i < sizeof(ad5) / sizeof(int); i++)
+		{
+			pd5 = AddNode(ad5[i], pd5);
+		}
+		ShowNode(pd5);
+		pd5 = deleteDuplicates(pd5,0);
+		ShowNode(pd5);
+
+        node *pd6 = NULL;
+		int ad6[] = { 1,1,2,3,3 };
+		for (int i = 0; i < sizeof(ad6) / sizeof(int); i++)
+		{
+			pd6 = AddNode(ad6[i], pd6);
+		}
+		ShowNode(pd6);
+		pd6 = deleteDuplicates(pd6,0);
+		ShowNode(pd6);
+
+        node *pd7 = NULL;
+		int ad7[] = { 1,1,2,2 };
+		for (int i = 0; i < sizeof(ad7) / sizeof(int); i++)
+		{
+			pd7 = AddNode(ad7[i], pd7);
+		}
+		ShowNode(pd7);
+		pd7 = deleteDuplicates(pd7,0);
+		ShowNode(pd7);
+    }
+    {
+        node *pd1 = NULL;
+		int ad1[] = { 1,4,3,2,5,2 };
+		for (int i = 0; i < sizeof(ad1) / sizeof(int); i++)
+		{
+			pd1 = AddNode(ad1[i], pd1);
+		}
+		ShowNode(pd1);
+		pd1 = partition(pd1,3);
+		ShowNode(pd1);
     }
 	///////////////////////
 	struct ListNode *l1 = NULL;
