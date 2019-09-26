@@ -353,64 +353,102 @@ node * AddNode(int value , node *a)
 }
 node * deleteDuplicates(node *head)
 {
-    int value = 0;
-    vector<int> ids;
-    node *pCur = head,*pCurPre = NULL,*pCurNext,*pCurNextNext;
-    if (head == NULL || head ->next == NULL)
+    node *pCur = head, *pCurNext = NULL, *pCurNextNext = NULL, *p, *pCurPre = NULL;
+    if (head == NULL || head->next == NULL)
         return head;
 
-    int id = 0;
-    pCur = head;
     pCurNext = pCur->next;
-    while(pCur != NULL)
+    if (pCurNext->next == NULL)
     {
-        pCurNext = pCur->next;
-        if (pCurNext != NULL)
+        //only has 2 node.
+        if (pCur->val == pCurNext->val)
+        {
+            free(pCur);
+            free(pCurNext);
+            head = NULL;
+        }
+        return head;
+    }
+    pCurNextNext = pCurNext->next;
+    while (pCur->next != NULL)
+    {
+        if (pCurNextNext == NULL)
         {
             if (pCur->val == pCurNext->val)
             {
-                value = pCur->val;
-                ids.push_back(id);
+                if (pCurPre == NULL)
+                {
+                    free(pCur);
+                    free(pCurNext);
+                    head = NULL;
+                }
+                else
+                {
+                    free(pCur);
+                    free(pCurNext);
+                    pCurPre->next = NULL;
+                }
+            }
+            break;
+        }
+        if (pCur->val == pCurNext->val && pCur->val == pCurNextNext->val)
+        {
+            if (pCurPre == NULL)
+            {
+                head = head->next;
+            }
+            else
+            {
+                pCurPre->next = pCur->next;
+            }
+            p = pCur;
+            pCur = pCurNext;
+            if (pCurNext != NULL)
+            {
+                pCurNext = pCurNext->next;
+            }
+            if (pCurNext != NULL)
+            {
+                pCurNextNext = pCurNext->next;
+            }
+            free(p);
+        }
+        else if (pCur->val == pCurNext->val && pCur->val != pCurNextNext->val)
+        {
+            if (pCurPre == NULL)
+            {
+                head = pCurNextNext;
+            }
+            else
+            {
+                pCurPre->next = pCurNextNext;
+            }
+            free(pCur);
+            free(pCurNext);
+            pCur = pCurNextNext;
+            if (pCur != NULL)
+            {
+                pCurNext = pCur->next;
+            }
+            if (pCurNext != NULL)
+            {
+                pCurNextNext = pCurNext->next;
             }
         }
         else
         {
-            break;
+            pCurPre = pCur;
+            pCur = pCur->next;
+            if (pCurNext != NULL)
+            {
+                pCurNext = pCurNext->next;
+            }
+            if (pCurNextNext != NULL)
+            {
+                pCurNextNext = pCurNextNext->next;
+            }
         }
-        id++;
-        pCur = pCur->next;
     }
-
-    //pCurNext = pCur->next;
-    //while (pCur->next != NULL)    
-    //{
-    //    pCurPre = pCur;
-    //    pCur = pCur->next;
-    //    pCurNext = pCur->next;
-    //    /////////////////
-    //    if (pCurPre->val == pCur->val)
-    //    {
-    //        if (pCurPre == head)
-    //        {
-    //            head = pCur;
-    //            free(pCurPre);
-    //            pCur = head;
-    //            continue;
-    //        }
-    //        else
-    //        {
-    //        }
-    //    }
-    //    if (pCur->val == pCurNext->val)
-    //    {
-    //        pCurNextNext = pCurNext->next;
-    //        pCurPre->next = pCurNext->next;
-    //        free(pCur);
-    //        free(pCurNext);
-    //        pCur = pCurNextNext;
-    //        continue;
-    //    }
-    //}
     return head;
 }
 charnode * pushNode(char value , charnode *a)
@@ -1004,6 +1042,16 @@ void LinkAction()
         ShowNode(pd3);
         pd3 = deleteDuplicates(pd3);
         ShowNode(pd3);
+
+		node *pd4 = NULL;
+		int ad4[] = { 1,2,2 };
+		for (int i = 0; i < sizeof(ad4) / sizeof(int); i++)
+		{
+			pd4 = AddNode(ad4[i], pd4);
+		}
+		ShowNode(pd4);
+		pd4 = deleteDuplicates(pd4);
+		ShowNode(pd4);
     }
 	///////////////////////
 	struct ListNode *l1 = NULL;
