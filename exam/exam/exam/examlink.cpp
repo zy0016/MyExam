@@ -993,6 +993,35 @@ node* DeleteNodeById(node *head,unsigned int id)
 	printf("\nfree the %d node", id);
     return head;
 }
+node* reverseBetween(node* head, int m, int n)
+{
+    node *p = head,*pm = NULL,*pmPre = NULL,*pn = NULL,*pnPre=NULL,*pm_bak = NULL,*pn_bak = NULL;
+    int i = 1;
+    while(p != NULL && i < m)
+    {
+        pmPre = p;
+        p = p->next;
+        i++;
+    }
+    pm = p;
+    //////////////////
+    while(p != NULL && i < n)
+    {
+        pnPre = p;
+        p = p->next;
+        i++;
+    }
+    pn = p;
+    //////////////////
+    pm_bak = pm->next;
+    pn_bak = pn->next;
+    pmPre->next = pn;
+    pn->next = pm_bak;
+
+    pnPre->next = pm_bak;
+
+    return head;
+}
 
 void LinkAction()
 {
@@ -1199,6 +1228,17 @@ void LinkAction()
 		ShowNode(pd7);
     }
     {
+        node *pr = NULL;
+        int iv[] = {1,2,3,4,5};
+        for (int i = 0; i < sizeof(iv) / sizeof(int); i++)
+		{
+			pr = AddNode(iv[i], pr);
+		}
+		ShowNode(pr);
+        pr = reverseBetween(pr,2,4);
+		ShowNode(pr);
+    }
+    /*{
         node *pd1 = NULL;
 		int ad1[] = { 1,4,3,2,5,2 };
 		for (int i = 0; i < sizeof(ad1) / sizeof(int); i++)
@@ -1208,7 +1248,7 @@ void LinkAction()
 		ShowNode(pd1);
 		pd1 = partition(pd1,3);
 		ShowNode(pd1);
-    }
+    }*/
 	///////////////////////
 	struct ListNode *l1 = NULL;
 	struct ListNode *l2 = NULL;

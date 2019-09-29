@@ -917,10 +917,31 @@ bool search(vector<int>& nums, int target)
     }
     return false;
 }
-
+void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n)
+{
+    int j = 0;
+    for (int i = m;j < nums2Size;i++,j++)
+    {
+        nums1[i] = nums2[j];
+    }
+    InsertSort(nums1,nums1Size);
+}
+//int numDecodings(char * s)
+//{
+//    int icount = 0;
+//    for (int i = 0;i < strlen(s);i++)
+//    {
+//
+//    }
+//}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        int a1[] = {1,2,3,0,0,0};
+        int a2[] = {2,5,6};
+        merge(a1,sizeof(a1)/sizeof(int),3,a2,sizeof(a2)/sizeof(int),3);
+    }
     {
         int ar[] = {1,1,1,2};
         int ir = removeDuplicates(ar,sizeof(ar)/sizeof(int));

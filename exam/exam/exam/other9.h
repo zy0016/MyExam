@@ -13,6 +13,7 @@
 #include "linkstructor.h"
 #include "sortstructor.h"
 #include "other8.h"
+#include "sortstructor.h"
 //////////////////////////////
 
 void Other9Action();
