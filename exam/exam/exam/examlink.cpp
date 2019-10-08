@@ -996,12 +996,18 @@ node* DeleteNodeById(node *head,unsigned int id)
 node* reverseBetween(node* head, int m, int n)
 {
     node *p = head,*pm = NULL,*pmPre = NULL,*pn = NULL,*pnPre=NULL,*pm_bak = NULL,*pn_bak = NULL;
+    if (m >= n || head == NULL || head->next == NULL)
+        return head;
     int i = 1;
     while(p != NULL && i < m)
     {
         pmPre = p;
         p = p->next;
         i++;
+    }
+    if (p == NULL && i <= m)
+    {
+        return head;
     }
     pm = p;
     //////////////////
@@ -1011,15 +1017,86 @@ node* reverseBetween(node* head, int m, int n)
         p = p->next;
         i++;
     }
+    if (p == NULL && i <= n)
+    {
+        return head;
+    }
     pn = p;
     //////////////////
     pm_bak = pm->next;
     pn_bak = pn->next;
-    pmPre->next = pn;
-    pn->next = pm_bak;
+    /////////////////
+    if (pmPre == NULL)
+    {
+        head = reverse(pm,pn);
+    }
+    else
+    {
+        pmPre->next = reverse(pm,pn);
+    }
+    ////////////////////
+    i = 1;
+    while(p != NULL && i < m)
+    {
+        pmPre = p;
+        p = p->next;
+        i++;
+    }
+    if (p == NULL && i <= m)
+    {
+        return head;
+    }
+    pm = p;
+    //////////////////
+    while(p != NULL && i < n)
+    {
+        pnPre = p;
+        p = p->next;
+        i++;
+    }
+    if (p == NULL && i <= n)
+    {
+        return head;
+    }
+    pn = p;
+    //////////////////
+    pm_bak = pm->next;
+    pn_bak = pn->next;
+    if (pnPre == pm)
+    {
+        if (pmPre == NULL)
+        {
+            head = pn;
+            pn->next = pm;
+            pm->next = pn_bak;
+        }
+        else
+        {
+            pmPre->next = pn;
+            pn->next = pm;
+            pm->next = pn_bak;
+        }
+    }
+    else
+    {
+        if (pmPre == NULL)
+        {
+            head = pn;
+            pnPre->next = pm;
+            pn->next = pm_bak;
+            pm->next = pn_bak;
+        }
+        else
+        {
+            pmPre->next = pn;
+            pnPre->next = pm;
 
-    pnPre->next = pm_bak;
+            pn->next = pm_bak;
+            pm->next = pn_bak;
+        }
+    }
 
+    
     return head;
 }
 
@@ -1237,6 +1314,56 @@ void LinkAction()
 		ShowNode(pr);
         pr = reverseBetween(pr,2,4);
 		ShowNode(pr);
+        ////////////////////
+        node *pr1 = NULL;
+        int iv1[] = {1,2,3,4,5};
+        for (int i = 0; i < sizeof(iv1) / sizeof(int); i++)
+		{
+			pr1 = AddNode(iv1[i], pr1);
+		}
+		ShowNode(pr1);
+        pr1 = reverseBetween(pr1,6,7);
+		ShowNode(pr1);
+        //////////////////////
+        node *pr2 = NULL;
+        int iv2[] = {3,5};
+        for (int i = 0; i < sizeof(iv2) / sizeof(int); i++)
+		{
+			pr2 = AddNode(iv2[i], pr2);
+		}
+		ShowNode(pr2);
+        pr2 = reverseBetween(pr2,1,2);
+		ShowNode(pr2);
+        ////////////////////////
+        node *pr3 = NULL;
+        int iv3[] = {1,2,3};
+        for (int i = 0; i < sizeof(iv3) / sizeof(int); i++)
+		{
+			pr3 = AddNode(iv3[i], pr3);
+		}
+		ShowNode(pr3);
+        pr3 = reverseBetween(pr3,2,3);
+		ShowNode(pr3);
+        //////////////////////////
+        node *pr4 = NULL;
+        int iv4[] = {1,2,3};
+        for (int i = 0; i < sizeof(iv4) / sizeof(int); i++)
+		{
+			pr4 = AddNode(iv4[i], pr4);
+		}
+		ShowNode(pr4);
+        pr4 = reverseBetween(pr4,1,3);
+		ShowNode(pr4);
+        //////////////////////////
+        node *pr5 = NULL;
+        int iv5[] = {1,2,3,4};
+        for (int i = 0; i < sizeof(iv5) / sizeof(int); i++)
+		{
+			pr5 = AddNode(iv5[i], pr5);
+		}
+		ShowNode(pr5);
+        pr5 = reverseBetween(pr5,1,4);
+		ShowNode(pr5);
     }
     /*{
         node *pd1 = NULL;

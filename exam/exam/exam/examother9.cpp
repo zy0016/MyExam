@@ -926,14 +926,24 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n)
     }
     InsertSort(nums1,nums1Size);
 }
-//int numDecodings(char * s)
-//{
-//    int icount = 0;
-//    for (int i = 0;i < strlen(s);i++)
-//    {
-//
-//    }
-//}
+int numDecodings(char * s)
+{
+    if (s == NULL)
+        return 0;
+    int len = strlen(s);
+    if (len == 0)
+        return 0;
+    int icount = len;
+    for (int i = 0;i < len;i++)
+    {
+        if (s[i] == '0')
+        {
+            icount--;
+        }
+    }
+
+    return icount;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
