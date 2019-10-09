@@ -995,7 +995,7 @@ node* DeleteNodeById(node *head,unsigned int id)
 }
 node* reverseBetween(node* head, int m, int n)
 {
-    node *p = head,*pm = NULL,*pmPre = NULL,*pn = NULL,*pnPre=NULL,*pm_bak = NULL,*pn_bak = NULL;
+    node *p = head,*pm = NULL,*pmPre = NULL,*pn = NULL,*pn_bak = NULL;
     if (m >= n || head == NULL || head->next == NULL)
         return head;
     int i = 1;
@@ -1013,7 +1013,6 @@ node* reverseBetween(node* head, int m, int n)
     //////////////////
     while(p != NULL && i < n)
     {
-        pnPre = p;
         p = p->next;
         i++;
     }
@@ -1022,81 +1021,22 @@ node* reverseBetween(node* head, int m, int n)
         return head;
     }
     pn = p;
-    //////////////////
-    pm_bak = pm->next;
     pn_bak = pn->next;
-    /////////////////
+    pn->next = NULL;
     if (pmPre == NULL)
     {
-        head = reverse(pm,pn);
+        head = reverse(pm);
     }
     else
     {
-        pmPre->next = reverse(pm,pn);
+        pmPre->next = reverse(pm);
     }
-    ////////////////////
-    i = 1;
-    while(p != NULL && i < m)
+    p = head;
+    while(p->next != NULL)
     {
-        pmPre = p;
         p = p->next;
-        i++;
     }
-    if (p == NULL && i <= m)
-    {
-        return head;
-    }
-    pm = p;
-    //////////////////
-    while(p != NULL && i < n)
-    {
-        pnPre = p;
-        p = p->next;
-        i++;
-    }
-    if (p == NULL && i <= n)
-    {
-        return head;
-    }
-    pn = p;
-    //////////////////
-    pm_bak = pm->next;
-    pn_bak = pn->next;
-    if (pnPre == pm)
-    {
-        if (pmPre == NULL)
-        {
-            head = pn;
-            pn->next = pm;
-            pm->next = pn_bak;
-        }
-        else
-        {
-            pmPre->next = pn;
-            pn->next = pm;
-            pm->next = pn_bak;
-        }
-    }
-    else
-    {
-        if (pmPre == NULL)
-        {
-            head = pn;
-            pnPre->next = pm;
-            pn->next = pm_bak;
-            pm->next = pn_bak;
-        }
-        else
-        {
-            pmPre->next = pn;
-            pnPre->next = pm;
-
-            pn->next = pm_bak;
-            pm->next = pn_bak;
-        }
-    }
-
-    
+    p->next = pn_bak;
     return head;
 }
 
