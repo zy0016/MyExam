@@ -944,6 +944,73 @@ int numDecodings(char * s)
 
     return icount;
 }
+bool searchMatrix(vector<vector<int>>& matrix, int target) 
+{
+    if (matrix.size() == 0)
+        return false;
+    int l = 0, r = matrix[0].size(), t = 0, b = matrix.size();
+    for (int t = 0; t < b;t++)
+    {
+        for (int l = 0; l < r;l++)
+        {
+            if (matrix[t][l] == target)
+                return true;
+        }
+    }
+    return false;
+}
+int singleNumber(vector<int>& nums) 
+{
+    int len = nums.size();
+    for (int i = 0;i < len - 1;i++)
+    {
+        int m = nums[i];
+        for (int j = i + 1;j < len;j++)
+        {
+            int n = nums[j];
+            if (m == n)
+            {
+                nums[i] = 0;
+                nums[j] = 0;
+                break;
+            }
+        }
+    }
+    for (int i = 0;i < len;i++)
+    {
+        if (nums[i] != 0)
+            return nums[i];
+    }
+    return 0;
+}
+int singleNumber(vector<int>& nums,int) 
+{
+    int len = nums.size();
+    for (int i = 0;i < len - 1;i++)
+    {
+        bool bfind = false;
+        int m = nums[i];
+        for (int j = i + 1;j < len;j++)
+        {
+            int n = nums[j];
+            if (m == n)
+            {
+                nums[j] = 0;
+                bfind = true;
+            }
+        }
+        if (bfind)
+        {
+            nums[i] = 0;
+        }
+    }
+    for (int i = 0;i < len;i++)
+    {
+        if (nums[i] != 0)
+            return nums[i];
+    }
+    return 0;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
