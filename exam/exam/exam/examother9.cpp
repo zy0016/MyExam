@@ -1011,9 +1011,112 @@ int singleNumber(vector<int>& nums,int)
     }
     return 0;
 }
+bool isChar(char c)
+{
+    return (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z');
+}
+bool isNumber(char c)
+{
+    return (c >= '0' && c <= '9');
+}
+char *remove_no_char(char *s)
+{
+    int len = strlen(s),j;
+    for (int i = 0;i < len;)
+    {
+        if (s[i] == '\0')
+            break;
+        if (isChar(s[i]) || isNumber(s[i]))
+        {
+            i++;
+        }
+        else
+        {
+            if (i == len - 1)
+            {
+                s[i] = '\0';
+                break;
+            }
+            else
+            {
+                for (j = i;j < len;j++)
+                {
+                    s[j] = s[j + 1];
+                }
+                s[j] = '\0';
+                len--;
+            }
+        }
+    }
+    char *pEnd=s+len-1;    
+    while((*pEnd==' ')&&(len-- > 0))
+        *pEnd-- = '\0';
+    return s;
+}
+
+bool isPalindrome(char * s)
+{
+    if (s == NULL)
+        return true;
+    int len = strlen(s);
+    if (len == 0)
+        return true;
+    int i = 0,j = len - 1;
+    while(i <= j)
+    {
+        char c1 = s[i];
+        char c2 = s[j];
+        if (isChar(c1)||isNumber(c1))
+        {
+            if (c1 >= 'A' && c1 <= 'Z')
+                c1 = c1 - 'A' + 'a';
+        }
+        else
+        {
+            i++;
+            continue;
+        }
+        if (isChar(c2)||isNumber(c2))
+        {
+            if (c2 >= 'A' && c2 <= 'Z')
+                c2 = c2 - 'A' + 'a';
+        }
+        else
+        {
+            j--;
+            continue;
+        }
+        if (c1 == c2)
+        {
+            i++;
+            j--;
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        char s1[] = "A man, a plan, a canal: Panama";
+        bool b1 = isPalindrome(s1);
+        cout<<b1<<endl;
+        ///////////
+        char s2[] = "race a car";
+        bool b2 = isPalindrome(s2);
+        cout<<b2<<endl;
+        ///////////
+        char s3[] = "0p";
+        bool b3 = isPalindrome(s3);
+        cout<<b3<<endl;
+        ///////////
+        ///////////
+        char s4[] = "ab2a";
+        bool b4 = isPalindrome(s4);
+        cout<<b4<<endl;
+    }
     {
         int a1[] = {1,2,3,0,0,0};
         int a2[] = {2,5,6};
