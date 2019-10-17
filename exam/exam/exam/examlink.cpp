@@ -1039,6 +1039,42 @@ node* reverseBetween(node* head, int m, int n)
     p->next = pn_bak;
     return head;
 }
+node* partitionList(node*low, node*high)
+{
+    //链表范围是[low, high)
+    int key = low->val;
+    node* loc = low;
+    for(node*i = low->next; i != high; i = i->next)
+        if(i->val < key)
+        {
+            loc = loc->next;
+            swap(i->val, loc->val);
+        }
+    swap(loc->val, low->val);
+    return loc;
+}
+void qsortList(node*head, node*tail)
+{
+    //链表范围是[low, high)
+    if(head != tail && head->next != tail)
+    {
+        node* mid = partitionList(head, tail);
+        qsortList(head, mid);
+        qsortList(mid->next, tail);
+    }
+}
+
+node* sortList(node* head) 
+{
+    // IMPORTANT: Please reset any member data you declared, as
+    // the same Solution instance will be reused for each test case.
+    //链表快速排序
+    if(head == NULL || head->next == NULL)
+        return head;
+    qsortList(head, NULL);
+    return head;
+}
+//////////////////////
 
 void LinkAction()
 {
@@ -1304,6 +1340,17 @@ void LinkAction()
 		ShowNode(pr5);
         pr5 = reverseBetween(pr5,1,4);
 		ShowNode(pr5);
+    }
+    {
+        node *psort = NULL;
+        int ele[] = {5,4,3,2,1};
+        for (int i = 0;i < sizeof(ele)/sizeof(int);i++)
+        {
+            psort = AddNode(ele[i],psort);
+        }
+        ShowNode(psort);
+        psort = sortList(psort);
+        ShowNode(psort);
     }
     /*{
         node *pd1 = NULL;

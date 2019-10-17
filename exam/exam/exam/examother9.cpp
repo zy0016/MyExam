@@ -1096,9 +1096,99 @@ bool isPalindrome(char * s)
     }
     return true;
 }
+bool findmych(string s)
+{
+    for(int i = 0;i < s.length();i++)
+    {
+        if (s[i] != '-')
+            return true;
+    }
+    return false;
+}
+bool wordBreak(string s, vector<string>& wordDict) 
+{
+    string sbak = s;
+    vector<string> wordDictbak = wordDict;
+    while(wordDict.size() > 0)
+    {
+        s = sbak;
+        int len = wordDict.size();
+        for (int i = len - 1;i >=0 && s.length() > 0;)
+        {
+            int ifind = s.find(wordDict[i]);
+            if (ifind >= 0 )
+            {
+                s.replace(ifind,wordDict[i].length(),"-");
+            }
+            else
+            {
+                i--;
+            }
+        }
+        if (findmych(s) == false)
+            return true;
+        wordDict.pop_back();
+    }
+    s = sbak;
+    wordDict = wordDictbak;
+    int len = wordDict.size();
+    for (int i = 0;i < len && s.length() > 0;i++)
+    {
+        int ifind = s.find(wordDict[i]);
+        if (ifind >= 0)
+        {
+            s.replace(ifind,wordDict[i].length(),"-");
+        }
+    }
+    if (findmych(s) == false)
+        return true;
+    else
+        return false;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        vector<string> wordDict;
+        wordDict.push_back("apple");
+        wordDict.push_back("pen");
+        bool b1 = wordBreak("applepenapple",wordDict);
+        cout<<b1<<endl;
+        //////////////
+        wordDict.clear();
+        wordDict.push_back("leet");
+        wordDict.push_back("code");
+        b1 = wordBreak("leetcode",wordDict);
+        cout<<b1<<endl;
+        //////////////
+        wordDict.clear();
+        wordDict.push_back("cats");
+        wordDict.push_back("dog");
+        wordDict.push_back("sand");
+        wordDict.push_back("and");
+        wordDict.push_back("cat");
+        b1 = wordBreak("catsandog",wordDict);
+        cout<<b1<<endl;
+        //////////////
+        wordDict.clear();
+        wordDict.push_back("car");
+        wordDict.push_back("ca");
+        wordDict.push_back("rs");
+        b1 = wordBreak("cars",wordDict);
+        cout<<b1<<endl;
+        //////////////
+        wordDict.clear();
+        wordDict.push_back("aaaa");
+        wordDict.push_back("aaa");
+        b1 = wordBreak("aaaaaaa",wordDict);
+        cout<<b1<<endl;
+        //////////////
+        wordDict.clear();
+        wordDict.push_back("bc");
+        wordDict.push_back("cb");
+        b1 = wordBreak("ccbb",wordDict);
+        cout<<b1<<endl;
+    }
     {
         char s1[] = "A man, a plan, a canal: Panama";
         bool b1 = isPalindrome(s1);
