@@ -1145,9 +1145,77 @@ bool wordBreak(string s, vector<string>& wordDict)
     else
         return false;
 }
+vector<vector<int>> generate(int numRows) 
+{
+    vector<vector<int>> res;
+    for(int i = 0; i < numRows; i++)
+    {
+        vector<int> temp;
+        for(int j = 0; j <= i; j++)
+        {
+            if(j == 0 || i == j)
+            {
+                temp.push_back(1);
+            }
+            else
+            {
+                temp.push_back(res[i-1][j] + res[i-1][j-1]);  
+            }
+        }
+        res.push_back(temp);
+    }
+    return res;
+}
+vector<int> getRow(int rowIndex) 
+{
+    vector<vector<int>> res;
+    vector<int> temp;
+    rowIndex++;
+    for(int i = 0; i < rowIndex; i++)
+    {
+        temp.clear();
+        for(int j = 0; j <= i; j++)
+        {
+            if(j == 0 || i == j)
+            {
+                temp.push_back(1);
+            }
+            else
+            {
+                temp.push_back(res[i-1][j] + res[i-1][j-1]);  
+            }
+        }
+        res.push_back(temp);
+    }
+    return temp;
+}
+int maxProfit(vector<int>& prices) 
+{
+    int len = prices.size();
+    int max = 0;
+    for (int i = 0;i < len - 1;i++)
+    {
+        for (int j = i + 1;j < len;j++)
+        {
+            int gap = 0;
+            if (prices[i] < prices[j])
+            {
+                gap = prices[j] - prices[i];
+                if (gap > max)
+                {
+                    max = gap;
+                }
+            }
+        }
+    }
+    return max;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        generate(5);
+    }
     {
         vector<string> wordDict;
         wordDict.push_back("apple");
