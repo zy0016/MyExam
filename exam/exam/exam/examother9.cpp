@@ -1210,9 +1210,56 @@ int maxProfit(vector<int>& prices)
     }
     return max;
 }
+void trim(string &s)
+{
+    if (!s.empty())
+    {
+        s.erase(0,s.find_first_not_of(" "));
+        s.erase(s.find_last_not_of(" ") + 1);
+    }
+}
+string reverseWords(string s) 
+{
+    int len;
+    string result = "";
+    trim(s);
+    while(true)
+    {
+        int ispace = s.rfind(" ");
+        if (ispace == -1)
+        {
+            trim(s);
+            result = result + " " + s;
+            break;
+        }
+        string single = s.substr(ispace);
+        trim(single);
+        result = result + " " +  single;
+        trim(result);
+        len = s.length();
+        string snew = s.substr(0,len - single.length());
+        trim(snew);
+        s = snew;
+    }
+    trim(result);
+    return result;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+    {
+        string s = "the sky is blue";
+        string sr = reverseWords(s);
+        cout<<sr<<endl;
+        ////////////////
+        string s1 = "  hello world!  ";
+        sr = reverseWords(s1);
+        cout<<sr<<endl;
+        ////////////////
+        string s2 = "a good   example";
+        sr = reverseWords(s2);
+        cout<<sr<<endl;
+    }
     {
         generate(5);
     }
