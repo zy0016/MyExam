@@ -1244,6 +1244,18 @@ string reverseWords(string s)
     trim(result);
     return result;
 }
+int findPeakElement(vector<int>& nums) 
+{
+    int len = nums.size();
+    if (len == 0 || len == 1)
+        return 0;
+    for (int i = 1;i < len - 1;i++)
+    {
+        if (nums[i] > nums[i - 1] && nums[i] > nums[i + 1])
+            return i;
+    }
+    return (nums[len - 1] > nums[len - 2]) ? (len - 1) : 0;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;

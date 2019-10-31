@@ -1075,7 +1075,24 @@ node* sortList(node* head)
     return head;
 }
 //////////////////////
-
+node *getIntersectionNode(node *headA, node *headB) 
+{
+    /*https://leetcode.com/problems/intersection-of-two-linked-lists/*/
+    //Write a program to find the node at which the intersection of two singly linked lists begins.
+    node *a = headA;
+    while(a != NULL)
+    {
+        node *b = headB;
+        while(b!=NULL)
+        {
+            if (a == b)
+                return a;
+            b = b->next;
+        }
+        a = a->next;
+    }
+    return NULL;
+}
 void LinkAction()
 {
     int i;
