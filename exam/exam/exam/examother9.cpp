@@ -1256,6 +1256,63 @@ int findPeakElement(vector<int>& nums)
     }
     return (nums[len - 1] > nums[len - 2]) ? (len - 1) : 0;
 }
+
+int maxProfit(vector<int>& prices, int)
+{
+	int len = prices.size();
+	int max = 0;
+	int id = 0;
+	while (id < len)
+	{
+		if (id == len - 1)
+		{
+			break;
+		}
+		int v1 = prices[id];
+		int v2 = prices[id + 1];
+		if (v1 < v2)
+		{
+			max = max + v2 - v1;
+		}
+		id++;
+	}
+	return max;
+}
+
+int gapCountTwoWords(string word1, string word2)
+{
+	int len1 = word1.length();
+	int len2 = word2.length();
+	if (len1 != len2)
+		return -1;
+	int icount = 0;
+	for (int i = 0; i < len1; i++)
+	{
+		if (word1[i] = word2[i])
+			icount++;
+	}
+	return icount;
+}
+int ladderLength(string beginWord, string endWord, vector<string>& wordList)
+{
+	int id = 0;
+	wordList.insert(wordList.begin(), beginWord);
+	int len = wordList.size();
+	while (id < len)
+	{
+		if (id == len - 1)
+			break;
+		if (wordList[id] == endWord)
+			break;
+		int ires = gapCountTwoWords(wordList[id], wordList[id + 1]);
+		if (ires != 1)
+		{
+			return 0;
+		}
+		id++;
+	}
+	return id;
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
@@ -1272,9 +1329,25 @@ void Other9Action()
         sr = reverseWords(s2);
         cout<<sr<<endl;
     }
-    {
-        generate(5);
-    }
+	{
+		generate(5);
+		/////////////////
+		int a1[] = { 7,1,5,3,6,4 };
+		vector<int> prices;
+		for (int i = 0; i < sizeof(a1) / sizeof(int); i++)
+		{
+			prices.push_back(a1[i]);
+		}
+		int res = maxProfit(prices, 1);
+		///////////////////
+		string s1[] = { "hot","dot","dog","lot","log","cog" };
+		vector<string> wordList;
+		for (int i = 0; i < 6; i++)
+		{
+			wordList.push_back(s1[i]);
+		}
+		res = ladderLength("hit", "cog", wordList);
+	}
     {
         vector<string> wordDict;
         wordDict.push_back("apple");
