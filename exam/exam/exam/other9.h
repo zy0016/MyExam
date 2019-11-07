@@ -15,6 +15,6 @@
 #include "other8.h"
 #include "sortstructor.h"
 //////////////////////////////
-
+extern void myitoa(int n, char *str);
 void Other9Action();
 #endif

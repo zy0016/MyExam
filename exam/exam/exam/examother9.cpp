@@ -1313,9 +1313,170 @@ int ladderLength(string beginWord, string endWord, vector<string>& wordList)
 	}
 	return id;
 }
+int findMin(vector<int>& nums)
+{
+	int len = nums.size();
+	switch (len)
+	{
+	case 0:
+		return 0;
+	case 1:
+		return nums[0];
+	default:
+		if (nums[0] < nums[1] && nums[0] > nums[len - 1])
+		{
+			int j;
+			for (int i = len - 1; i >= 0; i--)
+			{
+				j = i - 1;
+				if (nums[j] > nums[i])
+					return nums[i];
+			}
+		}
+		else if (nums[0] > nums[1] && nums[0] > nums[len - 1])
+		{
+			return nums[1];
+		}
+		else
+		{
+			return nums[0];
+		}
+		break;
+	}
+	return 0;
+}
+string fractionToDecimal(int numerator, int denominator) 
+{
+	if (numerator % denominator == 0)
+	{
+		int ires = numerator / denominator;
+		char cresult[256] = "";
+		myitoa(ires, cresult);
+		string sresult(cresult);
+		return sresult;
+	}
+	else
+	{
+		string result = "";
+		return result;
+	}
+}
+vector<int> twoSum(vector<int>& numbers, int target) 
+{
+	int len = numbers.size();
+	vector<int> result;
+	if (len < 2)
+		return result;
+	
+	int i = 0, j = i + 1;
+	if (target == 0)
+	{
+		for (i = 0; i < len - 1; i++)
+		{
+			for (j = i + 1; j < len; j++)
+			{
+				if (numbers[i] + numbers[j] == target)
+				{
+					result.push_back(i + 1);
+					result.push_back(j + 1);
+				}
+			}
+		}
+	}
+	else
+	{
+		for (i = 0; i < len - 1; i++)
+		{
+			if (numbers[i] == 0)
+				continue;
+			for (j = i + 1; j < len; j++)
+			{
+				if (numbers[i] + numbers[j] == target)
+				{
+					result.push_back(i + 1);
+					result.push_back(j + 1);
+				}
+			}
+		}
+	}
+	return result;
+}
+
+int majorityElement(vector<int>& nums)
+{
+	sort(nums.begin(), nums.end());
+	int len = nums.size();
+	if (len == 0)
+		return 0;
+	if (len == 1)
+		return nums[0];
+
+	int id = 0, half = len / 2, vcount = 0, oldvalue = 0, value = 0, realvalue = 0, maxvcount = 0;
+	bool bfind = false;
+	while (id < len)
+	{
+		value = nums[id];
+		if (value != oldvalue)
+		{
+			vcount = 0;
+			bfind = false;
+			for (int i = 0; i < nums.size(); i++)
+			{
+				if (value == nums[i])
+				{
+					vcount++;
+					if (vcount > half)
+					{
+						bfind = true;
+						maxvcount = vcount;
+						realvalue = value;
+						break;
+					}
+				}
+			}
+			if (bfind)
+			{
+				break;
+			}
+			if (vcount > maxvcount)
+			{
+				maxvcount = vcount;
+				realvalue = value;
+			}
+			if (vcount > half)
+			{
+				break;
+			}
+			oldvalue = value;
+		}
+		id++;
+	}
+	return realvalue;
+}
+int trailingZeroes(int n)
+{
+	int zeros = 0;
+	while (n > 0)
+	{
+		n /= 5;
+		zeros += n;
+	}
+	return zeros;
+}
+
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+	{
+		int a1[] = { 2,7,11,15 };
+		vector<int> numbers;
+		vector<int> res;
+		for (int i = 0; i < sizeof(a1) / sizeof(int); i++)
+		{
+			numbers.push_back(a1[i]);
+		}
+		res = twoSum(numbers, 9);
+	}
     {
         string s = "the sky is blue";
         string sr = reverseWords(s);
