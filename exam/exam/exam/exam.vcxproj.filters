@@ -60,6 +60,45 @@
     <ClInclude Include="mystring.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="other2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other7.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="other9.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="template4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="template5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="template6.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mytree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="thread1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +141,45 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="mystring.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother7.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother8.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examother9.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examtemplate4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examtemplate5.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examtemplate6.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examtree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examthread1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

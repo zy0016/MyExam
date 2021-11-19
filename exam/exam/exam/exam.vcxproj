@@ -14,13 +14,14 @@
     <ProjectGuid>{8ED9C1E4-5960-4ECD-A23A-C1E3F5DB9399}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>exam</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v100</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -84,13 +85,26 @@
     <ClInclude Include="classstructor.h" />
     <ClInclude Include="linkstructor.h" />
     <ClInclude Include="mystring.h" />
+    <ClInclude Include="mytree.h" />
     <ClInclude Include="other.h" />
+    <ClInclude Include="other2.h" />
+    <ClInclude Include="other3.h" />
+    <ClInclude Include="other4.h" />
+    <ClInclude Include="other5.h" />
+    <ClInclude Include="other6.h" />
+    <ClInclude Include="other7.h" />
+    <ClInclude Include="other8.h" />
+    <ClInclude Include="other9.h" />
     <ClInclude Include="sortstructor.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="template1.h" />
     <ClInclude Include="template2.h" />
     <ClInclude Include="template3.h" />
+    <ClInclude Include="template4.h" />
+    <ClInclude Include="template5.h" />
+    <ClInclude Include="template6.h" />
+    <ClInclude Include="thread1.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="exam.cpp" />
@@ -101,10 +115,23 @@
     <ClCompile Include="examclass5.cpp" />
     <ClCompile Include="examlink.cpp" />
     <ClCompile Include="examother.cpp" />
+    <ClCompile Include="examother2.cpp" />
+    <ClCompile Include="examother3.cpp" />
+    <ClCompile Include="examother4.cpp" />
+    <ClCompile Include="examother5.cpp" />
+    <ClCompile Include="examother6.cpp" />
+    <ClCompile Include="examother7.cpp" />
+    <ClCompile Include="examother8.cpp" />
+    <ClCompile Include="examother9.cpp" />
     <ClCompile Include="examsort.cpp" />
     <ClCompile Include="examtemplate.cpp" />
     <ClCompile Include="examtemplate2.cpp" />
     <ClCompile Include="examtemplate3.cpp" />
+    <ClCompile Include="examtemplate4.cpp" />
+    <ClCompile Include="examtemplate5.cpp" />
+    <ClCompile Include="examtemplate6.cpp" />
+    <ClCompile Include="examthread1.cpp" />
+    <ClCompile Include="examtree.cpp" />
     <ClCompile Include="mystring.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

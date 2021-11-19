@@ -32,12 +32,12 @@ void QuickSort(int array[] , int left,int right)
 
         while (low < high)
         {
-            while (low < high && array[high] >= key)
+            while (low < high && key <= array[high])
                 high--;
 
             array[low] = array[high];
 
-            while (low < high && array[low] <= key)
+            while (low < high && key >= array[low])
                 low++;
 
             array[high] = array[low];

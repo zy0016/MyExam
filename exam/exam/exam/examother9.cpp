@@ -1464,9 +1464,124 @@ int trailingZeroes(int n)
 	return zeros;
 }
 
+void reorder(vector<string>& array)
+{
+	int j,nNum = array.size();
+	string temp;
+	unsigned int i;
+	for (i = 1; i < nNum; ++i)
+	{
+		if (array[i - 1] + array[i] > array[i] + array[i - 1])
+		{
+			temp = array[i];
+			array[i] = array[i - 1];
+			for (j = i - 1; j >= 0 && array[j] + temp > temp + array[j]; --j)
+			{
+				array[j + 1] = array[j];
+			}
+			array[j + 1] = temp;
+		}
+	}
+	for (i = 0,j = nNum - 1; i < nNum / 2; i++,j--)
+	{
+		string t = array[i];
+		array[i] = array[j];
+		array[j] = t;
+	}
+}
+string largestNumber(vector<int>& nums) 
+{
+	string result = "";
+	int len = nums.size();
+	vector<string> numstring;
+	for (int i = 0; i < len; i++)
+	{
+		numstring.push_back(to_string(nums[i]));
+	}
+	/*sort(numstring.begin(), numstring.end(), [&](const string x, const string y) {
+		return x + y > y + x;
+	});*/
+	reorder(numstring);
+	for (int i = 0; i < numstring.size(); i++)
+	{
+		result = result + numstring[i];
+	}
+	return result;
+}
+void rotate(vector<int>& nums, int k) 
+{
+	int len = nums.size();
+	vector<int> result;
+	k = k % len;
+	if (k == 0)
+		return;
+	
+	for (int i = len - k; i < len; i++)
+	{
+		result.push_back(nums[i]);
+	}
+	for (int i = 0; i < len - k; i++)
+	{
+		result.push_back(nums[i]);
+	}
+	for (int i = 0; i < result.size(); i++)
+	{
+		nums[i] = result[i];
+	}
+}
 void Other9Action()
 {
     cout << "\n===========================Other9Action===========================" << endl;
+	{
+		int a1[] = { 1,2,3,4,5,6,7 };
+		vector<int> numbers;
+		for (int i = 0; i < sizeof(a1) / sizeof(int); i++)
+		{
+			numbers.push_back(a1[i]);
+		}
+		rotate(numbers,3);
+
+		int a2[] = { -1,-100,3,99 };
+		vector<int> numbers2;
+		for (int i = 0; i < sizeof(a2) / sizeof(int); i++)
+		{
+			numbers2.push_back(a2[i]);
+		}
+		rotate(numbers2, 2);
+	}
+	{
+		int a1[] = { 10,2 };
+		vector<int> numbers;
+		for (int i = 0; i < sizeof(a1) / sizeof(int); i++)
+		{
+			numbers.push_back(a1[i]);
+		}
+		string res = largestNumber(numbers);
+
+		int a2[] = { 3,30,34,5,9 };
+		vector<int> numbers2;
+		for (int i = 0; i < sizeof(a2) / sizeof(int); i++)
+		{
+			numbers2.push_back(a2[i]);
+		}
+		string res2 = largestNumber(numbers2);
+
+		int a3[] = { 128,12 };
+		vector<int> numbers3;
+		for (int i = 0; i < sizeof(a3) / sizeof(int); i++)
+		{
+			numbers3.push_back(a3[i]);
+		}
+		string res3 = largestNumber(numbers3);
+
+		int a4[] = { 0,9,8,7,6,5,4,3,2,1 };
+		vector<int> numbers4;
+		for (int i = 0; i < sizeof(a4) / sizeof(int); i++)
+		{
+			numbers4.push_back(a4[i]);
+		}
+		string res4 = largestNumber(numbers4);
+	}
 	{
 		int a1[] = { 2,7,11,15 };
 		vector<int> numbers;
