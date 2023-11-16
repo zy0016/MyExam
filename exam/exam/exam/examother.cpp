@@ -550,6 +550,8 @@ void OtherAction()
     cout << "\n===========================OtherAction===========================" << endl;
 	int *p = NULL;
 	int i = sizeof(void*);
+    auto a = 10;
+    decltype(i) b = 2;
 
     testpoint();
     OtherAction1();

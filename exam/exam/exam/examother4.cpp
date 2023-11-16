@@ -16,6 +16,8 @@
 #include <iterator>
 #include <stack>
 #include <queue>
+#include <winsock.h>
+
 using namespace std;
 
 typedef stack<string> Stack1;

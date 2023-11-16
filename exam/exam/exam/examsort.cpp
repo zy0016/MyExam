@@ -108,6 +108,20 @@ void ShellSort(int Array[], int iDataNum)
     }
 }
 #endif
+void shellsort2(int v[],int n)
+{
+    int gap,i,j,temp;
+    for(gap = n / 2;gap > 0; gap /= 2)
+    {
+        for (i = gap; i < n;i++)
+        {
+            for (j = i - gap; j >= 0 && v[j] > v[j + gap]; j-= gap)
+            {
+                temp = v[j];v[j] = v[j + gap];v[j + gap] = temp;
+            }
+        }
+    }
+}
 ///////////////////////////////////////////////////
 #if 0
 void HeapAdjust(int array[], int s,int m)
@@ -371,6 +385,7 @@ void SortAction()
 	int arr8[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
 	int arr9[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
 	int arr10[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
+    int arr11[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
     int k = 3;
     int maxknd = FindkndMaxValue(arr1, sizeof(arr1) / sizeof(int), k);
     cout << "\n===========================Sort===========================" << endl;
@@ -385,7 +400,7 @@ void SortAction()
 	mergeSort(arr8, 0, sizeof(arr8) / sizeof(int) - 1);
 	mergeSort2(arr9, sizeof(arr9) / sizeof(int));
 	//headSort(arr10, sizeof(arr10) / sizeof(int));
-
+    shellsort2(arr11,sizeof(arr3) / sizeof(int));
     printf("\narr1:");
     for (int i = 0;i < sizeof(arr1) / sizeof(int) ;i++)
     {
@@ -426,11 +441,11 @@ void SortAction()
 	{
 		printf("%d ", arr9[i]);
 	}
-	/*printf("\narr10:");
-	for (int i = 0; i < sizeof(arr10) / sizeof(int); i++)
+	printf("\narr11:");
+	for (int i = 0; i < sizeof(arr11) / sizeof(int); i++)
 	{
-		printf("%d ", arr10[i]);
-	}*/
+		printf("%d ", arr11[i]);
+	}
 	printf("end.\n");
 }
 
