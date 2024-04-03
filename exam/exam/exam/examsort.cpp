@@ -371,8 +371,6 @@ void downAdjust(int arr[], int parent, int n)
 	}
 }
 
-
-
 void SortAction()
 {
     int arr1[] = {13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230};
@@ -381,10 +379,10 @@ void SortAction()
     int arr4[] = {13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230};
     int arr5[] = {13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230};
     int arr6[sizeof(arr5) / sizeof(int)] = {};
-	int arr7[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
-	int arr8[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
-	int arr9[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
-	int arr10[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
+    int arr7[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
+    int arr8[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
+    int arr9[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
+    int arr10[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
     int arr11[] = { 13,5,4,3,2,1,1200,901,205,301,12,0,9,8,7,6,5,1000,304,902,900,1230 };
     int k = 3;
     int maxknd = FindkndMaxValue(arr1, sizeof(arr1) / sizeof(int), k);
@@ -396,10 +394,10 @@ void SortAction()
     ShellSort( arr3, sizeof(arr3) / sizeof(int));
     HeapSort(arr4, sizeof(arr4) / sizeof(int));
     specialsort(arr5, sizeof(arr5) / sizeof(int),arr6);
-	SelectSort(arr7, sizeof(arr7) / sizeof(int));
-	mergeSort(arr8, 0, sizeof(arr8) / sizeof(int) - 1);
-	mergeSort2(arr9, sizeof(arr9) / sizeof(int));
-	//headSort(arr10, sizeof(arr10) / sizeof(int));
+    SelectSort(arr7, sizeof(arr7) / sizeof(int));
+    mergeSort(arr8, 0, sizeof(arr8) / sizeof(int) - 1);
+    mergeSort2(arr9, sizeof(arr9) / sizeof(int));
+    //headSort(arr10, sizeof(arr10) / sizeof(int));
     shellsort2(arr11,sizeof(arr3) / sizeof(int));
     printf("\narr1:");
     for (int i = 0;i < sizeof(arr1) / sizeof(int) ;i++)
@@ -426,7 +424,7 @@ void SortAction()
     {
         printf("%d ", arr6[i]);
     }
-	printf("\narr7:");
+    printf("\narr7:");
 	for (int i = 0; i < sizeof(arr7) / sizeof(int); i++)
 	{
 		printf("%d ", arr7[i]);
@@ -446,6 +444,6 @@ void SortAction()
 	{
 		printf("%d ", arr11[i]);
 	}
-	printf("end.\n");
+    printf("end.\n");
 }
 
