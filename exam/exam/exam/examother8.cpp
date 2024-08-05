@@ -25,40 +25,42 @@ using namespace std;
 
 int ch_contain(char * str,char c)
 {
-    int len = strlen(str);
-    for (int i = 0; i < len; i++)
+    while (*str != '\0')
     {
-        if (c == str[i])
-        {
+        if (c == *str)
             return 1;
-        }
+        str++;
     }
     return 0;
 }
 
 int lengthOfLongestSubstring(char * s) 
 {
-    char w[100] = { 0 }, res[100] = {0};
-    int index = 0,j = 0,i = 0;
-    for (i = 0; i < strlen(s) && j < strlen(s); i++)
+    char w[100] = { 0 };
+    int index = 0, j = 0, i = 0, wlen = 0, reslen = 0;
+    while (s[i] != '\0')
     {
         if (ch_contain(w, s[i]))
         {
             j++;
-            if (strlen(w) > strlen(res))
+            if (wlen > reslen)
             {
-                strcpy(res, w);
+                reslen = wlen;
             }
-            memset(w, 0x00, sizeof(w));
+            w[0] = '\0';
             index = 0;
+            wlen = 0;
             i = j;
         }
         w[index++] = s[i];
+        w[index] = '\0';
+        wlen = index;
+        i++;
     }
-    if (strlen(w) > strlen(res))
-        return strlen(w);
+    if (wlen > reslen)
+        return wlen;
     else
-        return strlen(res);
+        return reslen;
 }
 
 long reverse(int x) {
@@ -727,11 +729,18 @@ int divide(int dividend, int divisor)
     int div = 0;
     if (dividend == 0)
         return 0;
-    if (dividend == divisor || divisor == 1)
+    if (dividend == divisor)
         return 1;
+    if (divisor == 1)
+        return dividend;
     if (divisor == -1)
     {
-        return (dividend == INT_MIN) ? INT_MAX : -dividend;
+        if (dividend <= INT_MIN)
+            return INT_MAX;
+        else if (dividend == INT_MAX)
+            return -INT_MAX;
+        else
+            return -dividend;
     }
     if (dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0)
     {
@@ -1733,8 +1742,14 @@ void Other8Action()
     int id = divide(-10,-3);
     cout<<id<<endl;
 
+    id = divide(-1, 1);
+    cout << id << endl;
+
     id = divide(7,-3);
     cout<<id<<endl;
+
+    id = divide(-2147483648, 4);
+    cout << id << endl;
 
     id = divide(2147483647,2);
     cout<<id<<endl;

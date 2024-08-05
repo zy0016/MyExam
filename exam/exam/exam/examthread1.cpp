@@ -118,27 +118,27 @@ void Thread1Action4()
 {
     cout << "\n===========================Thread1Action4===========================" << endl;
     cout << "main" << "threadid= " << std::this_thread::get_id() << endl;
-	std::future<int> result = std::async(mythread);//流程并不卡在这里
-	cout << "continue....." << endl;
-    //枚举类型
-	//std::future_status status = result.wait_for(std::chrono::seconds(0));//等待一秒
-    std::future_status::future_status status = result.wait_for(std::chrono::seconds(0));
-    if (status == std::future_status::deferred)
-	{
-		//线程被延迟执行了，系统资源紧张
-		cout << "线程被延迟执行了，系统资源紧张 result.get():" << result.get() << endl; //此时采取调用mythread()
-	}
-	else if (status == std::future_status::timeout)//
-	{
-		//超时：表示线程还没执行完；我想等待你1秒，希望你返回，你没有返回，那么 status = timeout
-		//线程还没执行完
-		cout << "超时：表示线程还没执行完!" << endl;
-	}
-	else if (status == std::future_status::ready)
-	{
-		//表示线程成功返回
-		cout << "线程成功执行完毕，返回 result.get():" << result.get() << endl;
-	}
+	//std::future<int> result = std::async(mythread);//流程并不卡在这里
+	//cout << "continue....." << endl;
+ //   //枚举类型
+	////std::future_status status = result.wait_for(std::chrono::seconds(0));//等待一秒
+ //   std::future_status::future_status status = result.wait_for(std::chrono::seconds(0));
+ //   if (status == std::future_status::deferred)
+	//{
+	//	//线程被延迟执行了，系统资源紧张
+	//	cout << "线程被延迟执行了，系统资源紧张 result.get():" << result.get() << endl; //此时采取调用mythread()
+	//}
+	//else if (status == std::future_status::timeout)//
+	//{
+	//	//超时：表示线程还没执行完；我想等待你1秒，希望你返回，你没有返回，那么 status = timeout
+	//	//线程还没执行完
+	//	cout << "超时：表示线程还没执行完!" << endl;
+	//}
+	//else if (status == std::future_status::ready)
+	//{
+	//	//表示线程成功返回
+	//	cout << "线程成功执行完毕，返回 result.get():" << result.get() << endl;
+	//}
 }
 void safe_increment()
 {
